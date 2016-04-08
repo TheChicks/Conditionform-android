@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     NavigationView mNavigationView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
 
+    FragmentManager fm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,66 +35,102 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
-        if(actionBar != null){
+        if (actionBar != null) {
 //            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
 //            actionBar.setDisplayShowHomeEnabled(true);
 //            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         setupDrawerContent(mNavigationView);
+
+        //Animate the Hamburger Icon
         mActionBarDrawerToggle = setupDrawerToggle();
+        mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+
+        fm = getSupportFragmentManager();
+
+        //초기 화면 지정
+        Fragment fragmnet = fm.findFragmentById(R.id.container_fragment);
+        if (fragmnet == null) {
+            HomeFragment homeFragment = HomeFragment.newInstance();
+
+            fm.beginTransaction()
+                    .add(R.id.container_fragment, homeFragment)
+                    .commit();
+        }
     }
 
-    private void initView(){
+    private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView)findViewById(R.id.navigationView);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
     }
 
-    private void setupDrawerContent(NavigationView navigationView){
+    private void setupDrawerContent(NavigationView navigationView) {
+
+        navigationView.getMenu().getItem(0).setChecked(true);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 selectDrawerItem(item);
-                return false;
+                return true;
             }
         });
     }
 
-    private ActionBarDrawerToggle setupDrawerToggle(){
+    private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
     }
 
-    public void selectDrawerItem(MenuItem menuItem){
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        switch (menuItem.getItemId()){
+    public void selectDrawerItem(MenuItem menuItem) {
+
+        //체크되어 있다면 현재화면이므로 바꿀 필요없다.
+        if (menuItem.isChecked()) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+
+        Fragment fragment = fm.findFragmentById(R.id.container_fragment);
+        Fragment newFragment = null;
+
+        switch (menuItem.getItemId()) {
             case R.id.nav_home_fragment:
-                fragmentClass = HomeFragment.class;
+                if (fragment instanceof HomeFragment) {
+                    return;
+                }
+                newFragment = HomeFragment.newInstance();
                 break;
             case R.id.nav_history_fragment:
-                fragmentClass = HistoryFragment.class;
+                if (fragment instanceof HistoryFragment) {
+                    return;
+                }
+                newFragment = HistoryFragment.newInstance();
                 break;
             case R.id.nav_statistics_fragment:
-                fragmentClass = StatisticsFragment.class;
+                if (fragment instanceof StatisticsFragment) {
+                    return;
+                }
+                newFragment = StatisticsFragment.newInstance();
                 break;
             case R.id.nav_search_fragment:
-                fragmentClass = SearchFragment.class;
+                if (fragment instanceof SearchFragment) {
+                    return;
+                }
+                newFragment = SearchFragment.newInstance();
                 break;
             case R.id.nav_settings_fragment:
-                fragmentClass = SettingsFragment.class;
+                if (fragment instanceof SettingsFragment) {
+                    return;
+                }
+                newFragment = SettingsFragment.newInstance();
                 break;
         }
 
-        try {
-            fragment = (Fragment)fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (newFragment != null) {
+            // Insert the fragment by replacing any existing fragment
+            fm.beginTransaction().replace(R.id.container_fragment, newFragment).commit();
         }
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().replace(R.id.container_fragment, fragment).commit();
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -112,17 +150,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if(mActionBarDrawerToggle.onOptionsItemSelected(item)){
+        if (mActionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 Log.d(TAG, " home");
                 return true;
-            case R.id.action_settings:
-                return true;
+//            case R.id.action_settings:
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -136,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle.syncState();
     }
 
+    //런타임에서 설정 변경시 호출
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
