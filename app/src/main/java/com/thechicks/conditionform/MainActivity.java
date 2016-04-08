@@ -15,13 +15,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    @Bind(R.id.toolbar)
     Toolbar mToolbar;
+
+    @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+
+    @Bind(R.id.navigationView)
     NavigationView mNavigationView;
+
     ActionBarDrawerToggle mActionBarDrawerToggle;
 
     FragmentManager fm;
@@ -31,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initView();
+        ButterKnife.bind(this);
 
         setSupportActionBar(mToolbar);
         final ActionBar actionBar = getSupportActionBar();
@@ -58,12 +67,6 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container_fragment, homeFragment)
                     .commit();
         }
-    }
-
-    private void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavigationView = (NavigationView) findViewById(R.id.navigationView);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
