@@ -1,13 +1,27 @@
 package com.thechicks.conditionform;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.Calendar;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 메인 화면
@@ -15,6 +29,45 @@ import android.view.ViewGroup;
 public class HomeFragment extends Fragment {
 
     public static final String TAG = HomeFragment.class.getSimpleName();
+
+    @Bind(R.id.imageView_date_previous)
+    ImageView ivDatePrevious;
+
+    @Bind(R.id.imageView_date_next)
+    ImageView ivDateNext;
+
+    @Bind(R.id.textView_date_toDay)
+    TextView tvDateToday;
+
+    @Bind(R.id.recyclerView_disease)
+    RecyclerView rvDisease;
+
+    @Bind(R.id.fab_add)
+    FloatingActionButton fabAdd;
+
+    @Bind(R.id.fab_1)
+    FloatingActionButton fab1;
+
+    @Bind(R.id.fab_2)
+    FloatingActionButton fab2;
+
+    @Bind(R.id.fab_3)
+    FloatingActionButton fab3;
+
+    //Save the fab's active status
+    //false -> fab = close
+    //true -> fab = open
+    private boolean fabStatus = false;
+
+    //Animations
+    Animation showFab1;
+    Animation hideFab1;
+    Animation showFab2;
+    Animation hideFab2;
+    Animation showFab3;
+    Animation hideFab3;
+
+    DiseaseListAdapter mDiseaseListAdapter;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -49,8 +102,127 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvDisease.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rvDisease.setHasFixedSize(true);
+
+        mDiseaseListAdapter = new DiseaseListAdapter(getActivity());
+        rvDisease.setAdapter(mDiseaseListAdapter);
+
+        rvDisease.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(fabStatus){
+                    hideFab();
+                    fabStatus = false;
+                }
+                return fabStatus;
+            }
+        });
+
+        showFab1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab1_show);
+        hideFab1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab1_hide);
+        showFab2 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab2_show);
+        hideFab2 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab2_hide);
+        showFab3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab3_show);
+        hideFab3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab3_hide);
+
+        setupToday();
+    }
+
+    public void setupToday() {
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1;
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        tvDateToday.setText(month + "월 " + day + "일");
+    }
+
+    //Todo: 이전 날짜로 이동
+    @OnClick(R.id.imageView_date_previous)
+    public void onClickDatePrevious() {
+
+    }
+
+    //Todo: 다음 날짜로 이동
+    @OnClick(R.id.imageView_date_next)
+    public void onClickDateNext() {
+
+    }
+
+    //Todo: DatePicker 표시하고 넘어온 Date로 변화
+    @OnClick(R.id.textView_date_toDay)
+    public void onClickDateToday() {
+
+    }
+
+    @OnClick(R.id.fab_add)
+    public void onClickFabAdd() {
+
+        if (fabStatus) {
+            //Close FAB menu
+            hideFab();
+            fabStatus = false;
+        } else {
+            //Display FAB menu
+            expandFab();
+            fabStatus = true;
+        }
+    }
+
+    private void expandFab() {
+
+        FrameLayout.LayoutParams layoutParams1 = (FrameLayout.LayoutParams) fab1.getLayoutParams();
+        layoutParams1.rightMargin += (int) (fab1.getWidth() * 1.7);
+        layoutParams1.bottomMargin += (int) (fab1.getHeight() * 0.25);
+        fab1.setLayoutParams(layoutParams1);
+        fab1.startAnimation(showFab1);
+        fab1.setClickable(true);
+
+        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) fab2.getLayoutParams();
+        layoutParams2.rightMargin += (int) (fab2.getWidth() * 1.5);
+        layoutParams2.bottomMargin += (int) (fab2.getHeight() * 1.5);
+        fab2.setLayoutParams(layoutParams2);
+        fab2.startAnimation(showFab2);
+        fab2.setClickable(true);
+
+        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) fab3.getLayoutParams();
+        layoutParams3.rightMargin += (int) (fab3.getWidth() * 0.25);
+        layoutParams3.bottomMargin += (int) (fab3.getHeight() * 1.7);
+        fab3.startAnimation(showFab3);
+        fab3.setClickable(true);
+    }
+
+    private void hideFab() {
+
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fab1.getLayoutParams();
+        layoutParams.rightMargin -= (int) (fab1.getWidth() * 1.7);
+        layoutParams.bottomMargin -= (int) (fab1.getHeight() * 0.25);
+        fab1.setLayoutParams(layoutParams);
+        fab1.startAnimation(hideFab1);
+        fab1.setClickable(false);
+
+        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) fab2.getLayoutParams();
+        layoutParams2.rightMargin -= (int) (fab2.getWidth() * 1.5);
+        layoutParams2.bottomMargin -= (int) (fab2.getHeight() * 1.5);
+        fab2.setLayoutParams(layoutParams2);
+        fab2.startAnimation(hideFab2);
+        fab2.setClickable(false);
+
+        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) fab3.getLayoutParams();
+        layoutParams3.rightMargin -= (int) (fab3.getWidth() * 0.25);
+        layoutParams3.bottomMargin -= (int) (fab3.getHeight() * 1.7);
+        fab3.setLayoutParams(layoutParams3);
+        fab3.startAnimation(hideFab3);
+        fab3.setClickable(false);
+    }
 }
