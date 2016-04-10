@@ -23,7 +23,7 @@
             android:id="@+id/ll_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#449911"
+            android:background="#2c90d7"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="8dp">
@@ -49,33 +49,34 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <ImageView
-                android:id="@+id/imageView_morning"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <TextView
                 android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:id="@+id/textView_interval"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2시간씩"/>
 
-            <ImageView
-                android:id="@+id/imageView_lunch"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:id="@+id/textView_dosage_current"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"/>
 
-            <ImageView
-                android:id="@+id/imageView_dinner"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <TextView
                 android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/"/>
 
-            <ImageView
-                android:id="@+id/imageView_sleep"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <TextView
                 android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:id="@+id/textView_dosage_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8"/>
 
         </LinearLayout>
     </LinearLayout>

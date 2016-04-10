@@ -7,12 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Dong on 2016-04-09.
  */
 public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    public static final int VIEW_TYPE_NORMAL = 0;
+    public static final int VIEW_TYPE_INTERVAL = 1;
 
     private final Context mContext;
     private final ArrayList<Disease> mDiseaseList;
@@ -30,16 +32,38 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
+    //Todo: 객체의 뷰타입에 따라 리턴되게 수정
+    @Override
+    public int getItemViewType(int position) {
+        return position % 2 == 0 ? VIEW_TYPE_NORMAL : VIEW_TYPE_INTERVAL;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_disease, parent, false);
-        return new DiseaseViewHolder(view);
+
+        switch (viewType) {
+            case VIEW_TYPE_NORMAL:
+                return DiseaseNormalViewHolder.newInstance(parent);
+            case VIEW_TYPE_INTERVAL:
+                return DiseaseIntervalViewHolder.newInstance(parent);
+            default:
+                return null;
+        }
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
         Disease disease = mDiseaseList.get(position);
-        ((DiseaseViewHolder) holder).bind(disease);
+
+        if (holder instanceof DiseaseNormalViewHolder) {
+            ((DiseaseNormalViewHolder) holder).bind(disease);
+        } else {
+            ((DiseaseIntervalViewHolder) holder).bind(disease);
+        }
+
+
+
     }
 
     @Override
