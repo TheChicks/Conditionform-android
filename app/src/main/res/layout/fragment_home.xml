@@ -52,6 +52,14 @@
             android:layout_below="@id/textView_date_toDay"/>
     </RelativeLayout>
 
+    <FrameLayout
+        android:id="@+id/trans_bg"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="@drawable/simple_circle" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"

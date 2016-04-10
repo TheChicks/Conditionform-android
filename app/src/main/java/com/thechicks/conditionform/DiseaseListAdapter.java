@@ -61,9 +61,6 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             ((DiseaseIntervalViewHolder) holder).bind(disease);
         }
-
-
-
     }
 
     @Override

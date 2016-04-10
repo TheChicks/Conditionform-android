@@ -1,5 +1,6 @@
 package com.thechicks.conditionform;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -60,16 +62,24 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.relative_fab_menu2)
     RelativeLayout rlFabMenu2;
 
+    @Bind(R.id.trans_bg)
+    FrameLayout flTransBg;
+
     //Save the fab's active status
     //false -> fab = close
     //true -> fab = open
     private boolean fabStatus = false;
+
+    boolean isGrownAnim = false;
 
     //Animations
     Animation showFab1;
     Animation hideFab1;
     Animation showFab2;
     Animation hideFab2;
+
+    Animation animGrow;
+    Animation animShrink;
 
     DiseaseListAdapter mDiseaseListAdapter;
 
@@ -124,7 +134,7 @@ public class HomeFragment extends Fragment {
         rvDisease.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(fabStatus){
+                if (fabStatus) {
                     hideFab();
                     fabStatus = false;
                 }
@@ -138,6 +148,39 @@ public class HomeFragment extends Fragment {
         hideFab2 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab2_hide);
 
         setupToday();
+
+        animGrow = AnimationUtils.loadAnimation(getActivity(), R.anim.grow_color);
+        animShrink = AnimationUtils.loadAnimation(getActivity(), R.anim.shrink_color);
+
+        animGrow.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                isGrownAnim = true;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        animShrink.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                isGrownAnim = fabStatus;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
     }
 
     public void setupToday() {
@@ -179,43 +222,50 @@ public class HomeFragment extends Fragment {
             expandFab();
             fabStatus = true;
         }
+
+        if(isGrownAnim){
+            flTransBg.startAnimation(animShrink);
+        }else{
+            flTransBg.startAnimation(animGrow);
+        }
     }
 
     @OnClick(R.id.fab_1)
-    public void onClickFabMenu1(){
+    public void onClickFabMenu1() {
         Toast.makeText(getActivity(), "fab1", Toast.LENGTH_LONG).show();
     }
 
     @OnClick(R.id.fab_2)
-    public void onClickFabMenu2(){
+    public void onClickFabMenu2() {
         Toast.makeText(getActivity(), "fab2", Toast.LENGTH_LONG).show();
     }
 
     private void expandFab() {
 
-        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams)rlFabMenu1.getLayoutParams();
-        lpFabMenu1.bottomMargin += (int)(rlFabMenu1.getHeight() * 1.2);
+        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams) rlFabMenu1.getLayoutParams();
+        lpFabMenu1.bottomMargin += (int) (rlFabMenu1.getHeight() * 1.2);
         rlFabMenu1.setLayoutParams(lpFabMenu1);
         rlFabMenu1.startAnimation(showFab1);
         fab1.setClickable(true);
 
-        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams)rlFabMenu2.getLayoutParams();
-        lpFabMenu2.bottomMargin += (int)(rlFabMenu2.getHeight() * 2.3);
+        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams) rlFabMenu2.getLayoutParams();
+        lpFabMenu2.bottomMargin += (int) (rlFabMenu2.getHeight() * 2.3);
         rlFabMenu2.setLayoutParams(lpFabMenu2);
         rlFabMenu2.startAnimation(showFab2);
         fab2.setClickable(true);
+
     }
 
     private void hideFab() {
 
-        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams)rlFabMenu1.getLayoutParams();
-        lpFabMenu1.bottomMargin -= (int)(rlFabMenu1.getHeight() * 1.2);
+        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams) rlFabMenu1.getLayoutParams();
+        lpFabMenu1.bottomMargin -= (int) (rlFabMenu1.getHeight() * 1.2);
         rlFabMenu1.setLayoutParams(lpFabMenu1);
         rlFabMenu1.startAnimation(hideFab1);
         fab1.setClickable(fabStatus);
 
-        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams)rlFabMenu2.getLayoutParams();
-        lpFabMenu2.bottomMargin -= (int)(rlFabMenu2.getHeight() * 2.3);
+        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams) rlFabMenu2.getLayoutParams();
+        lpFabMenu2.bottomMargin -= (int) (rlFabMenu2.getHeight() * 2.3);
         rlFabMenu2.setLayoutParams(lpFabMenu2);
         rlFabMenu2.startAnimation(hideFab2);
         fab1.setClickable(fabStatus);
