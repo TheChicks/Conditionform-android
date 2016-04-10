@@ -6,14 +6,14 @@
     <translate
         android:duration="800"
         android:fromXDelta="0%"
-        android:fromYDelta="-350%"
+        android:fromYDelta="-230%"
         android:interpolator="@android:anim/linear_interpolator"
         android:toXDelta="0%"
         android:toYDelta="0%"></translate>
 
     <!--Fade Out-->
     <alpha
-        android:duration="2000"
+        android:duration="1000"
         android:fromAlpha="1.0"
         android:interpolator="@android:anim/accelerate_interpolator"
         android:toAlpha="0.0"></alpha>

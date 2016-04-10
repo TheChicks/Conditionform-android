@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -52,8 +54,11 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.fab_2)
     FloatingActionButton fab2;
 
-//    @Bind(R.id.fab_3)
-//    FloatingActionButton fab3;
+    @Bind(R.id.relative_fab_menu1)
+    RelativeLayout rlFabMenu1;
+
+    @Bind(R.id.relative_fab_menu2)
+    RelativeLayout rlFabMenu2;
 
     //Save the fab's active status
     //false -> fab = close
@@ -176,40 +181,43 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @OnClick(R.id.fab_1)
+    public void onClickFabMenu1(){
+        Toast.makeText(getActivity(), "fab1", Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.fab_2)
+    public void onClickFabMenu2(){
+        Toast.makeText(getActivity(), "fab2", Toast.LENGTH_LONG).show();
+    }
+
     private void expandFab() {
 
-        RelativeLayout.LayoutParams layoutParams1 = (RelativeLayout.LayoutParams) fab1.getLayoutParams();
-//        layoutParams1.rightMargin += (int) (fab1.getWidth() * 1.7);
-        layoutParams1.bottomMargin += (int) (fab1.getHeight() * 1.8);
-        fab1.setLayoutParams(layoutParams1);
-        fab1.startAnimation(showFab1);
+        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams)rlFabMenu1.getLayoutParams();
+        lpFabMenu1.bottomMargin += (int)(rlFabMenu1.getHeight() * 1.2);
+        rlFabMenu1.setLayoutParams(lpFabMenu1);
+        rlFabMenu1.startAnimation(showFab1);
         fab1.setClickable(true);
 
-        RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) fab2.getLayoutParams();
-//        layoutParams2.rightMargin += (int) (fab2.getWidth() * 1.5);
-        layoutParams2.bottomMargin += (int) (fab2.getHeight() * 3.5);
-        fab2.setLayoutParams(layoutParams2);
-        fab2.startAnimation(showFab2);
+        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams)rlFabMenu2.getLayoutParams();
+        lpFabMenu2.bottomMargin += (int)(rlFabMenu2.getHeight() * 2.3);
+        rlFabMenu2.setLayoutParams(lpFabMenu2);
+        rlFabMenu2.startAnimation(showFab2);
         fab2.setClickable(true);
-
     }
 
     private void hideFab() {
 
-        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) fab1.getLayoutParams();
-//        layoutParams.rightMargin -= (int) (fab1.getWidth() * 1.7);
-        layoutParams.bottomMargin -= (int) (fab1.getHeight() * 1.8);
-        fab1.setLayoutParams(layoutParams);
-        fab1.startAnimation(hideFab1);
-        fab1.setClickable(false);
+        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams)rlFabMenu1.getLayoutParams();
+        lpFabMenu1.bottomMargin -= (int)(rlFabMenu1.getHeight() * 1.2);
+        rlFabMenu1.setLayoutParams(lpFabMenu1);
+        rlFabMenu1.startAnimation(hideFab1);
+        fab1.setClickable(fabStatus);
 
-        RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) fab2.getLayoutParams();
-//        layoutParams2.rightMargin -= (int) (fab2.getWidth() * 1.5);
-        layoutParams2.bottomMargin -= (int) (fab2.getHeight() * 3.5);
-        fab2.setLayoutParams(layoutParams2);
-        fab2.startAnimation(hideFab2);
-        fab2.setClickable(false);
-
-
+        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams)rlFabMenu2.getLayoutParams();
+        lpFabMenu2.bottomMargin -= (int)(rlFabMenu2.getHeight() * 2.3);
+        rlFabMenu2.setLayoutParams(lpFabMenu2);
+        rlFabMenu2.startAnimation(hideFab2);
+        fab1.setClickable(fabStatus);
     }
 }
