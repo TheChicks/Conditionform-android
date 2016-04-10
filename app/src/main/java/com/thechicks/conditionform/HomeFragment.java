@@ -15,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Calendar;
@@ -51,8 +52,8 @@ public class HomeFragment extends Fragment {
     @Bind(R.id.fab_2)
     FloatingActionButton fab2;
 
-    @Bind(R.id.fab_3)
-    FloatingActionButton fab3;
+//    @Bind(R.id.fab_3)
+//    FloatingActionButton fab3;
 
     //Save the fab's active status
     //false -> fab = close
@@ -64,8 +65,6 @@ public class HomeFragment extends Fragment {
     Animation hideFab1;
     Animation showFab2;
     Animation hideFab2;
-    Animation showFab3;
-    Animation hideFab3;
 
     DiseaseListAdapter mDiseaseListAdapter;
 
@@ -132,8 +131,6 @@ public class HomeFragment extends Fragment {
         hideFab1 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab1_hide);
         showFab2 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab2_show);
         hideFab2 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab2_hide);
-        showFab3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab3_show);
-        hideFab3 = AnimationUtils.loadAnimation(getActivity(), R.anim.fab3_hide);
 
         setupToday();
     }
@@ -181,48 +178,38 @@ public class HomeFragment extends Fragment {
 
     private void expandFab() {
 
-        FrameLayout.LayoutParams layoutParams1 = (FrameLayout.LayoutParams) fab1.getLayoutParams();
-        layoutParams1.rightMargin += (int) (fab1.getWidth() * 1.7);
-        layoutParams1.bottomMargin += (int) (fab1.getHeight() * 0.25);
+        RelativeLayout.LayoutParams layoutParams1 = (RelativeLayout.LayoutParams) fab1.getLayoutParams();
+//        layoutParams1.rightMargin += (int) (fab1.getWidth() * 1.7);
+        layoutParams1.bottomMargin += (int) (fab1.getHeight() * 1.8);
         fab1.setLayoutParams(layoutParams1);
         fab1.startAnimation(showFab1);
         fab1.setClickable(true);
 
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) fab2.getLayoutParams();
-        layoutParams2.rightMargin += (int) (fab2.getWidth() * 1.5);
-        layoutParams2.bottomMargin += (int) (fab2.getHeight() * 1.5);
+        RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) fab2.getLayoutParams();
+//        layoutParams2.rightMargin += (int) (fab2.getWidth() * 1.5);
+        layoutParams2.bottomMargin += (int) (fab2.getHeight() * 3.5);
         fab2.setLayoutParams(layoutParams2);
         fab2.startAnimation(showFab2);
         fab2.setClickable(true);
 
-        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) fab3.getLayoutParams();
-        layoutParams3.rightMargin += (int) (fab3.getWidth() * 0.25);
-        layoutParams3.bottomMargin += (int) (fab3.getHeight() * 1.7);
-        fab3.startAnimation(showFab3);
-        fab3.setClickable(true);
     }
 
     private void hideFab() {
 
-        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) fab1.getLayoutParams();
-        layoutParams.rightMargin -= (int) (fab1.getWidth() * 1.7);
-        layoutParams.bottomMargin -= (int) (fab1.getHeight() * 0.25);
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) fab1.getLayoutParams();
+//        layoutParams.rightMargin -= (int) (fab1.getWidth() * 1.7);
+        layoutParams.bottomMargin -= (int) (fab1.getHeight() * 1.8);
         fab1.setLayoutParams(layoutParams);
         fab1.startAnimation(hideFab1);
         fab1.setClickable(false);
 
-        FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) fab2.getLayoutParams();
-        layoutParams2.rightMargin -= (int) (fab2.getWidth() * 1.5);
-        layoutParams2.bottomMargin -= (int) (fab2.getHeight() * 1.5);
+        RelativeLayout.LayoutParams layoutParams2 = (RelativeLayout.LayoutParams) fab2.getLayoutParams();
+//        layoutParams2.rightMargin -= (int) (fab2.getWidth() * 1.5);
+        layoutParams2.bottomMargin -= (int) (fab2.getHeight() * 3.5);
         fab2.setLayoutParams(layoutParams2);
         fab2.startAnimation(hideFab2);
         fab2.setClickable(false);
 
-        FrameLayout.LayoutParams layoutParams3 = (FrameLayout.LayoutParams) fab3.getLayoutParams();
-        layoutParams3.rightMargin -= (int) (fab3.getWidth() * 0.25);
-        layoutParams3.bottomMargin -= (int) (fab3.getHeight() * 1.7);
-        fab3.setLayoutParams(layoutParams3);
-        fab3.startAnimation(hideFab3);
-        fab3.setClickable(false);
+
     }
 }
