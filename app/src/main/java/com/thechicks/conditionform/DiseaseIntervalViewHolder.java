@@ -31,8 +31,8 @@ public class DiseaseIntervalViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.textView_label)
     TextView tvLabel;
 
-    @Bind(R.id.textView_interval)
-    TextView tvInterval;
+    @Bind(R.id.textView_time_interval)
+    TextView tvTimeInterval;
 
     @Bind(R.id.textView_dosage_current)
     TextView tvDosageCurrent;
@@ -47,30 +47,50 @@ public class DiseaseIntervalViewHolder extends RecyclerView.ViewHolder {
 
     View mView;
 
-    public static DiseaseIntervalViewHolder newInstance(ViewGroup parent) {
+    DiseaseListAdapter.OnListItemClickListener mListener;
+
+    public static DiseaseIntervalViewHolder newInstance(ViewGroup parent, DiseaseListAdapter.OnListItemClickListener listener) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list_disease_interval, parent, false);
-        return new DiseaseIntervalViewHolder(itemView);
+        return new DiseaseIntervalViewHolder(itemView, listener);
     }
 
-    private DiseaseIntervalViewHolder(View itemView) {
+    private DiseaseIntervalViewHolder(View itemView, DiseaseListAdapter.OnListItemClickListener listener) {
         super(itemView);
 
         mView = itemView;
 
         gradientDrawable = new GradientDrawable();
 
+        mListener = listener;
+
         ButterKnife.bind(this, mView);
     }
 
-    public void bind(Disease disease) {
-        //Todo: 이미지 표시 여부 결정
-        //Todo: 레이블 이미지, 텍스트 셋
+    public void bind(final Disease disease) {
 
+        //레이블 이미지
+        ivLabel.setImageResource(disease.getImg());
 
-        //Todo: Border line 셋
-        gradientDrawable.setStroke(border, Color.parseColor("#2c90d7"));
+        //레이블 텍스트
+        tvLabel.setText(disease.getName());
+
+        //레이블 색 적용
+        llHead.setBackgroundColor(Color.parseColor(disease.getColor()));
+        gradientDrawable.setStroke(border, Color.parseColor(disease.getColor()));
         llContent.setBackground(gradientDrawable);
 
+        tvTimeInterval.setText(disease.getTimeInterval() + "시간씩");
+        tvDosageCurrent.setText(String.valueOf(disease.getDosageCurrnt()));
+        tvDosageTotal.setText(String.valueOf(disease.getDosageTotal()));
+
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null){
+                    mListener.onListItemClick(disease);
+                }
+            }
+        });
     }
 }

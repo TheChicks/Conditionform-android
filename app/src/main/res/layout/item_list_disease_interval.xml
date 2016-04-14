@@ -35,6 +35,8 @@
                 android:src="@mipmap/ic_launcher"/>
 
             <TextView
+                android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:id="@+id/textView_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +53,7 @@
 
             <TextView
                 android:layout_margin="4dp"
-                android:id="@+id/textView_interval"
+                android:id="@+id/textView_time_interval"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2시간씩"/>

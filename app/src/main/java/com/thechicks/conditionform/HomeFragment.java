@@ -1,5 +1,6 @@
 package com.thechicks.conditionform;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -127,6 +128,14 @@ public class HomeFragment extends Fragment {
 
         mDiseaseListAdapter = new DiseaseListAdapter(getActivity());
         rvDisease.setAdapter(mDiseaseListAdapter);
+        mDiseaseListAdapter.setOnListItemClickListener(new DiseaseListAdapter.OnListItemClickListener() {
+            @Override
+            public void onListItemClick(Disease disease) {
+//                Intent intent = new Intent(getActivity(), 이동할 액티비티);
+//                startActivity(intent);
+                Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         rvDisease.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -166,19 +175,19 @@ public class HomeFragment extends Fragment {
     //Todo: 이전 날짜로 이동
     @OnClick(R.id.imageView_date_previous)
     public void onClickDatePrevious() {
-
+        Toast.makeText(getActivity(), "previous day", Toast.LENGTH_SHORT).show();
     }
 
     //Todo: 다음 날짜로 이동
     @OnClick(R.id.imageView_date_next)
     public void onClickDateNext() {
-
+        Toast.makeText(getActivity(), "next day", Toast.LENGTH_SHORT).show();
     }
 
     //Todo: DatePicker 표시하고 넘어온 Date로 변화
     @OnClick(R.id.textView_date_toDay)
     public void onClickDateToday() {
-
+        Toast.makeText(getActivity(), "show DatePicker", Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.fab_menu_open)
@@ -195,7 +204,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    //Todo: 이벤트가 안날라온다.
+    //Todo: 이벤트가 안날라온다. FrameLayout 영역문제. 애니메이션으로 커지는 영역은 실 영역이 아니다.
     @OnClick(R.id.trans_bg)
     public void onClickFlTransBg() {
         hideFab();

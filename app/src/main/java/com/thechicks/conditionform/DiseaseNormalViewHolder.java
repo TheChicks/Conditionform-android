@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,17 +33,17 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.textView_label)
     TextView tvLabel;
 
-    @Bind(R.id.imageView_morning)
-    ImageView ivMorning;
+    @Bind(R.id.checkBox_morning)
+    CheckBox cbMorning;
 
-    @Bind(R.id.imageView_lunch)
-    ImageView ivLunch;
+    @Bind(R.id.checkBox_lunch)
+    CheckBox cbLunch;
 
-    @Bind(R.id.imageView_dinner)
-    ImageView ivDinner;
+    @Bind(R.id.checkBox_dinner)
+    CheckBox cbDinner;
 
-    @Bind(R.id.imageView_sleep)
-    ImageView ivSleep;
+    @Bind(R.id.checkBox_sleep)
+    CheckBox cbSleep;
 
     @BindDimen(R.dimen.disease_item_border_line)
     int border;
@@ -50,31 +52,103 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
 
     View mView;
 
+    DiseaseListAdapter.OnListItemClickListener mListener;
+
     //팩토리 메소드로 생성자를 제한. layout을 뷰홀더에서 알 수 있게
-    public static DiseaseNormalViewHolder newInstance(ViewGroup parent){
+    public static DiseaseNormalViewHolder newInstance(ViewGroup parent, DiseaseListAdapter.OnListItemClickListener listener) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list_disease_normal, parent, false);
-        return new DiseaseNormalViewHolder(itemView);
+        return new DiseaseNormalViewHolder(itemView, listener);
     }
 
-    private DiseaseNormalViewHolder(View itemView) {
+    private DiseaseNormalViewHolder(View itemView, DiseaseListAdapter.OnListItemClickListener listener) {
         super(itemView);
 
         mView = itemView;
+        gradientDrawable = new GradientDrawable();  //border 그리기용
 
-        gradientDrawable = new GradientDrawable();
+        mListener = listener;
 
         ButterKnife.bind(this, mView);
     }
 
-    public void bind(Disease disease) {
-        //Todo: 이미지 표시 여부 결정
-        //Todo: 레이블 이미지, 텍스트 셋
+    public void bind(final Disease disease) {
 
+        //레이블 이미지
+        ivLabel.setImageResource(disease.getImg());
 
-        //Todo: Border line 셋
-        gradientDrawable.setStroke(border, Color.parseColor("#7f62de"));
+        //레이블 텍스트
+        tvLabel.setText(disease.getName());
+
+        //레이블 색 적용
+        llHead.setBackgroundColor(Color.parseColor(disease.getColor()));
+        gradientDrawable.setStroke(border, Color.parseColor(disease.getColor()));
         llContent.setBackground(gradientDrawable);
+
+        //Todo: CheckBox 리스너 제거,
+        //이미지 표시 여부 결정
+        //약 먹은거 체크
+        if (disease.isShowMorning()) {  //표시
+            cbMorning.setVisibility(View.VISIBLE);
+
+            cbMorning.setChecked(disease.isMorning());
+            cbMorning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    disease.setMorning(isChecked);
+                }
+            });
+        } else {  //표시X
+            cbMorning.setVisibility(View.GONE);
+        }
+
+        if (disease.isShowLunch()) {  //표시
+            cbLunch.setVisibility(View.VISIBLE);
+            cbLunch.setChecked(disease.isLunch());
+            cbLunch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    disease.setLunch(isChecked);
+                }
+            });
+        } else {  //표시X
+            cbLunch.setVisibility(View.GONE);
+        }
+
+        if (disease.isShowDinner()) {  //표시
+            cbDinner.setVisibility(View.VISIBLE);
+            cbDinner.setChecked(disease.isDinner());
+            cbDinner.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    disease.setDinner(isChecked);
+                }
+            });
+        } else {  //표시X
+            cbDinner.setVisibility(View.GONE);
+        }
+
+        if (disease.isShowSleep()) {  //표시
+            cbSleep.setVisibility(View.VISIBLE);
+            cbSleep.setChecked(disease.isSleep());
+            cbSleep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    disease.setSleep(isChecked);
+                }
+            });
+        } else {  //표시X
+            cbSleep.setVisibility(View.GONE);
+        }
+
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null){
+                    mListener.onListItemClick(disease);
+                }
+            }
+        });
 
     }
 }

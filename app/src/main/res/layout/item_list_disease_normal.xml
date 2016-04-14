@@ -35,6 +35,8 @@
                 android:src="@mipmap/ic_launcher"/>
 
             <TextView
+                android:textColor="#ffffff"
+                android:textStyle="bold"
                 android:id="@+id/textView_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,33 +51,33 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <ImageView
-                android:id="@+id/imageView_morning"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <CheckBox
+                android:id="@+id/checkBox_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:button="@drawable/selector_morning"/>
 
-            <ImageView
-                android:id="@+id/imageView_lunch"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <CheckBox
+                android:id="@+id/checkBox_lunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:button="@drawable/selector_lunch"/>
 
-            <ImageView
-                android:id="@+id/imageView_dinner"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <CheckBox
+                android:id="@+id/checkBox_dinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:button="@drawable/selector_dinner"/>
 
-            <ImageView
-                android:id="@+id/imageView_sleep"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <CheckBox
+                android:id="@+id/checkBox_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:src="@mipmap/ic_launcher"/>
+                android:button="@drawable/selector_sleep"/>
 
         </LinearLayout>
     </LinearLayout>
