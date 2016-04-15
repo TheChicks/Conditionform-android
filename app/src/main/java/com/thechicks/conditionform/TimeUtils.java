@@ -2,6 +2,9 @@ package com.thechicks.conditionform;
 
 import android.util.Log;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,7 +23,9 @@ public class TimeUtils {
 
     //오늘 unixTimeStamp
     public static long getTodayUnixTimeStamp(){
+//        DateTime dateTime = new DateTime(DateTimeZone.getDefault());
         Calendar calendar = Calendar.getInstance();
+
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -32,6 +37,11 @@ public class TimeUtils {
     //내일 unixTimeStamp
     public static long getTomorrowUnixTimeStamp(long unixTimestampToday){
         return unixTimestampToday + (24 * 60 * 60);
+    }
+
+    //어제 unixTimeStamp
+    public static long getYesterdayUnixTimeStamp(long unixTimestampToday){
+        return unixTimestampToday - (24 * 60 * 60);
     }
 
     //시의 timeStamp 구하기
@@ -120,5 +130,38 @@ public class TimeUtils {
         Log.d("TimeUtils", " " + parseDate.getTime());
 
         return (parseDate.getTime() / 1000);
+    }
+
+    //unixTimeStamp -> String(yyyy년 MM월 dd일)
+    public static String UnixTimeStampToStringDateYearMonthDay(long timeStamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeStamp * 1000);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DATE);
+
+        String result;
+
+        if(month < 10){
+            result = year + "년 0" + month + "월 " + day + "일";
+        }else {
+            result = year + "년 " + month + "월 " + day + "일";
+        }
+
+        return result;
+    }
+
+    //unixTimeStamp -> String(MM월 dd일)
+    public static String UnixTimeStampToStringDateMonthDay(long timeStamp) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeStamp * 1000);
+
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DATE);
+
+        String result = month + "월 " + day + "일";
+
+        return result;
     }
 }

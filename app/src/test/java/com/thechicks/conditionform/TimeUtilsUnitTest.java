@@ -10,15 +10,76 @@ import static org.junit.Assert.assertEquals;
 public class TimeUtilsUnitTest {
 
     @Test
-    public void toDayUnixTimeStamp_isCorrect() throws Exception {
+    public void todayUnixTimeStamp_isCorrect() throws Exception {
 
-        long standTimeStamp = 1460332800L;  // 2016년 4월 11일
+//        long standard = 1460678400L;  // 2016년 4월 15일
 
-        long testTimeStamp = TimeUtils.getTodayUnixTimeStamp();
+        long standard = TimeUtils.getCurrentUnixTimeStamp();
 
-        assertEquals(standTimeStamp, standTimeStamp);
+        long test = TimeUtils.getTodayUnixTimeStamp();
+
+        assertEquals(standard, test);
+    }
+
+    @Test
+    public void tomorrowUnixTimeStamp_isCorrect() throws Exception {
+
+        long standard = 1460764800L;  // 2016년 4월 16일
+
+        long today = TimeUtils.getTodayUnixTimeStamp();
+
+        long test = TimeUtils.getTomorrowUnixTimeStamp(today);
+
+        assertEquals(standard, test);
+    }
+
+    @Test
+    public void yesterdayUnixTimeStamp_isCorrect() throws Exception {
+
+        long standard = 1460592000L;  // 2016년 4월 14일
+
+        long today = TimeUtils.getTodayUnixTimeStamp();
+
+        long test = TimeUtils.getYesterdayUnixTimeStamp(today);
+
+        assertEquals(standard, test);
     }
 
 
 
+    @Test
+    public void unixTimeStampToStringDate_isCorrect() throws Exception {
+
+        String standard = "2016-04-15";
+
+        long today = TimeUtils.getTodayUnixTimeStamp();
+
+        String test = TimeUtils.UnixTimeStampToStringDate(today);
+
+        assertEquals(standard, test);
+    }
+
+    @Test
+    public void unixTimeStampToStringDateYearMonthDay_isCorrect() throws Exception {
+
+        String standard = "2016년 04월 15일";
+
+        long today = TimeUtils.getTodayUnixTimeStamp();
+
+        String test = TimeUtils.UnixTimeStampToStringDateYearMonthDay(today);
+
+        assertEquals(standard, test);
+    }
+
+    @Test
+    public void unixTimeStampToStringDateMonthDay_isCorrect() throws Exception {
+
+        String standard = "4월 15일";
+
+        long today = TimeUtils.getTodayUnixTimeStamp();
+
+        String test = TimeUtils.UnixTimeStampToStringDateMonthDay(today);
+
+        assertEquals(standard, test);
+    }
 }
