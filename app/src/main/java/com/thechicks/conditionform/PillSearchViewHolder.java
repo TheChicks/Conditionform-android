@@ -15,14 +15,14 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2016-04-11.
  */
 public class PillSearchViewHolder extends RecyclerView.ViewHolder{
-    @Bind(R.id.pillImage)
-    ImageView pillImg;
+    @Bind(R.id.ivPillImg)
+    ImageView ivPillImg;
 
-    @Bind(R.id.pillName)
-    TextView pillName;
+    @Bind(R.id.tvPillName)
+    TextView tvPillName;
 
-    @Bind(R.id.pillNumber)
-    TextView pillNumber;
+    @Bind(R.id.tvPillNumber)
+    TextView tvPillNumber;
 
     GradientDrawable gradientDrawable;
     View mView;
@@ -44,8 +44,8 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
      }
 
     public void bind(PillSearchItem pillSearchItem) {
-        //pillImg.setImageResource(Integer.parseInt(pillSearchItem.getImage())); // 이미지 URL 경로 문자열
-        pillName.setText(pillSearchItem.getPillName());
-        pillNumber.setText(Integer.toString(pillSearchItem.getPillNumber()));
+        //ivPillImg.setImageResource(Integer.parseInt(pillSearchItem.getImage())); // 이미지 URL 경로 문자열
+        tvPillName.setText(pillSearchItem.getPillName());
+        tvPillNumber.setText(Integer.toString(pillSearchItem.getPillNumber()));
     }
 }
