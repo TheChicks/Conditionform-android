@@ -1,15 +1,4 @@
-*.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
-
-# Created by https://www.gitignore.io/api/and,android,windows,osx,linux,gradle
-
-#!! ERROR: and is undefined. Use list command to see defined gitignore types !!#
+# Created by https://www.gitignore.io/api/android,jetbrains,linux,osx,windows,gradle
 
 ### Android ###
 # Built application files
@@ -56,25 +45,64 @@ captures/
 gen-external-apklibs
 
 
-### Windows ###
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+### JetBrains ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-# Folder config file
-Desktop.ini
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Sensitive or high-churn files:
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
 
-# Windows shortcuts
-*.lnk
+# Mongo Explorer plugin:
+.idea/mongoSettings.xml
+
+## File-based project format:
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
+
+
+### Linux ###
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
 
 
 ### OSX ###
@@ -105,17 +133,25 @@ Temporary Items
 .apdisk
 
 
-### Linux ###
-*~
+### Windows ###
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
 
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
+# Folder config file
+Desktop.ini
 
-# KDE directory preferences
-.directory
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
 
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
 
 
 ### Gradle ###
