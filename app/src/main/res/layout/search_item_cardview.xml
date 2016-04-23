@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView android:id="@+id/cardview"
+    card_view:cardCornerRadius="3dp"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true"
+    xmlns:app="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="65dp"
+        android:id="@+id/ivPillImg"
+        android:src="@android:drawable/ic_menu_report_image" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="pillName"
+            android:id="@+id/tvPillName"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_weight="0.79"
+            android:textSize="20sp"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="pillNumber"
+            android:id="@+id/tvPillNumber"
+            android:layout_gravity="bottom|center_horizontal"
+            android:textSize="15sp"
+            android:gravity="center_vertical" />
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

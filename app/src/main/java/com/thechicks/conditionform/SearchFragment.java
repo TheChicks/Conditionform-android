@@ -1,13 +1,18 @@
 package com.thechicks.conditionform;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 검색 화면
@@ -15,6 +20,11 @@ import android.view.ViewGroup;
 public class SearchFragment extends Fragment {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
+
+    @Bind(R.id.recyclerview_search_item)
+    RecyclerView recyclerView;
+
+    PillSearchListAdapter mPillSearchListAdapter;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -50,6 +60,29 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+
+        View view =  inflater.inflate(R.layout.fragment_search, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
+
+         @Override
+         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+                 super.onViewCreated(view, savedInstanceState);
+
+                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+                 recyclerView.setHasFixedSize(true);
+
+                         mPillSearchListAdapter = new PillSearchListAdapter(getActivity());
+                 recyclerView.setAdapter(mPillSearchListAdapter);
+                 mPillSearchListAdapter.setOnListItemClickListener(new PillSearchListAdapter.OnListItemClickListener() {
+                         @Override
+                         public void onListItemClick(PillSearchItem disease) {
+                 //                Intent intent = new Intent(getActivity(), 이동할 액티비티);
+                         //                startActivity(intent);
+                                                 Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
+                             }
+                     });
+             }
+
 }
