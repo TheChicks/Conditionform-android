@@ -19,7 +19,9 @@ android:
 env:
   # TERM=dumb : For Gradle build output
   - TERM=dumb
+  
 before_install:
+ - echo y | android update sdk -u -a -t android-23
  - chmod +x gradlew
  
 script:
