@@ -182,6 +182,9 @@ public class HomeFragment extends Fragment {
         Toast.makeText(getActivity(), "previous day", Toast.LENGTH_SHORT).show();
 
         currentDayTimestamp = TimeUtils.getYesterdayUnixTimeStamp(currentDayTimestamp);
+        currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
+        currentDisplayMonth =TimeUtils.timestampToMonth(currentDayTimestamp);
+        currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
         tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
 
@@ -194,6 +197,9 @@ public class HomeFragment extends Fragment {
         Toast.makeText(getActivity(), "next day", Toast.LENGTH_SHORT).show();
 
         currentDayTimestamp = TimeUtils.getTomorrowUnixTimeStamp(currentDayTimestamp);
+        currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
+        currentDisplayMonth =TimeUtils.timestampToMonth(currentDayTimestamp);
+        currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
         tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
 
