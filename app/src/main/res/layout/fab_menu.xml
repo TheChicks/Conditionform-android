@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/relative_fab_menu_register_auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_mini"
+        android:visibility="invisible">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_menu_register_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin_mini"
+            android:src="@android:drawable/ic_menu_compass"
+            app:backgroundTint="@color/colorFAB"
+            app:fabSize="mini"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:id="@+id/textView_fab_register_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/fab_menu_register_auto"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@id/fab_menu_register_auto"
+            android:layout_toStartOf="@id/fab_menu_register_auto"
+            android:text="자동 등록"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relative_fab_menu_register_manual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin_mini"
+        android:visibility="invisible">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_menu_register_manual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/fab_margin_mini"
+            android:src="@android:drawable/ic_menu_myplaces"
+            app:backgroundTint="@color/colorFAB"
+            app:fabSize="mini"/>
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:id="@+id/textView_menu_register_manual"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/fab_menu_register_manual"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@id/fab_menu_register_manual"
+            android:layout_toStartOf="@id/fab_menu_register_manual"
+            android:text="직접 등록"/>
+
+    </RelativeLayout>
+</FrameLayout>
