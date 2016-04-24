@@ -1,5 +1,6 @@
 package com.thechicks.conditionform;
 
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,7 +41,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder{
 
     public void bind(AlarmItem alarmItem) {
         //ivPillImg.setImageResource(Integer.parseInt(pillSearchItem.getImage())); // 이미지 URL 경로 문자열
-        tvSkicknessName.setText(alarmItem.getIllness());
-        imIconColor.setBackgroundColor(Integer.parseInt(alarmItem.getColor()));
+        tvSkicknessName.setText(alarmItem.getIllness());                        //  병명 설정
+        imIconColor.setBackgroundColor(Color.parseColor(alarmItem.getColor())); //  컬러 설정
     }
 }
