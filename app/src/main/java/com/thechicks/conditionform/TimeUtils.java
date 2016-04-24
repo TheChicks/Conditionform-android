@@ -165,4 +165,14 @@ public class TimeUtils {
 
         return result;
     }
+
+    // 해당일로부터 after만큼 후의 timestamp를 리턴
+    // ex. 하루 뒤, 2일 뒤
+    public static long getAfterDayUnixTimeStamp(long unixTimestampToday, int after){
+        return unixTimestampToday +  (after * 24 * 60 * 60);
+    }
+
+
+
+
 }
