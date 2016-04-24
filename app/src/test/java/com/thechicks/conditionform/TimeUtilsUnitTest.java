@@ -86,7 +86,7 @@ public class TimeUtilsUnitTest {
     @Test
     public void UnixTimeStampToStringTime_isCorrect() throws Exception {
 
-        String standard = "18 : 33";
+        String standard = "19 : 44";
 
         long today = TimeUtils.getCurrentUnixTimeStamp();
 
@@ -105,5 +105,51 @@ public class TimeUtilsUnitTest {
         long test = TimeUtils.getAfterDayUnixTimeStamp(today, 2);
 
         assertEquals(standard, test);
+    }
+
+    @Test
+    public void getDayTimeStamp_isCorrect() throws Exception {
+
+        long standard = 1461596400L;  // 2016년 4월 26일
+
+        long test = TimeUtils.getDayTimeStamp(2016, 4, 26);
+
+        assertEquals(standard, test);
+    }
+
+    @Test
+    public void timestampToYear_isCorrect() throws Exception {
+
+        long standard = 1461596400L;  // 2016년 4월 26일
+
+        int expected = 2016;
+
+        int test = TimeUtils.timestampToYear(standard);
+
+        assertEquals(expected, test);
+    }
+
+    @Test
+    public void timestampToMonth_isCorrect() throws Exception {
+
+        long standard = 1461596400L;  // 2016년 4월 26일
+
+        int expected = 4;
+
+        int test = TimeUtils.timestampToMonth(standard);
+
+        assertEquals(expected, test);
+    }
+
+    @Test
+    public void timestampToDay_isCorrect() throws Exception {
+
+        long standard = 1461596400L;  // 2016년 4월 26일
+
+        int expected = 26;
+
+        int test = TimeUtils.timestampToDay(standard);
+
+        assertEquals(expected, test);
     }
 }

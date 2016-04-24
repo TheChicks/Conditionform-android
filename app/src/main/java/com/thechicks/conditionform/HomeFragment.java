@@ -1,5 +1,6 @@
 package com.thechicks.conditionform;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,20 +35,11 @@ public class HomeFragment extends Fragment {
 
     public static final String TAG = HomeFragment.class.getSimpleName();
 
-    @Bind(R.id.imageView_date_previous)
-    ImageView ivDatePrevious;
-
-    @Bind(R.id.imageView_date_next)
-    ImageView ivDateNext;
-
     @Bind(R.id.textView_date_toDay)
     TextView tvDateToday;
 
     @Bind(R.id.recyclerView_disease)
     RecyclerView rvDisease;
-
-    @Bind(R.id.fab_menu_open)
-    FloatingActionButton fabMenuOpen;
 
     @Bind(R.id.fab_menu_register_auto)
     FloatingActionButton fabRegisterAuto;
@@ -80,6 +73,12 @@ public class HomeFragment extends Fragment {
     Animation animShrink;
 
     DiseaseListAdapter mDiseaseListAdapter;
+
+    //시간 관리용
+    int currentDisplayYear;
+    int currentDisplayMonth;
+    int currentDisplayDay;
+    long currentDayTimestamp;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -151,7 +150,6 @@ public class HomeFragment extends Fragment {
 
         animationLoad();
         setupToday();
-
     }
 
     private void animationLoad() {
@@ -165,29 +163,63 @@ public class HomeFragment extends Fragment {
 
     public void setupToday() {
         final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH) + 1;
-        int day = c.get(Calendar.DAY_OF_MONTH);
+        currentDayTimestamp = TimeUtils.getTodayUnixTimeStamp();
 
-        tvDateToday.setText(month + "월 " + day + "일");
+        currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
+        currentDisplayMonth =TimeUtils.timestampToMonth(currentDayTimestamp);
+        currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
+
+        Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
+
+        tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+
+        //Todo: 데이터 로드
     }
 
-    //Todo: 이전 날짜로 이동
+    //이전 날짜로 이동
     @OnClick(R.id.imageView_date_previous)
     public void onClickDatePrevious() {
         Toast.makeText(getActivity(), "previous day", Toast.LENGTH_SHORT).show();
+
+        currentDayTimestamp = TimeUtils.getYesterdayUnixTimeStamp(currentDayTimestamp);
+
+        tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+
+        //Todo: 데이터 로드
     }
 
-    //Todo: 다음 날짜로 이동
+    //다음 날짜로 이동
     @OnClick(R.id.imageView_date_next)
     public void onClickDateNext() {
         Toast.makeText(getActivity(), "next day", Toast.LENGTH_SHORT).show();
+
+        currentDayTimestamp = TimeUtils.getTomorrowUnixTimeStamp(currentDayTimestamp);
+
+        tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+
+        //Todo: 데이터 로드
+
     }
 
-    //Todo: DatePicker 표시하고 넘어온 Date로 변화
+    //DatePicker 표시하고 넘어온 Date로 변화
     @OnClick(R.id.textView_date_toDay)
     public void onClickDateToday() {
-        Toast.makeText(getActivity(), "show DatePicker", Toast.LENGTH_SHORT).show();
+               new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                currentDisplayYear = year;
+                currentDisplayMonth = monthOfYear + 1;
+                currentDisplayDay = dayOfMonth;
+
+                Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
+
+                currentDayTimestamp = TimeUtils.getDayTimeStamp(currentDisplayYear, currentDisplayMonth, currentDisplayDay);
+
+                tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+            }
+        }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
+
+        //Todo: 데이터 로드
     }
 
     @OnClick(R.id.fab_menu_open)

@@ -2,9 +2,6 @@ package com.thechicks.conditionform;
 
 import android.util.Log;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,7 +20,6 @@ public class TimeUtils {
 
     //오늘 unixTimeStamp
     public static long getTodayUnixTimeStamp(){
-//        DateTime dateTime = new DateTime(DateTimeZone.getDefault());
         Calendar calendar = Calendar.getInstance();
 
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -172,7 +168,48 @@ public class TimeUtils {
         return unixTimestampToday +  (after * 24 * 60 * 60);
     }
 
+    //원하는 날의 timestamp 리턴
+    public static long getDayTimeStamp(int year, int month, int day){
+        Calendar calendar = Calendar.getInstance();
 
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
 
+        return (calendar.getTimeInMillis() / 1000);
+    }
 
+    //timestamp에서 년 추출
+    public static int timestampToYear(long timeStamp){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeStamp * 1000);
+
+        int year = calendar.get(Calendar.YEAR);
+
+        return year;
+    }
+
+    //timestamp에서 월 추출
+    public static int timestampToMonth(long timeStamp){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeStamp * 1000);
+
+        int month = calendar.get(Calendar.MONTH) + 1;
+
+       return month;
+    }
+
+    //timestamp에서 일 추출
+    public static int timestampToDay(long timeStamp){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timeStamp * 1000);
+
+        int day = calendar.get(Calendar.DATE);
+
+        return day;
+    }
 }
