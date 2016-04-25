@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:id="@+id/item_regist_pill_list">
+    <TextView
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/pill"
+        android:hint="Pill"
+        android:textSize="20dp"/>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/pill_rmbtn"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/remove_button"
+        android:onClick="ClickedRemoveButton"/>
+</LinearLayout>
