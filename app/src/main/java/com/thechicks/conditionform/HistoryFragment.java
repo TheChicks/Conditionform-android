@@ -31,6 +31,8 @@ public class HistoryFragment extends Fragment {
     @Bind(R.id.recyclerView_history)
     RecyclerView rvHistory;
 
+    HistoryListAdapter mHistoryListAdapter;
+
     public HistoryFragment() {
         // Required empty public constructor
     }
@@ -66,6 +68,9 @@ public class HistoryFragment extends Fragment {
 
         rvHistory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         rvHistory.setHasFixedSize(true);
+
+        mHistoryListAdapter = new HistoryListAdapter(getActivity());
+        rvHistory.setAdapter(mHistoryListAdapter);
 
 
 

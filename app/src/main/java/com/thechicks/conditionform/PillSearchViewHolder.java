@@ -12,7 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016-04-11.
+ * Created by opklnm102 on 2016-04-11.
  */
 public class PillSearchViewHolder extends RecyclerView.ViewHolder{
     @Bind(R.id.ivPillImg)

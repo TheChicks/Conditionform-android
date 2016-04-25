@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 /**
- * Created by Administrator on 2016-04-11.
+ * Created by opklnm102 on 2016-04-11.
  */
 public class PillSearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 

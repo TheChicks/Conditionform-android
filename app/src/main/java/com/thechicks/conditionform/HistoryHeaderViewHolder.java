@@ -39,9 +39,9 @@ public class HistoryHeaderViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, mView);
     }
 
-    public void bind(int year, int month) {
+    public void bind(String head) {
 
-        tvDate.setText(year + "년 " + month + "일");
+        tvDate.setText(head);
 
     }
 }

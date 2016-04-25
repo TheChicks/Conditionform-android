@@ -12,6 +12,16 @@ public class HistoryItem {
     long dateStart;  //시작일
     long dateEnd;  //종료일
 
+    //정렬 용도
+    int dateStartYear;
+    int dateStartMonth;
+    int dateStartDay;
+
+    int dateEndYear;
+    int dateEndMonth;
+    int dateEndDay;
+
+    //Todo: 이거 어떻게 할지... 수정 필요
     int type;  //식사, 시간마다. type에 따라 뷰가 바뀐다.
 
     //시간마다.
@@ -19,7 +29,66 @@ public class HistoryItem {
 
     String strDosageType;
 
+    //날짜 분리
+    public void dateSlice() {
+        this.dateStartYear = TimeUtils.timestampToYear(dateStart);
+        this.dateStartMonth = TimeUtils.timestampToMonth(dateStart);
+        this.dateStartDay = TimeUtils.timestampToDay(dateStart);
+
+        this.dateEndYear = TimeUtils.timestampToYear(dateStart);
+        this.dateEndMonth = TimeUtils.timestampToMonth(dateStart);
+        this.dateEndDay = TimeUtils.timestampToDay(dateStart);
+    }
+
     public HistoryItem() {
+    }
+
+    public int getDateStartYear() {
+        return dateStartYear;
+    }
+
+    public void setDateStartYear(int dateStartYear) {
+        this.dateStartYear = dateStartYear;
+    }
+
+    public int getDateStartMonth() {
+        return dateStartMonth;
+    }
+
+    public void setDateStartMonth(int dateStartMonth) {
+        this.dateStartMonth = dateStartMonth;
+    }
+
+    public int getDateStartDay() {
+        return dateStartDay;
+    }
+
+    public void setDateStartDay(int dateStartDay) {
+        this.dateStartDay = dateStartDay;
+    }
+
+    public int getDateEndYear() {
+        return dateEndYear;
+    }
+
+    public void setDateEndYear(int dateEndYear) {
+        this.dateEndYear = dateEndYear;
+    }
+
+    public int getDateEndMonth() {
+        return dateEndMonth;
+    }
+
+    public void setDateEndMonth(int dateEndMonth) {
+        this.dateEndMonth = dateEndMonth;
+    }
+
+    public int getDateEndDay() {
+        return dateEndDay;
+    }
+
+    public void setDateEndDay(int dateEndDay) {
+        this.dateEndDay = dateEndDay;
     }
 
     public String getColor() {
@@ -96,5 +165,7 @@ public class HistoryItem {
         this.type = type;
         this.timeInterval = timeInterval;
         this.strDosageType = strDosageType;
+
+        dateSlice();
     }
 }
