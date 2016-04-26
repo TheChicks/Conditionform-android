@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context mContext;
-    private final ArrayList<AlarmItem> mAlarmItems;
+    private ArrayList<AlarmItem> mAlarmItems;
 
     public AlarmListAdapter(Context context) {
         mContext = context;
@@ -22,8 +22,12 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void initData() {
-        addItem(new AlarmItem("감기", "#FF2C49A3"));
-        addItem(new AlarmItem("혈압", "#FFF4FF22"));
+        for (int i = 0; i < 10; i++) {
+            if (i % 2 == 0)
+                addItem(new AlarmItem("감기", "#FF2C49A3"), i);
+            else
+                addItem(new AlarmItem("혈압", "#FFF4FF22"), i);
+        }
     }
 
     @Override
@@ -34,7 +38,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         AlarmItem alarmItem = mAlarmItems.get(position);
-        ((AlarmViewHolder)holder).bind(alarmItem);
+        ((AlarmViewHolder) holder).bind(alarmItem);
     }
 
     @Override
@@ -42,7 +46,13 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         return mAlarmItems.size();
     }
 
-    public void addItem(AlarmItem alarmItem) {
-        mAlarmItems.add(alarmItem);
+    public void addItem(AlarmItem alarmItem, int position) {
+        mAlarmItems.add(position, alarmItem);
+        notifyItemInserted(position);
+    }
+
+    public void removeItem(int position) {
+        mAlarmItems.remove(position);
+        notifyItemRemoved(position);
     }
 }
