@@ -1,13 +1,17 @@
 package com.thechicks.conditionform;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * 복용 내역 화면
@@ -21,6 +25,11 @@ public class HistoryFragment extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    @Bind(R.id.recyclerView_history)
+    RecyclerView rvHistory;
+
+    HistoryListAdapter mHistoryListAdapter;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -42,13 +51,33 @@ public class HistoryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        Log.d("onCreate ", TAG);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvHistory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rvHistory.setHasFixedSize(true);
+
+        mHistoryListAdapter = new HistoryListAdapter(getActivity());
+        mHistoryListAdapter.setOnListItemClickListener(new HistoryListAdapter.OnListItemClickListener() {
+            @Override
+            public void onListItemClick(HistoryItem historyItem) {
+                //Todo: 복용내역 상세정보로 이동
+//                Intent intent = new Intent(getActivity(), 이동할 액티비티);
+//                startActivity(intent);
+
+                Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
+            }
+        });
+        rvHistory.setAdapter(mHistoryListAdapter);
     }
 }

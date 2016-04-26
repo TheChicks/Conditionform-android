@@ -1,7 +1,6 @@
 package com.thechicks.conditionform;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -17,7 +16,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -130,6 +128,7 @@ public class HomeFragment extends Fragment {
         mDiseaseListAdapter.setOnListItemClickListener(new DiseaseListAdapter.OnListItemClickListener() {
             @Override
             public void onListItemClick(Disease disease) {
+                //Todo: 복용내역 상세정보로 이동
 //                Intent intent = new Intent(getActivity(), 이동할 액티비티);
 //                startActivity(intent);
                 Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
