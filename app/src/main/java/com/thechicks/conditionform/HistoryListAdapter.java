@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 /**
- * Created by Administrator on 2016-04-24.
+ * Created by opklnm102 on 2016-04-24.
  */
 public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -73,37 +73,39 @@ public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private void sortHistoryList(ArrayList<HistoryItem> list) {
         mHistoryItemArrayList = list;
 
-        //Todo: 리펙토링 1순위
         //내림차순 정렬
         Collections.sort(mHistoryItemArrayList, new Comparator<HistoryItem>() {
 
             @Override
             public int compare(HistoryItem lhs, HistoryItem rhs) {
-                int lhsDateStartYear = lhs.getDateStartYear();
-                int rhsDateStartYear = rhs.getDateStartYear();
-                if (lhsDateStartYear > rhsDateStartYear) {
-                    return -1;
-                } else if (lhsDateStartYear == rhsDateStartYear) {
-                    int lhsDateStartMonth = lhs.getDateStartMonth();
-                    int rhsDateStartMonth = rhs.getDateStartMonth();
-                    if (lhsDateStartMonth > rhsDateStartMonth) {
-                        return -1;
-                    } else if (lhsDateStartMonth == rhsDateStartMonth) {
-                        int lhsDateStartDay = lhs.getDateStartDay();
-                        int rhsDateStartDay = rhs.getDateStartDay();
-                        if (lhsDateStartDay > rhsDateStartDay) {
-                            return -1;
-                        } else if (lhsDateStartDay == rhsDateStartDay) {
-                            return 0;
-                        } else {
-                            return 1;
-                        }
-                    } else {
-                        return 1;
-                    }
-                } else {
-                    return 1;
-                }
+//                int lhsDateStartYear = lhs.getDateStartYear();
+//                int rhsDateStartYear = rhs.getDateStartYear();
+//                if (lhsDateStartYear > rhsDateStartYear) {
+//                    return -1;
+//                } else if (lhsDateStartYear == rhsDateStartYear) {
+//                    int lhsDateStartMonth = lhs.getDateStartMonth();
+//                    int rhsDateStartMonth = rhs.getDateStartMonth();
+//                    if (lhsDateStartMonth > rhsDateStartMonth) {
+//                        return -1;
+//                    } else if (lhsDateStartMonth == rhsDateStartMonth) {
+//                        int lhsDateStartDay = lhs.getDateStartDay();
+//                        int rhsDateStartDay = rhs.getDateStartDay();
+//                        if (lhsDateStartDay > rhsDateStartDay) {
+//                            return -1;
+//                        } else if (lhsDateStartDay == rhsDateStartDay) {
+//                            return 0;
+//                        } else {
+//                            return 1;
+//                        }
+//                    } else {
+//                        return 1;
+//                    }
+//                } else {
+//                    return 1;
+//                }
+
+                //축약
+                return (lhs.getDateStart() > rhs.getDateStart()) ? -1 : (lhs.getDateStart() > rhs.getDateStart()) ? 1 : 0;
             }
         });
     }
