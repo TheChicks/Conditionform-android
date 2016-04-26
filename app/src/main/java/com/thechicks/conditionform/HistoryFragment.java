@@ -1,16 +1,14 @@
 package com.thechicks.conditionform;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -70,9 +68,16 @@ public class HistoryFragment extends Fragment {
         rvHistory.setHasFixedSize(true);
 
         mHistoryListAdapter = new HistoryListAdapter(getActivity());
+        mHistoryListAdapter.setOnListItemClickListener(new HistoryListAdapter.OnListItemClickListener() {
+            @Override
+            public void onListItemClick(HistoryItem historyItem) {
+                //Todo: 복용내역 상세정보로 이동
+//                Intent intent = new Intent(getActivity(), 이동할 액티비티);
+//                startActivity(intent);
+
+                Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
+            }
+        });
         rvHistory.setAdapter(mHistoryListAdapter);
-
-
-
     }
 }

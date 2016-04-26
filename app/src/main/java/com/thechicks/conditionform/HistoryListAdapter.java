@@ -104,7 +104,7 @@ public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 //                    return 1;
 //                }
 
-                //축약
+                //개선
                 return (lhs.getDateStart() > rhs.getDateStart()) ? -1 : (lhs.getDateStart() > rhs.getDateStart()) ? 1 : 0;
             }
         });
