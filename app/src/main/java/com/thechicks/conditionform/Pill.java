@@ -7,9 +7,10 @@ public class Pill {
 
     String koName;
     String enName;
-    String image_url;
+    String imageUrl;
 
     String categoryWelfare;  //복지부 분류
+    String classification; //구분
     String manufactureAssort;  //제조,수입 구분
     String assortment;  //제조사
     Integer insuranceCode;  //약품 보험 코드
@@ -29,7 +30,7 @@ public class Pill {
 
     String dosage;  //용법용량
 
-    String precaution;
+    String precaution; //사용상 주의사항
 
     String pregnantRating;  //임산부금기등급
 
@@ -56,12 +57,12 @@ public class Pill {
         this.enName = enName;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getCategoryWelfare() {
@@ -72,6 +73,12 @@ public class Pill {
         this.categoryWelfare = categoryWelfare;
     }
 
+    public void setClassification(String classification) {
+        this.classification = classification;
+    }
+    public String getClassification() {
+        return classification;
+    }
     public String getManufactureAssort() {
         return manufactureAssort;
     }
