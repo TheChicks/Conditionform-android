@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -26,38 +28,39 @@ public class RegistManualActivity extends AppCompatActivity {
     private int mYear, mMonth, mDay;
     private int startYear, startMonth, startDay;
     private int endYear, endMonth, endDay;
+    static int pillIndex = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist_manual);
 
-        final LinearLayout pillInLayout = (LinearLayout)findViewById(R.id.pills);
-        Button addPill = (Button)findViewById(R.id.add_pill);
-        // 약 추가 버튼을 누르면 EditText에 입력한 약이 추가된다.
-        addPill.setOnClickListener(new Button.OnClickListener(){
+        final RecyclerView pillRecyclerView = (RecyclerView)findViewById(R.id.pills);
+        final PillAdapter pillAdapter = new PillAdapter(this);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        pillRecyclerView.setLayoutManager(layoutManager);
+        pillRecyclerView.setAdapter(pillAdapter);
+
+        Button pillAdd = (Button)findViewById(R.id.add_pill);
+        pillAdd.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                LinearLayout itemPill = (LinearLayout)inflater.inflate(R.layout.items_regist_pill_list, null);
                 EditText et = (EditText)findViewById(R.id.edit_pill_name);
-                String pillName = et.getText().toString();
-                TextView tv = (TextView)itemPill.findViewById(R.id.pill);
-                tv.setText(pillName);
-                pillInLayout.addView(itemPill, 0);
+                pillAdapter.addItem(et.getText().toString(), 0);
                 et.setText("");
+                pillIndex++;
             }
         });
-        // 리스트에서 약삭제 구현해야함
-
 
         final Calendar calendar = Calendar.getInstance();
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DATE);
 
-        start = (TextView)findViewById(R.id.start); // 시작일 DatePickerDialog호출
-        start.setOnClickListener(new TextView.OnClickListener(){
+        start = (TextView) findViewById(R.id.start);
+        start.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(DATE_DIALOG_START);
@@ -65,25 +68,26 @@ public class RegistManualActivity extends AppCompatActivity {
             }
         });
 
-        end = (TextView)findViewById(R.id.end);// 종료일 DatePickerDialog호출
-        end.setOnClickListener(new TextView.OnClickListener(){
+        end = (TextView) findViewById(R.id.end);
+        end.setOnClickListener(new TextView.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDialog(DATE_DIALOG_END);
                 updateEndDate();
             }
         });
-        
-
     }
-    private void updateStartDate(){
-        startDate = startYear+"/"+(startMonth+1)+"/"+startDay;
+
+    private void updateStartDate() {
+        startDate = startYear + "/" + (startMonth + 1) + "/" + startDay;
         start.setText(startDate);
     }
-    private void updateEndDate(){
-        endDate = endYear+"/"+(endMonth+1)+"/"+endDay;
+
+    private void updateEndDate() {
+        endDate = endYear + "/" + (endMonth + 1) + "/" + endDay;
         end.setText(endDate);
     }
+
     private DatePickerDialog.OnDateSetListener mDateSetStartListener =
             new DatePickerDialog.OnDateSetListener() {
                 @Override
@@ -107,7 +111,7 @@ public class RegistManualActivity extends AppCompatActivity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
-        switch (id){
+        switch (id) {
             case DATE_DIALOG_START:
                 return new DatePickerDialog(this, mDateSetStartListener, mYear, mMonth, mDay);
             case DATE_DIALOG_END:

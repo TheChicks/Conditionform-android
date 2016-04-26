@@ -34,19 +34,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <EditText
                     android:layout_margin="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Pill name"
                     android:id="@+id/edit_pill_name"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/pills">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/pills"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -74,44 +73,55 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:id="@+id/end" />
             </LinearLayout>
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:entries="@array/interval"
-                android:layout_margin="5dp"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="time add"
-                android:id="@+id/add_time"
-                android:layout_margin="5dp"
-                android:background="@drawable/regist_manual_button"
-                android:onClick="AddTime"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/times">
+                android:orientation="vertical">
+                <Spinner
+                    android:id="@+id/spinner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/interval"
+                    android:layout_margin="5dp"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="time add"
+                    android:id="@+id/add_time"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/regist_manual_button"
+                    android:onClick="AddTime"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/times"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="cancel"
                     android:id="@+id/cancel"
                     android:background="@drawable/regist_manual_confirm_button"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
                 <Button
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="confirm"
                     android:id="@+id/commit"
                     android:background="@drawable/regist_manual_confirm_button"
-                    android:layout_marginLeft="55dp"/>
-            </LinearLayout>
+                    android:layout_marginRight="30dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
