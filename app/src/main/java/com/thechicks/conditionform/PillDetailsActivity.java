@@ -10,6 +10,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class PillDetailsActivity extends AppCompatActivity {
+
     @Bind(R.id.IvPill)
     ImageView ivPill;
 
@@ -74,9 +75,12 @@ public class PillDetailsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
+        //Todo: 데이터 받아서 표시
+
         mToolbar.setTitle("알람등록");
         setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
     }
-
 }

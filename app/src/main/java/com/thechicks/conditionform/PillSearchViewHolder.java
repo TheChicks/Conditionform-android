@@ -15,6 +15,7 @@ import butterknife.ButterKnife;
  * Created by opklnm102 on 2016-04-11.
  */
 public class PillSearchViewHolder extends RecyclerView.ViewHolder{
+
     @Bind(R.id.ivPillImg)
     ImageView ivPillImg;
 
@@ -25,12 +26,14 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
     TextView tvPillNumber;
 
     GradientDrawable gradientDrawable;
+
     View mView;
+
     PillSearchListAdapter.OnListItemClickListener mListener;
 
     public static RecyclerView.ViewHolder newInstance(ViewGroup parent, PillSearchListAdapter.OnListItemClickListener listener) {
-
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_item_cardview, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.search_item_cardview, parent, false);
         return new PillSearchViewHolder(itemView, listener);
     }
 
@@ -39,13 +42,24 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
 
          mView = itemView;
          gradientDrawable = new GradientDrawable();  //border 그리기용
+
          mListener = listener;
+
          ButterKnife.bind(this, mView);
      }
 
-    public void bind(PillSearchItem pillSearchItem) {
+    public void bind(final PillSearchItem pillSearchItem) {
         //ivPillImg.setImageResource(Integer.parseInt(pillSearchItem.getImage())); // 이미지 URL 경로 문자열
         tvPillName.setText(pillSearchItem.getPillName());
         tvPillNumber.setText(Integer.toString(pillSearchItem.getPillNumber()));
+
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null){
+                    mListener.onListItemClick(pillSearchItem);
+                }
+            }
+        });
     }
 }

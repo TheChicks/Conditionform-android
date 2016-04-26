@@ -1,5 +1,6 @@
 package com.thechicks.conditionform;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -61,28 +62,31 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view =  inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
 
-         @Override
-         public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-                 super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-                         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-                 recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setHasFixedSize(true);
 
-                         mPillSearchListAdapter = new PillSearchListAdapter(getActivity());
-                 recyclerView.setAdapter(mPillSearchListAdapter);
-                 mPillSearchListAdapter.setOnListItemClickListener(new PillSearchListAdapter.OnListItemClickListener() {
-                         @Override
-                         public void onListItemClick(PillSearchItem disease) {
-                 //                Intent intent = new Intent(getActivity(), 이동할 액티비티);
-                         //                startActivity(intent);
-                                                 Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
-                             }
-                     });
-             }
+        mPillSearchListAdapter = new PillSearchListAdapter(getActivity());
+        recyclerView.setAdapter(mPillSearchListAdapter);
+        mPillSearchListAdapter.setOnListItemClickListener(new PillSearchListAdapter.OnListItemClickListener() {
+            @Override
+            public void onListItemClick(PillSearchItem pillSearchItem) {
+                Intent intent = new Intent(getActivity(), PillDetailsActivity.class);
+
+                //Todo: 데이터 넘기기
+
+                startActivity(intent);
+
+            }
+        });
+    }
 
 }
