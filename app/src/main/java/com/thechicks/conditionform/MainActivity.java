@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
+    @Bind(R.id.search_edit_widget)
+    SearchEditWidget mSearchEditWidget;
+
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     ActionBarDrawerToggle mActionBarDrawerToggle;
 
     FragmentManager fm;
+
+    boolean isSearchFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +72,19 @@ public class MainActivity extends AppCompatActivity {
             fm.beginTransaction()
                     .add(R.id.container_fragment, homeFragment)
                     .commit();
+
+            isSearchFragment = false;
+            showAndHideSearchEditWidget();
         }
+    }
+
+    private void showAndHideSearchEditWidget(){
+        if(isSearchFragment){
+            mSearchEditWidget.setVisibility(View.VISIBLE);
+        }else {
+            mSearchEditWidget.setVisibility(View.GONE);
+        }
+
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -87,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
+
+        isSearchFragment = false;
 
         //체크되어 있다면 현재화면이므로 바꿀 필요없다.
         if (menuItem.isChecked()) {
@@ -120,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                 if (fragment instanceof SearchFragment) {
                     return;
                 }
+                isSearchFragment = true;
                 newFragment = SearchFragment.newInstance();
                 break;
             case R.id.nav_settings_fragment:
@@ -134,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
             // Insert the fragment by replacing any existing fragment
             fm.beginTransaction().replace(R.id.container_fragment, newFragment).commit();
         }
+
+        showAndHideSearchEditWidget();
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
