@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_search_24dp"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_weight="9"
+        android:id="@+id/textInputLayout_search"
+        android:theme="@style/TextInputLayout_search"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:hint="약품명 또는 약품코드를 입력해주세요."
+            android:id="@+id/editText_search_query"
+            android:singleLine="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/imageView_search_query_clear"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_clear_24dp"/>
+
+</LinearLayout>
