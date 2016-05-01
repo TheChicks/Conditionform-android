@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -48,16 +50,23 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
          ButterKnife.bind(this, mView);
      }
 
-    public void bind(final PillSearchItem pillSearchItem) {
-        //ivPillImg.setImageResource(Integer.parseInt(pillSearchItem.getImage())); // 이미지 URL 경로 문자열
-        tvPillName.setText(pillSearchItem.getPillName());
-        tvPillNumber.setText(Integer.toString(pillSearchItem.getPillNumber()));
+    public void bind(final Pill pill) {
+
+        Glide.with(mView.getContext())
+                .load(pill.getImageUrl())
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher)
+                .crossFade()
+                .into(ivPillImg);
+
+        tvPillName.setText(pill.getKoName());
+        tvPillNumber.setText(pill.getInsuranceCode());
 
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mListener != null){
-                    mListener.onListItemClick(pillSearchItem);
+                    mListener.onListItemClick(pill);
                 }
             }
         });

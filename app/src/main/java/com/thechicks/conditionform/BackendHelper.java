@@ -53,6 +53,6 @@ public class BackendHelper {
     }
 
     public Call<JsonArray> getPillInformationName(String pillName){
-        return service.getPillInformationCode(pillName);
+        return service.getPillInformationName(pillName);
     }
 }

@@ -1,10 +1,13 @@
 package com.thechicks.conditionform;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -75,11 +78,23 @@ public class PillDetailsActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        //Todo: 데이터 받아서 표시
+        // 데이터 받아서 표시
+        Intent intent = getIntent();
 
-        mToolbar.setTitle("알람등록");
+        Pill pill = (Pill)intent.getSerializableExtra("pill");
+
+        mToolbar.setTitle(pill.getKoName());
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+
+        Glide.with(this)
+                .load(pill.getImageUrl())
+                .crossFade()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher)
+                .into(ivPill);
 
 
     }

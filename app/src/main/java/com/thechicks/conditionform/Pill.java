@@ -1,44 +1,102 @@
 package com.thechicks.conditionform;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
+
 /**
- * Created by Dong on 2016-04-09.
+ * Created by opklnm102 on 2016-05-02.
  */
-public class Pill {
+public class Pill implements Serializable {
 
-    String koName;
-    String enName;
-    String imageUrl;
+    private int id;
 
-    String categoryWelfare;  //복지부 분류
-    String classification; //구분
-    String manufactureAssort;  //제조,수입 구분
-    String assortment;  //제조사
-    Integer insuranceCode;  //약품 보험 코드
+    @SerializedName("medi_ko_name")
+    private String koName; // 한글약이름
 
-    //외형정보
-    String shapeInfoAppearance;  //성상
-    String shapeInfoFormulation;  //제형
-    String shapeInfoShape;  //모양
-    String shapeInfoColor;  //색상
-    String shapeInfoIdMark;  //식별 표기
+    @SerializedName("medi_en_name")
+    private String enName; // 영문약이름
 
-    String ingredientInfo;  //성분정보
+    @SerializedName("image_url")
+    private String imageUrl; // 이미지URL
 
-    String storagintMethod;  //저장방법
+    @SerializedName("ingredient")
+    private String ingredient; // 성분명
 
-    String efficacy;  //효능효과
+    @SerializedName("assortment")
+    private String assortment; //전문/일반 //구분
 
-    String dosage;  //용법용량
+    @SerializedName("unitariness_or_complexness")
+    private String unitarinessOrComplexness; // 단일/복합
 
-    String precaution; //사용상 주의사항
+    @SerializedName("manufacture_assortment")
+    private String manufactureAssortment; //제조/수입사
 
-    String pregnantRating;  //임산부금기등급
+    @SerializedName("seller")
+    private String seller;//판매사
 
-    String ageProhibit;  //연령금지
+    @SerializedName("formulation")
+    private String formulation; //제형
 
-    String prescriptionNo;
+    @SerializedName("taking_route")
+    private String takingRoute; // 투여경로
 
-    public Pill() {
+    @SerializedName("welfare_category")
+    private String welfareCategory; //복지부분류
+
+    @SerializedName("insurance_code")
+    private String insuranceCode; //보험코드
+
+
+    @SerializedName("combination_prohibition")
+    private String combinationProhibition; //병용금지
+
+    @SerializedName("age_prohibition")
+    private String ageProhibition; //연령금지
+
+    @SerializedName("pregnant_prohibition")
+    private String pregnantProhibition; //임부금지
+
+    @SerializedName("old_man_caution")
+    private String oldManCaution; //노인주의
+
+    @SerializedName("volume_and_treatment_period_caution")
+    private String volumeAndTreatmentPeriodCaution; //용량/투여기간주의
+
+    @SerializedName("division_caution")
+    private String divisionCaution; //분할주의
+
+    @SerializedName("blood_donation_prohibition")
+    private String bloodDonationProhibition; //헌혈금기
+
+
+    @SerializedName("shape_info")
+    private String shapeInfo; //성상
+
+    @SerializedName("packing_unit")
+    private String packingUnit; //포장단위
+
+    @SerializedName("storagint_method")
+    private String storagintMethod; //저장방법
+
+    @SerializedName("efficacy")
+    private String efficacy; //효능효과
+
+    @SerializedName("dosage")
+    private String dosage; //용법용량
+
+    @SerializedName("precaution")
+    private String precaution; //사용상주의사항
+
+    @SerializedName("medication_guide")
+    private String medicationGuide; //복약지도
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getKoName() {
@@ -65,26 +123,12 @@ public class Pill {
         this.imageUrl = imageUrl;
     }
 
-    public String getCategoryWelfare() {
-        return categoryWelfare;
+    public String getIngredient() {
+        return ingredient;
     }
 
-    public void setCategoryWelfare(String categoryWelfare) {
-        this.categoryWelfare = categoryWelfare;
-    }
-
-    public void setClassification(String classification) {
-        this.classification = classification;
-    }
-    public String getClassification() {
-        return classification;
-    }
-    public String getManufactureAssort() {
-        return manufactureAssort;
-    }
-
-    public void setManufactureAssort(String manufactureAssort) {
-        this.manufactureAssort = manufactureAssort;
+    public void setIngredient(String ingredient) {
+        this.ingredient = ingredient;
     }
 
     public String getAssortment() {
@@ -95,60 +139,132 @@ public class Pill {
         this.assortment = assortment;
     }
 
-    public Integer getInsuranceCode() {
+    public String getUnitarinessOrComplexness() {
+        return unitarinessOrComplexness;
+    }
+
+    public void setUnitarinessOrComplexness(String unitarinessOrComplexness) {
+        this.unitarinessOrComplexness = unitarinessOrComplexness;
+    }
+
+    public String getManufactureAssortment() {
+        return manufactureAssortment;
+    }
+
+    public void setManufactureAssortment(String manufactureAssortment) {
+        this.manufactureAssortment = manufactureAssortment;
+    }
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public String getFormulation() {
+        return formulation;
+    }
+
+    public void setFormulation(String formulation) {
+        this.formulation = formulation;
+    }
+
+    public String getTakingRoute() {
+        return takingRoute;
+    }
+
+    public void setTakingRoute(String takingRoute) {
+        this.takingRoute = takingRoute;
+    }
+
+    public String getWelfareCategory() {
+        return welfareCategory;
+    }
+
+    public void setWelfareCategory(String welfareCategory) {
+        this.welfareCategory = welfareCategory;
+    }
+
+    public String getInsuranceCode() {
         return insuranceCode;
     }
 
-    public void setInsuranceCode(Integer insuranceCode) {
+    public void setInsuranceCode(String insuranceCode) {
         this.insuranceCode = insuranceCode;
     }
 
-    public String getShapeInfoAppearance() {
-        return shapeInfoAppearance;
+    public String getCombinationProhibition() {
+        return combinationProhibition;
     }
 
-    public void setShapeInfoAppearance(String shapeInfoAppearance) {
-        this.shapeInfoAppearance = shapeInfoAppearance;
+    public void setCombinationProhibition(String combinationProhibition) {
+        this.combinationProhibition = combinationProhibition;
     }
 
-    public String getShapeInfoFormulation() {
-        return shapeInfoFormulation;
+    public String getAgeProhibition() {
+        return ageProhibition;
     }
 
-    public void setShapeInfoFormulation(String shapeInfoFormulation) {
-        this.shapeInfoFormulation = shapeInfoFormulation;
+    public void setAgeProhibition(String ageProhibition) {
+        this.ageProhibition = ageProhibition;
     }
 
-    public String getShapeInfoShape() {
-        return shapeInfoShape;
+    public String getPregnantProhibition() {
+        return pregnantProhibition;
     }
 
-    public void setShapeInfoShape(String shapeInfoShape) {
-        this.shapeInfoShape = shapeInfoShape;
+    public void setPregnantProhibition(String pregnantProhibition) {
+        this.pregnantProhibition = pregnantProhibition;
     }
 
-    public String getShapeInfoColor() {
-        return shapeInfoColor;
+    public String getOldManCaution() {
+        return oldManCaution;
     }
 
-    public void setShapeInfoColor(String shapeInfoColor) {
-        this.shapeInfoColor = shapeInfoColor;
+    public void setOldManCaution(String oldManCaution) {
+        this.oldManCaution = oldManCaution;
     }
 
-    public String getShapeInfoIdMark() {
-        return shapeInfoIdMark;
+    public String getVolumeAndTreatmentPeriodCaution() {
+        return volumeAndTreatmentPeriodCaution;
     }
 
-    public void setShapeInfoIdMark(String shapeInfoIdMark) {
-        this.shapeInfoIdMark = shapeInfoIdMark;
+    public void setVolumeAndTreatmentPeriodCaution(String volumeAndTreatmentPeriodCaution) {
+        this.volumeAndTreatmentPeriodCaution = volumeAndTreatmentPeriodCaution;
     }
 
-    public String getIngredientInfo() {
-        return ingredientInfo;
+    public String getDivisionCaution() {
+        return divisionCaution;
     }
 
-    public void setIngredientInfo(String ingredientInfo) {
-        this.ingredientInfo = ingredientInfo;
+    public void setDivisionCaution(String divisionCaution) {
+        this.divisionCaution = divisionCaution;
+    }
+
+    public String getBloodDonationProhibition() {
+        return bloodDonationProhibition;
+    }
+
+    public void setBloodDonationProhibition(String bloodDonationProhibition) {
+        this.bloodDonationProhibition = bloodDonationProhibition;
+    }
+
+    public String getShapeInfo() {
+        return shapeInfo;
+    }
+
+    public void setShapeInfo(String shapeInfo) {
+        this.shapeInfo = shapeInfo;
+    }
+
+    public String getPackingUnit() {
+        return packingUnit;
+    }
+
+    public void setPackingUnit(String packingUnit) {
+        this.packingUnit = packingUnit;
     }
 
     public String getStoragintMethod() {
@@ -183,27 +299,11 @@ public class Pill {
         this.precaution = precaution;
     }
 
-    public String getPregnantRating() {
-        return pregnantRating;
+    public String getMedicationGuide() {
+        return medicationGuide;
     }
 
-    public void setPregnantRating(String pregnantRating) {
-        this.pregnantRating = pregnantRating;
-    }
-
-    public String getAgeProhibit() {
-        return ageProhibit;
-    }
-
-    public void setAgeProhibit(String ageProhibit) {
-        this.ageProhibit = ageProhibit;
-    }
-
-    public String getPrescriptionNo() {
-        return prescriptionNo;
-    }
-
-    public void setPrescriptionNo(String prescriptionNo) {
-        this.prescriptionNo = prescriptionNo;
+    public void setMedicationGuide(String medicationGuide) {
+        this.medicationGuide = medicationGuide;
     }
 }
