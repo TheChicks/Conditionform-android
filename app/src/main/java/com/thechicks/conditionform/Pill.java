@@ -11,10 +11,10 @@ public class Pill implements Serializable {
 
     private int id;
 
-    @SerializedName("medi_ko_name")
+    @SerializedName("ko_name")
     private String koName;  // 한글약이름
 
-    @SerializedName("medi_en_name")
+    @SerializedName("en_name")
     private String enName;  // 영문약이름
 
     @SerializedName("image_url")
@@ -41,21 +41,21 @@ public class Pill implements Serializable {
     @SerializedName("taking_route")
     private String takingRoute;  // 투여경로
 
-    @SerializedName("welfare_category")
-    private String welfareCategory;  // 식약처 분류
+    @SerializedName("korea_food_and_drug_administration_category")
+    private String koreaFoodAndDrugAdministrationCategory;  // 식약처 분류
 
     @SerializedName("insurance_code")
     private String insuranceCode;  //보험코드
 
 
     //의약품 안전성 정보(DUR)
-    @SerializedName("combination_prohibition")
+    @SerializedName("combination_taboo")
     private String combinationTaboo; //병용금기
 
-    @SerializedName("age_prohibition")
+    @SerializedName("age_taboo")
     private String ageTaboo;  //연령금기
 
-    @SerializedName("pregnant_prohibition")
+    @SerializedName("pregnant_taboo")
     private String pregnantTaboo;  //임부금기
 
     @SerializedName("old_man_caution")
@@ -180,12 +180,12 @@ public class Pill implements Serializable {
         this.takingRoute = takingRoute;
     }
 
-    public String getWelfareCategory() {
-        return welfareCategory;
+    public String getKoreaFoodAndDrugAdministrationCategory() {
+        return koreaFoodAndDrugAdministrationCategory;
     }
 
-    public void setWelfareCategory(String welfareCategory) {
-        this.welfareCategory = welfareCategory;
+    public void setKoreaFoodAndDrugAdministrationCategory(String koreaFoodAndDrugAdministrationCategory) {
+        this.koreaFoodAndDrugAdministrationCategory = koreaFoodAndDrugAdministrationCategory;
     }
 
     public String getInsuranceCode() {

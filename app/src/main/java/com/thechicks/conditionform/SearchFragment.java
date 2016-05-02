@@ -110,7 +110,7 @@ public class SearchFragment extends Fragment {
 
     public void getPillInformationName(){
 
-        Call<JsonArray> call = sBackendHelper.getPillInformationName("타이레놀");
+        Call<JsonArray> call = sBackendHelper.getPillInformation("타이레놀");
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {

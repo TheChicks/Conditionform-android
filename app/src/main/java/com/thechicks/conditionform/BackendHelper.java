@@ -48,11 +48,9 @@ public class BackendHelper {
         service = retrofit.create(BackendService.class);
     }
 
-    public Call<JsonArray> getPillInformationCode(String pillCode){
-        return service.getPillInformationCode(pillCode);
+    public Call<JsonArray> getPillInformation(String searchWord){
+        return service.getPillInformation(searchWord);
     }
 
-    public Call<JsonArray> getPillInformationName(String pillName){
-        return service.getPillInformationName(pillName);
-    }
+
 }

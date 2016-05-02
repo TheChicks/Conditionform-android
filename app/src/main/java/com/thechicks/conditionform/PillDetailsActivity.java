@@ -47,8 +47,8 @@ public class PillDetailsActivity extends AppCompatActivity {
     @Bind(R.id.textView_takingRoute)
     TextView tvTakingRoute;   //투여경로
 
-    @Bind(R.id.textView_welfareCategory)
-    TextView tvWelfareCategory;   //식약처 분류
+    @Bind(R.id.textView_koreaFoodAndDrugAdministrationCategory)
+    TextView tvKoreaFoodAndDrugAdministrationCategory;   //식약처 분류
 
     @Bind(R.id.textView_insuranceCode)
     TextView tvIinsuranceCode;   //보험코드
@@ -132,7 +132,7 @@ public class PillDetailsActivity extends AppCompatActivity {
         tvSeller.setText(pill.getSeller());
         tvFormulation.setText(pill.getFormulation());
         tvTakingRoute.setText(pill.getTakingRoute());
-        tvWelfareCategory.setText(pill.getWelfareCategory());
+        tvKoreaFoodAndDrugAdministrationCategory.setText(pill.getKoreaFoodAndDrugAdministrationCategory());
         tvIinsuranceCode.setText(pill.getInsuranceCode());
         tvCombinationTaboo.setText(pill.getCombinationTaboo());
         tvAgeTaboo.setText(pill.getAgeTaboo());
