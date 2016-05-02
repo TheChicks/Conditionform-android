@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="pillName"
-            android:id="@+id/tvPillName"
+            android:id="@+id/textView_pill_name"
             android:layout_gravity="top|center_horizontal"
             android:layout_weight="0.79"
             android:textSize="20sp"

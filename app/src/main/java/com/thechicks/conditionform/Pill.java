@@ -12,84 +12,85 @@ public class Pill implements Serializable {
     private int id;
 
     @SerializedName("medi_ko_name")
-    private String koName; // 한글약이름
+    private String koName;  // 한글약이름
 
     @SerializedName("medi_en_name")
-    private String enName; // 영문약이름
+    private String enName;  // 영문약이름
 
     @SerializedName("image_url")
-    private String imageUrl; // 이미지URL
+    private String imageUrl;  // 이미지URL
 
     @SerializedName("ingredient")
-    private String ingredient; // 성분명
+    private String ingredient;  // 성분명
 
     @SerializedName("assortment")
-    private String assortment; //전문/일반 //구분
+    private String assortment;  //전문/일반 //구분
 
     @SerializedName("unitariness_or_complexness")
-    private String unitarinessOrComplexness; // 단일/복합
+    private String unitarinessOrComplexness;  // 단일/복합
 
     @SerializedName("manufacture_assortment")
-    private String manufactureAssortment; //제조/수입사
+    private String manufactureAssortment;  // 제조/수입사
 
     @SerializedName("seller")
-    private String seller;//판매사
+    private String seller;  //판매사
 
     @SerializedName("formulation")
-    private String formulation; //제형
+    private String formulation;  //제형
 
     @SerializedName("taking_route")
-    private String takingRoute; // 투여경로
+    private String takingRoute;  // 투여경로
 
     @SerializedName("welfare_category")
-    private String welfareCategory; //복지부분류
+    private String welfareCategory;  // 식약처 분류
 
     @SerializedName("insurance_code")
-    private String insuranceCode; //보험코드
+    private String insuranceCode;  //보험코드
 
 
+    //의약품 안전성 정보(DUR)
     @SerializedName("combination_prohibition")
-    private String combinationProhibition; //병용금지
+    private String combinationTaboo; //병용금기
 
     @SerializedName("age_prohibition")
-    private String ageProhibition; //연령금지
+    private String ageTaboo;  //연령금기
 
     @SerializedName("pregnant_prohibition")
-    private String pregnantProhibition; //임부금지
+    private String pregnantTaboo;  //임부금기
 
     @SerializedName("old_man_caution")
-    private String oldManCaution; //노인주의
+    private String oldManCaution;  //노인주의
 
     @SerializedName("volume_and_treatment_period_caution")
-    private String volumeAndTreatmentPeriodCaution; //용량/투여기간주의
+    private String volumeAndTreatmentPeriodCaution;  //용량/투여기간주의
 
     @SerializedName("division_caution")
-    private String divisionCaution; //분할주의
+    private String divisionCaution;  //분할주의
 
     @SerializedName("blood_donation_prohibition")
-    private String bloodDonationProhibition; //헌혈금기
+    private String bloodDonationProhibition;  //헌혈금지
 
 
     @SerializedName("shape_info")
-    private String shapeInfo; //성상
+    private String shapeInfo;  //성상
 
     @SerializedName("packing_unit")
-    private String packingUnit; //포장단위
+    private String packingUnit;  //포장단위
 
     @SerializedName("storagint_method")
-    private String storagintMethod; //저장방법
+    private String storagintMethod;  //저장방법
 
     @SerializedName("efficacy")
-    private String efficacy; //효능효과
+    private String efficacy;  //효능효과
 
     @SerializedName("dosage")
-    private String dosage; //용법용량
+    private String dosage;  //용법용량
 
     @SerializedName("precaution")
-    private String precaution; //사용상주의사항
+    private String precaution;  //사용상 주의사항
 
     @SerializedName("medication_guide")
-    private String medicationGuide; //복약지도
+    private String medicationGuide;  //복약지도
 
     public int getId() {
         return id;
@@ -195,28 +196,28 @@ public class Pill implements Serializable {
         this.insuranceCode = insuranceCode;
     }
 
-    public String getCombinationProhibition() {
-        return combinationProhibition;
+    public String getCombinationTaboo() {
+        return combinationTaboo;
     }
 
-    public void setCombinationProhibition(String combinationProhibition) {
-        this.combinationProhibition = combinationProhibition;
+    public void setCombinationTaboo(String combinationTaboo) {
+        this.combinationTaboo = combinationTaboo;
     }
 
-    public String getAgeProhibition() {
-        return ageProhibition;
+    public String getAgeTaboo() {
+        return ageTaboo;
     }
 
-    public void setAgeProhibition(String ageProhibition) {
-        this.ageProhibition = ageProhibition;
+    public void setAgeTaboo(String ageTaboo) {
+        this.ageTaboo = ageTaboo;
     }
 
-    public String getPregnantProhibition() {
-        return pregnantProhibition;
+    public String getPregnantTaboo() {
+        return pregnantTaboo;
     }
 
-    public void setPregnantProhibition(String pregnantProhibition) {
-        this.pregnantProhibition = pregnantProhibition;
+    public void setPregnantTaboo(String pregnantTaboo) {
+        this.pregnantTaboo = pregnantTaboo;
     }
 
     public String getOldManCaution() {

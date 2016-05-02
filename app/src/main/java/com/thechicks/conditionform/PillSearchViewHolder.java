@@ -21,7 +21,7 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
     @Bind(R.id.ivPillImg)
     ImageView ivPillImg;
 
-    @Bind(R.id.tvPillName)
+    @Bind(R.id.textView_pill_name)
     TextView tvPillName;
 
     @Bind(R.id.tvPillNumber)
