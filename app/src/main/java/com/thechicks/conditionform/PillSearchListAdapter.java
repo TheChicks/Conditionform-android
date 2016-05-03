@@ -12,12 +12,13 @@ import java.util.ArrayList;
 public class PillSearchListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private final Context mContext;
-    private final ArrayList<PillSearchItem> mPillSearchItemList;
+    private ArrayList<Pill> mPillArrayList;
 
     //item click event
     private OnListItemClickListener mOnListItemClickListener;
+
     public interface OnListItemClickListener{
-        void onListItemClick(PillSearchItem pillSearchItem);
+        void onListItemClick(Pill pill);
     }
 
     public void setOnListItemClickListener(OnListItemClickListener listener){
@@ -26,22 +27,8 @@ public class PillSearchListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public PillSearchListAdapter(Context context) {
         mContext = context;
-        mPillSearchItemList = new ArrayList<>();
-
-        initData();
+        mPillArrayList = new ArrayList<>();
     }
-
-    public void initData() {
-        for (int i = 0; i < 10; i++) {
-            addItem(new PillSearchItem("URL", "아스피린 정 50mg", 123456789));
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return mPillSearchItemList.get(position).getPillNumber();
-    }
-
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,17 +37,28 @@ public class PillSearchListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        PillSearchItem pillSearchItem = mPillSearchItemList.get(position);
-        ((PillSearchViewHolder)holder).bind(pillSearchItem);
+        Pill pill = mPillArrayList.get(position);
+        ((PillSearchViewHolder)holder).bind(pill);
     }
 
     @Override
     public int getItemCount() {
-        return mPillSearchItemList.size();
+        return mPillArrayList.size();
     }
 
-    public void addItem(PillSearchItem pillSearchItem) {
-        mPillSearchItemList.add(pillSearchItem);
+    public void addItem(Pill pill, int position) {
+        mPillArrayList.add(position, pill);
+        notifyItemInserted(position);
+    }
+
+    public void removeItem(int position) {
+        mPillArrayList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void setData(ArrayList<Pill> data){
+        mPillArrayList = data;
+        notifyDataSetChanged();
     }
 
 }

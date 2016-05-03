@@ -10,10 +10,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 검색 화면
@@ -26,6 +33,8 @@ public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
 
     PillSearchListAdapter mPillSearchListAdapter;
+
+    protected static BackendHelper sBackendHelper;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -55,6 +64,10 @@ public class SearchFragment extends Fragment {
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+        if (sBackendHelper == null){
+            sBackendHelper = BackendHelper.getInstance();
+        }
+
         Log.d("onCreate ", TAG);
     }
 
@@ -78,15 +91,56 @@ public class SearchFragment extends Fragment {
         recyclerView.setAdapter(mPillSearchListAdapter);
         mPillSearchListAdapter.setOnListItemClickListener(new PillSearchListAdapter.OnListItemClickListener() {
             @Override
-            public void onListItemClick(PillSearchItem pillSearchItem) {
+            public void onListItemClick(Pill pill) {
                 Intent intent = new Intent(getActivity(), PillDetailsActivity.class);
 
-                //Todo: 데이터 넘기기
+                // 데이터 넘기기
+                intent.putExtra("pill", pill);
 
                 startActivity(intent);
-
             }
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPillInformationName();
+    }
+
+    public void getPillInformationName(){
+
+        Call<JsonArray> call = sBackendHelper.getPillInformation("타이레놀");
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+
+                JsonArray jaRoot = response.body();
+
+                Log.e(TAG, " onResponse()");
+
+                if(jaRoot != null){
+
+                    Log.e(TAG, " " + jaRoot);
+
+                    ArrayList<Pill> pillArrayList = new ArrayList<Pill>();
+
+                    for (int i=0; i<jaRoot.size(); i++){
+                        Pill pill = new Gson().fromJson(jaRoot.get(i), Pill.class);
+                        pillArrayList.add(pill);
+                    }
+
+                    mPillSearchListAdapter.setData(pillArrayList);
+
+                }else {
+                    Log.e(TAG, "jaRoot null");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                Log.e(TAG, " Throwable is " + t);
+            }
+        });
+    }
 }
