@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -84,7 +86,6 @@ public class MainActivity extends AppCompatActivity {
         }else {
             mSearchEditWidget.setVisibility(View.GONE);
         }
-
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

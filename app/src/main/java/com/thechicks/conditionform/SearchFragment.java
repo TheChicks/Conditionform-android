@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -103,14 +106,21 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        getPillInformationName();
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
-    public void getPillInformationName(){
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
 
-        Call<JsonArray> call = sBackendHelper.getPillInformation("타이레놀");
+    @Subscribe
+    public void getPillInformationName(PillSearchEvent event){
+
+        Call<JsonArray> call = sBackendHelper.getPillInformation(event.word);
         call.enqueue(new Callback<JsonArray>() {
             @Override
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {

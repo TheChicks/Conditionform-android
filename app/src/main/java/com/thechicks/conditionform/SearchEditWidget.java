@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by opklnm102 on 2016-04-29.
  */
@@ -36,7 +38,7 @@ public class SearchEditWidget extends LinearLayout {
         init();
     }
 
-    private void init() {
+    public void init() {
         LayoutInflater.from(getContext()).inflate(R.layout.widget_search_edit, this, true);
 
         ivClear = (ImageView) findViewById(R.id.imageView_search_query_clear);
@@ -53,6 +55,7 @@ public class SearchEditWidget extends LinearLayout {
                     ivClear.setVisibility(INVISIBLE);
                 }else {
                     ivClear.setVisibility(VISIBLE);
+                    EventBus.getDefault().post(new PillSearchEvent(etSearch.getText().toString()));
                 }
             }
 
@@ -66,8 +69,10 @@ public class SearchEditWidget extends LinearLayout {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH){
 
-                    //Todo: 검색 api 호출
+                    //검색 api 호출
+                    EventBus.getDefault().post(new PillSearchEvent(etSearch.getText().toString()));
 
+                    etSearch.setText(null);
                     return true;
                 }
                 return false;
