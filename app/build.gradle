@@ -49,4 +49,6 @@ dependencies {
     def glideVersion = '3.7.0'
     compile "com.github.bumptech.glide:glide:$glideVersion"
 
+    def eventBusVersion = '3.0.0'
+    compile "org.greenrobot:eventbus:$eventBusVersion"
 }
