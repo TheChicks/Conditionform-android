@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application
         android:allowBackup="true"
@@ -39,8 +40,21 @@
         <service
             android:name=".AlarmService"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
         </service>
+
+        <!-- enabled="true" 시스템이 알아서 실행
+             exported="false" 외부앱이 사용 불가
+        -->
+        <receiver
+            android:name=".AlarmInitReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+
+        </receiver>
     </application>
 
 </manifest>
