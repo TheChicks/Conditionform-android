@@ -18,7 +18,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
 
     /**
      * Sets Alarm on ACTION_BOOT_COMPLETED.
-     * Resets alarm on TIME_SET, TIMEZONE_CHANGED
+     * Todo: Resets alarm on TIME_SET, TIMEZONE_CHANGED
      */
     @Override
 
@@ -26,26 +26,27 @@ public class AlarmInitReceiver extends BroadcastReceiver {
 
         Log.d(TAG, " onReceive()");
 
-        final String action = intent.getAction();
-
-        PendingResult result = goAsync();  //Broadcast Receiver에서 background작업을 할 수 있게
-
-        //Alarm 초기화가 끝날 때까지 CPU가 잠들지않게 잠금
-        final PowerManager.WakeLock wakeLock = AlarmAlertWakeLock.createPartialWakeLock(context);
-        wakeLock.acquire();
-
-        if(action.equals(Intent.ACTION_BOOT_COMPLETED)){
-
-            //Update all the alarm instances on time change event
+        Intent serviceIntent = new Intent(context, AlarmInitService.class);
+        context.startService(serviceIntent);
 
 
-
-            result.finish();
-            wakeLock.release();
-        }
-
-
-
+//        final String action = intent.getAction();
+//
+//        PendingResult result = goAsync();  //Broadcast Receiver에서 background작업을 할 수 있게
+//
+//        //Alarm 초기화가 끝날 때까지 CPU가 잠들지않게 잠금
+//        final PowerManager.WakeLock wakeLock = AlarmAlertWakeLock.createPartialWakeLock(context);
+//        wakeLock.acquire();
+//
+//        if(action.equals(Intent.ACTION_BOOT_COMPLETED)){
+//
+//            //Update all the alarm instances on time change event
+//
+//
+//
+//            result.finish();
+//            wakeLock.release();
+//        }
 
 
     }

@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container_fragment, homeFragment)
                     .commit();
         }
+
+        //Alarm Test
+//        AlarmAlertBroadcastReceiver.registerNextAlarmWithAlarmManager(MainActivity.this, null);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

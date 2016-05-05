@@ -3,7 +3,7 @@ package com.thechicks.conditionform;
 import android.net.Uri;
 
 /**
- * Created by Administrator on 2016-04-28.
+ * Created by opklnm102 on 2016-04-28.
  */
 public class AlarmInstance {
 
