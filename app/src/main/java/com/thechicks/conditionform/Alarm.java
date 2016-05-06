@@ -59,7 +59,7 @@ public class Alarm implements Serializable {
 
 
     public Alarm() {
-        this(0, 0);
+//        this(0, 0);
     }
 
     public Alarm(int hour, int minutes) {

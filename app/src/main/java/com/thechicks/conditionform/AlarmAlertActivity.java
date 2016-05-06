@@ -63,7 +63,6 @@ public class AlarmAlertActivity extends AppCompatActivity {
                         AlarmKlaxon.start(AlarmAlertActivity.this, null, false);
                         break;
                 }
-
                 super.onCallStateChanged(state, incomingNumber);
             }
         };

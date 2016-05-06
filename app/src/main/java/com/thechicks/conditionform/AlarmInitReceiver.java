@@ -11,7 +11,7 @@ public class AlarmInitReceiver extends BroadcastReceiver {
 
     public static final String TAG = AlarmInitReceiver.class.getSimpleName();
 
-    private static final String PERF_VOLUME_DEF_DONE = "vol_def_done";
+//    private static final String PERF_VOLUME_DEF_DONE = "vol_def_done";
 
     public AlarmInitReceiver() {
     }
