@@ -212,4 +212,36 @@ public class TimeUtils {
 
         return day;
     }
+
+    public static int timestampToHour(long timestamp){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp * 1000);
+
+        calendar.set(Calendar.YEAR, 0);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        return hour;
+    }
+
+    public static int timestampToMinute(long timestamp){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(timestamp * 1000);
+
+        calendar.set(Calendar.YEAR, 0);
+        calendar.set(Calendar.MONTH, 0);
+        calendar.set(Calendar.DAY_OF_MONTH, 0);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        int minute = calendar.get(Calendar.MINUTE);
+
+        return minute;
+    }
 }
