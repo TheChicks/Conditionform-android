@@ -39,7 +39,7 @@
         android:textStyle="normal|bold"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_alarm_item"
+        android:id="@+id/recyclerView_alarm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/imageView6"

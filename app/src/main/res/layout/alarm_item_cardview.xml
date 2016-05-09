@@ -7,13 +7,13 @@
     android:paddingBottom="5dp"
     android:paddingTop="5dp">
 
-        <ImageView
-            android:background="@drawable/circle_label_background"
-            android:id="@+id/imageView_label"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:src="@android:drawable/arrow_up_float"/>
+    <ImageView
+        android:id="@+id/imageView_label"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle_label_background"
+        android:src="@android:drawable/arrow_up_float"/>
 
 
     <TextView

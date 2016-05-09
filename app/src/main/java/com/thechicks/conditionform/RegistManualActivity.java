@@ -1,122 +1,195 @@
 package com.thechicks.conditionform;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2016-04-25.
  */
 public class RegistManualActivity extends AppCompatActivity {
-    static final int DATE_DIALOG_START = 1;
-    static final int DATE_DIALOG_END = 2;
-    String startDate, endDate;
-    TextView start, end;
-    private int mYear, mMonth, mDay;
-    private int startYear, startMonth, startDay;
-    private int endYear, endMonth, endDay;
-    static int pillIndex = 0;
+
+    public static final String TAG = RegistManualActivity.class.getSimpleName();
+
+    @Bind(R.id.textView_date_start)
+    TextView tvDateStart;
+
+    @Bind(R.id.textView_date_end)
+    TextView tvDateEnd;
+
+    @Bind(R.id.recyclerView_pill)
+    RecyclerView rvPill;
+
+    @Bind(R.id.recyclerView_time)
+    RecyclerView rvTime;
+
+    @Bind(R.id.editText_pill_name)
+    EditText etPillName;
+
+    @Bind(R.id.spinner_dosage_type)
+    Spinner spinnerDosageType;
+
+    RegistManualPillAdapter mRegistManualPillAdapter;
+    RegistManualTimeAdapter mRegistManualTimeAdapter;
+
+    ArrayAdapter<CharSequence> spinnerAdapter;
+
+    boolean mInitSpinner;
+
+
+    //시간 관리용
+    int currentDisplayYear;
+    int currentDisplayMonth;
+    int currentDisplayDay;
+    long currentDayTimestamp;
+
+    //시작 날짜
+    int startYear;
+    int startMonth;
+    int startDay;
+    long startDateTimestamp;
+
+    //끝 날짜
+    int endYear;
+    int endMonth;
+    int endDay;
+    long endDateTimestamp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regist_manual);
+        ButterKnife.bind(this);
 
-        final RecyclerView pillRecyclerView = (RecyclerView)findViewById(R.id.pills);
-        final PillAdapter pillAdapter = new PillAdapter(this);
+        mRegistManualPillAdapter = new RegistManualPillAdapter(this);
+        rvPill.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvPill.setAdapter(mRegistManualPillAdapter);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        pillRecyclerView.setLayoutManager(layoutManager);
-        pillRecyclerView.setAdapter(pillAdapter);
+        setupToday();
 
-        Button pillAdd = (Button)findViewById(R.id.add_pill);
-        pillAdd.setOnClickListener(new Button.OnClickListener(){
+        spinnerDosageType.setPrompt("복용 타입을 선택해주세요.");
+        spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.dosage_type,
+                android.R.layout.simple_spinner_item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDosageType.setAdapter(spinnerAdapter);
+
+        spinnerDosageType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                EditText et = (EditText)findViewById(R.id.edit_pill_name);
-                pillAdapter.addItem(et.getText().toString(), 0);
-                et.setText("");
-                pillIndex++;
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(mInitSpinner == false){
+                    mInitSpinner = true;
+                    return;
+                }
+                Toast.makeText(RegistManualActivity.this, spinnerAdapter.getItem(position) + "fd", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
 
+        mRegistManualTimeAdapter = new RegistManualTimeAdapter(this);
+        rvTime.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rvTime.setAdapter(mRegistManualTimeAdapter);
+
+        Log.e(TAG, " " +  TimeUtils.getCurrentUnixTimeStamp() );
+    }
+
+    public void setupToday() {
         final Calendar calendar = Calendar.getInstance();
-        mYear = calendar.get(Calendar.YEAR);
-        mMonth = calendar.get(Calendar.MONTH);
-        mDay = calendar.get(Calendar.DATE);
+        currentDayTimestamp = TimeUtils.getTodayUnixTimeStamp();
 
-        start = (TextView) findViewById(R.id.start);
-        start.setOnClickListener(new TextView.OnClickListener() {
+        currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
+        currentDisplayMonth = TimeUtils.timestampToMonth(currentDayTimestamp);
+        currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
+
+        Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
+    }
+
+    @OnClick(R.id.button_pill_add)
+    public void onClickPillAdd() {
+        Pill pill = new Pill();
+        pill.setKoName(etPillName.getText().toString());
+
+        mRegistManualPillAdapter.addItem(pill, 0);
+        etPillName.setText("");
+    }
+
+    @OnClick(R.id.button_time_add)
+    public void onClickTimeAdd(){
+        TimeItem timeItem = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
+
+        mRegistManualTimeAdapter.addItem(timeItem, 0);
+    }
+
+    @OnClick(R.id.textView_date_start)
+    public void onClickDateStart() {
+
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                showDialog(DATE_DIALOG_START);
-                updateStartDate();
-            }
-        });
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                startYear = year;
+                startMonth = monthOfYear + 1;
+                startDay = dayOfMonth;
 
-        end = (TextView) findViewById(R.id.end);
-        end.setOnClickListener(new TextView.OnClickListener() {
+                Log.e(TAG, startYear + "년 " + startMonth + "월 " + startDay + "일");
+
+                startDateTimestamp = TimeUtils.getDayTimeStamp(startYear, startMonth, startDay);
+                tvDateStart.setText(TimeUtils.UnixTimeStampToStringDateYearMonthDay(startDateTimestamp));
+            }
+        }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
+    }
+
+    @OnClick(R.id.textView_date_end)
+    public void onClickDateEnd() {
+
+        new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(View v) {
-                showDialog(DATE_DIALOG_END);
-                updateEndDate();
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                endYear = year;
+                endMonth = monthOfYear + 1;
+                endDay = dayOfMonth;
+
+                Log.e(TAG, endYear + "년 " + endMonth + "월 " + endDay + "일");
+
+                endDateTimestamp = TimeUtils.getDayTimeStamp(endYear, endMonth, endDay);
+                Log.e(TAG, " " + endDateTimestamp);
+                tvDateEnd.setText(TimeUtils.UnixTimeStampToStringDateYearMonthDay(endDateTimestamp));
             }
-        });
+        }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
     }
 
-    private void updateStartDate() {
-        startDate = startYear + "/" + (startMonth + 1) + "/" + startDay;
-        start.setText(startDate);
+    @OnClick(R.id.button_cancel)
+    public void onClickCancel() {
+        finish();
     }
 
-    private void updateEndDate() {
-        endDate = endYear + "/" + (endMonth + 1) + "/" + endDay;
-        end.setText(endDate);
-    }
+    @OnClick(R.id.button_confirm)
+    public void onClickConfirm() {
+        //Todo: 모델객체에 저장하고 DB에 저장
 
-    private DatePickerDialog.OnDateSetListener mDateSetStartListener =
-            new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    startYear = year;
-                    startMonth = monthOfYear;
-                    startDay = dayOfMonth;
-                    updateStartDate();
-                }
-            };
-    private DatePickerDialog.OnDateSetListener mDateSetEndListener =
-            new DatePickerDialog.OnDateSetListener() {
-                @Override
-                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    endYear = year;
-                    endMonth = monthOfYear;
-                    endDay = dayOfMonth;
-                    updateEndDate();
-                }
-            };
+    }
 
     @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_DIALOG_START:
-                return new DatePickerDialog(this, mDateSetStartListener, mYear, mMonth, mDay);
-            case DATE_DIALOG_END:
-                return new DatePickerDialog(this, mDateSetEndListener, mYear, mMonth, mDay);
-        }
-        return null;
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

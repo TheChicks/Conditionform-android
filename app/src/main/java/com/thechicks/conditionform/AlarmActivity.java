@@ -9,10 +9,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AlarmActivity extends AppCompatActivity {
+
     AlarmListAdapter mAlarmListAdapter;
 
-    @Bind(R.id.recyclerview_alarm_item)
-    RecyclerView recyclerview_alarm_item;
+    @Bind(R.id.recyclerView_alarm)
+    RecyclerView rvAlarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,10 @@ public class AlarmActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        recyclerview_alarm_item.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerview_alarm_item.setHasFixedSize(true);
+        rvAlarm.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        rvAlarm.setHasFixedSize(true);
 
         mAlarmListAdapter = new AlarmListAdapter(getApplicationContext());
-        recyclerview_alarm_item.setAdapter(mAlarmListAdapter);
+        rvAlarm.setAdapter(mAlarmListAdapter);
     }
 }

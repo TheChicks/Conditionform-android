@@ -20,4 +20,12 @@
 
     <string name="title_activity_alarm">AlarmActivity</string>
 
+    <string-array name="dosage_type">
+        <item id="everyDay">매일</item>
+        <item id="2Day">2일</item>
+        <item id="3Day">3일</item>
+        <item id="week">요일</item>
+        <item id="everyTime">시간마다</item>
+    </string-array>
+
 </resources>

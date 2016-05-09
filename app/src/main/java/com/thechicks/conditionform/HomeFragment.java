@@ -1,6 +1,7 @@
 package com.thechicks.conditionform;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -165,7 +166,7 @@ public class HomeFragment extends Fragment {
         currentDayTimestamp = TimeUtils.getTodayUnixTimeStamp();
 
         currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
-        currentDisplayMonth =TimeUtils.timestampToMonth(currentDayTimestamp);
+        currentDisplayMonth = TimeUtils.timestampToMonth(currentDayTimestamp);
         currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
         Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
@@ -182,7 +183,7 @@ public class HomeFragment extends Fragment {
 
         currentDayTimestamp = TimeUtils.getYesterdayUnixTimeStamp(currentDayTimestamp);
         currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
-        currentDisplayMonth =TimeUtils.timestampToMonth(currentDayTimestamp);
+        currentDisplayMonth = TimeUtils.timestampToMonth(currentDayTimestamp);
         currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
         tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
@@ -197,7 +198,7 @@ public class HomeFragment extends Fragment {
 
         currentDayTimestamp = TimeUtils.getTomorrowUnixTimeStamp(currentDayTimestamp);
         currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
-        currentDisplayMonth =TimeUtils.timestampToMonth(currentDayTimestamp);
+        currentDisplayMonth = TimeUtils.timestampToMonth(currentDayTimestamp);
         currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
         tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
@@ -209,7 +210,7 @@ public class HomeFragment extends Fragment {
     //DatePicker 표시하고 넘어온 Date로 변화
     @OnClick(R.id.textView_date_toDay)
     public void onClickDateToday() {
-               new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+        new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 currentDisplayYear = year;
@@ -276,10 +277,11 @@ public class HomeFragment extends Fragment {
         Toast.makeText(getActivity(), "fabRegisterAuto", Toast.LENGTH_LONG).show();
     }
 
-    //Todo: 직접 등록 화면으로 연결
+    //직접 등록 화면으로 연결
     @OnClick(R.id.fab_menu_register_manual)
     public void onClickFabMenuRegisterManual() {
-        Toast.makeText(getActivity(), "fabRegisterManual", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(getActivity(), RegistManualActivity.class);
+        startActivity(intent);
     }
 
     private void expandFab() {
