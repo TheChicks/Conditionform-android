@@ -15,7 +15,6 @@ public class Disease {
 
     String color;  //#ffffff
     int img;
-
     String name;
 
     ArrayList<Pill> mPillArrayList;
@@ -39,11 +38,30 @@ public class Disease {
     boolean sleep;
 
     //type: 시간마다. 얼마나 먹었는지 표시
+    int timeStartHour;
+    int timeStartMinute;
     int timeInterval;
     int dosageCurrnt;
     int dosageTotal;
 
     ArrayList<TimeItem> mTimeItems;
+
+
+    public int getTimeStartHour() {
+        return timeStartHour;
+    }
+
+    public void setTimeStartHour(int timeStartHour) {
+        this.timeStartHour = timeStartHour;
+    }
+
+    public int getTimeStartMinute() {
+        return timeStartMinute;
+    }
+
+    public void setTimeStartMinute(int timeStartMinute) {
+        this.timeStartMinute = timeStartMinute;
+    }
 
     public String getColor() {
         return color;
@@ -220,5 +238,32 @@ public class Disease {
     }
 
     public Disease() {
+    }
+
+    @Override
+    public String toString() {
+        return "Disease{" +
+                "color='" + color + '\'' +
+                ", img=" + img +
+                ", name='" + name + '\'' +
+                ", mPillArrayList=" + mPillArrayList +
+                ", dateStart=" + dateStart +
+                ", dateEnd=" + dateEnd +
+                ", dosageType=" + dosageType +
+                ", showMorning=" + showMorning +
+                ", showLunch=" + showLunch +
+                ", showDinner=" + showDinner +
+                ", showSleep=" + showSleep +
+                ", morning=" + morning +
+                ", lunch=" + lunch +
+                ", dinner=" + dinner +
+                ", sleep=" + sleep +
+                ", timeStartHour=" + timeStartHour +
+                ", timeStartMinute=" + timeStartMinute +
+                ", timeInterval=" + timeInterval +
+                ", dosageCurrnt=" + dosageCurrnt +
+                ", dosageTotal=" + dosageTotal +
+                ", mTimeItems=" + mTimeItems +
+                '}';
     }
 }

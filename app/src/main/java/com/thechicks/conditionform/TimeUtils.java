@@ -69,7 +69,7 @@ public class TimeUtils {
     }
 
     //unixTimeStamp -> Date -> String(yyyy-MM-dd)
-    public static String UnixTimeStampToStringDate(long timeStamp) {
+    public static String unixTimeStampToStringDate(long timeStamp) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA);
         SimpleDateFormat convertedSdf = new SimpleDateFormat("yyyy-MM-dd",Locale.KOREA);
@@ -93,7 +93,7 @@ public class TimeUtils {
 
     //Todo: Am, Pm 처리
     //unixTimeStamp -> Date -> String(HH:mm)
-    public static String UnixTimeStampToStringTime(long timeStamp) {
+    public static String unixTimeStampToStringTime(long timeStamp) {
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA);
         SimpleDateFormat convertedSdf = new SimpleDateFormat("HH : mm",Locale.KOREA);
@@ -130,7 +130,7 @@ public class TimeUtils {
     }
 
     //unixTimeStamp -> String(yyyy년 MM월 dd일)
-    public static String UnixTimeStampToStringDateYearMonthDay(long timeStamp) {
+    public static String unixTimeStampToStringDateYearMonthDay(long timeStamp) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeStamp * 1000);
 
@@ -150,7 +150,7 @@ public class TimeUtils {
     }
 
     //unixTimeStamp -> String(MM월 dd일)
-    public static String UnixTimeStampToStringDateMonthDay(long timeStamp) {
+    public static String unixTimeStampToStringDateMonthDay(long timeStamp) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(timeStamp * 1000);
 

@@ -53,7 +53,7 @@ public class TimeUtilsUnitTest {
 
         long today = 1461596400L;
 
-        String test = TimeUtils.UnixTimeStampToStringDate(today);
+        String test = TimeUtils.unixTimeStampToStringDate(today);
 
         assertEquals(expected, test);
     }
@@ -65,7 +65,7 @@ public class TimeUtilsUnitTest {
 
         long today = 1461510000L;
 
-        String test = TimeUtils.UnixTimeStampToStringDateYearMonthDay(today);
+        String test = TimeUtils.unixTimeStampToStringDateYearMonthDay(today);
 
         assertEquals(expected, test);
     }
@@ -77,7 +77,7 @@ public class TimeUtilsUnitTest {
 
         String expected = "22 : 57";
 
-        String test = TimeUtils.UnixTimeStampToStringTime(standard);
+        String test = TimeUtils.unixTimeStampToStringTime(standard);
 
         assertEquals(expected, test);
     }

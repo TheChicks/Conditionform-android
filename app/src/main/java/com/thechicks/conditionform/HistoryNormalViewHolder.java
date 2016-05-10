@@ -80,9 +80,9 @@ public class HistoryNormalViewHolder extends RecyclerView.ViewHolder {
 
          tvDosageType.setText(historyItem.getStrDosageType());
 
-         tvDosageDateStart.setText(TimeUtils.UnixTimeStampToStringDateYearMonthDay(historyItem.getDateStart()));
+         tvDosageDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(historyItem.getDateStart()));
 
-         tvDosageDateEnd.setText(TimeUtils.UnixTimeStampToStringDateYearMonthDay(historyItem.getDateEnd()));
+         tvDosageDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(historyItem.getDateEnd()));
 
         mView.setOnClickListener(new View.OnClickListener() {
             @Override

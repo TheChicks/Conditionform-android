@@ -71,4 +71,8 @@ public class RegistManualTimeAdapter extends RecyclerView.Adapter<RegistManualTi
         mTimeItemArrayList.remove(position);
         notifyItemRemoved(position);
     }
+
+    public ArrayList<TimeItem> getTimeItemArrayList() {
+        return mTimeItemArrayList;
+    }
 }

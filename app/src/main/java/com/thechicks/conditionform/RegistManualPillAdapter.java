@@ -58,4 +58,8 @@ public class RegistManualPillAdapter extends RecyclerView.Adapter<RegistManualPi
         mPillArrayList.remove(position);
         notifyItemRemoved(position);
     }
+
+    public ArrayList<Pill> getPillArrayList() {
+        return mPillArrayList;
+    }
 }

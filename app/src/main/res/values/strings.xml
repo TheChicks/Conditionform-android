@@ -28,4 +28,23 @@
         <item id="everyTime">시간마다</item>
     </string-array>
 
+    <string-array name="dosage_time_interval">
+        <item id="hour_one">1시간</item>
+        <item id="hour_two">2시간</item>
+        <item id="hour_three">3시간</item>
+        <item id="hour_four">4시간</item>
+        <item id="hour_five">5시간</item>
+    </string-array>
+
+    <string-array name="dosage_time_count">
+        <item id="count_one">1회</item>
+        <item id="count_two">2회</item>
+        <item id="count_three">3회</item>
+        <item id="count_four">4회</item>
+        <item id="count_five">5회</item>
+        <item id="count_six">6회</item>
+        <item id="count_seven">7회</item>
+        <item id="count_eight">8회</item>
+    </string-array>
+
 </resources>

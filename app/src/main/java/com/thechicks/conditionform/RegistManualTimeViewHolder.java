@@ -46,7 +46,7 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(final TimeItem timeItem) {
-        tvTime.setText(TimeUtils.UnixTimeStampToStringTime(timeItem.getTime()));
+        tvTime.setText(TimeUtils.unixTimeStampToStringTime(timeItem.getTime()));
 
         switch (timeItem.getType()) {
             case 0:
@@ -68,15 +68,15 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
 
-                long mCurrentTime = timeItem.getTime();
-                int mHour = TimeUtils.timestampToHour(mCurrentTime);
-                int mMinute = TimeUtils.timestampToMinute(mCurrentTime);
+                long currentTime = timeItem.getTime();
+                int hour = TimeUtils.timestampToHour(currentTime);
+                int minute = TimeUtils.timestampToMinute(currentTime);
 
                 new TimePickerDialog(mView.getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         long selectedTime = TimeUtils.getHourMinuteUnixTimeStamp(hourOfDay, minute);
-                        tvTime.setText(TimeUtils.UnixTimeStampToStringTime(selectedTime));
+                        tvTime.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
                         timeItem.setTime(selectedTime);
 
                         if (mListener != null) {
@@ -84,7 +84,7 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
                             mListener.onListItemChange(getAdapterPosition());
                         }
                     }
-                }, mHour, mMinute, true).show();
+                }, hour, minute, true).show();
             }
         });
 

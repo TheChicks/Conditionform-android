@@ -171,7 +171,7 @@ public class HomeFragment extends Fragment {
 
         Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
 
-        tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+        tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
 
         //Todo: 데이터 로드
     }
@@ -186,7 +186,7 @@ public class HomeFragment extends Fragment {
         currentDisplayMonth = TimeUtils.timestampToMonth(currentDayTimestamp);
         currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
-        tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+        tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
 
         //Todo: 데이터 로드
     }
@@ -201,7 +201,7 @@ public class HomeFragment extends Fragment {
         currentDisplayMonth = TimeUtils.timestampToMonth(currentDayTimestamp);
         currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
-        tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+        tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
 
         //Todo: 데이터 로드
 
@@ -221,7 +221,7 @@ public class HomeFragment extends Fragment {
 
                 currentDayTimestamp = TimeUtils.getDayTimeStamp(currentDisplayYear, currentDisplayMonth, currentDisplayDay);
 
-                tvDateToday.setText(TimeUtils.UnixTimeStampToStringDateMonthDay(currentDayTimestamp));
+                tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
             }
         }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
 

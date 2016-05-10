@@ -51,6 +51,7 @@
                 android:hint="약 이름"/>
 
             <android.support.v7.widget.RecyclerView
+                android:layout_margin="8dp"
                 android:id="@+id/recyclerView_pill"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
@@ -58,61 +59,103 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_margin="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="15dp">
+            android:orientation="horizontal">
 
             <TextView
+                android:padding="8dp"
+                android:textSize="16sp"
                 android:id="@+id/textView_date_start"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="시작일"/>
 
             <TextView
-                android:layout_width="30dp"
+                android:padding="8dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
                 android:text=" ~ "/>
 
             <TextView
+                android:padding="8dp"
+                android:textSize="16sp"
                 android:id="@+id/textView_date_end"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="종료일"/>
         </LinearLayout>
 
+        <Spinner
+            android:id="@+id/spinner_dosage_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:entries="@array/dosage_type"/>
+
         <LinearLayout
+            android:id="@+id/linearLayout_dosage_type_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <Spinner
-                android:id="@+id/spinner_dosage_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:entries="@array/dosage_type"/>
 
             <Button
                 android:id="@+id/button_time_add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="8dp"
                 android:background="@drawable/regist_manual_button"
                 android:text="시간 추가"/>
 
             <android.support.v7.widget.RecyclerView
+                android:layout_margin="8dp"
                 android:id="@+id/recyclerView_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_dosage_type_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Spinner
+                android:id="@+id/spinner_time_interval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:entries="@array/dosage_time_interval"/>
+
+            <TextView
+                android:padding="8dp"
+                android:id="@+id/textView_time_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:text="시작시간"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+
+            <Spinner
+                android:id="@+id/spinner_time_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:entries="@array/dosage_time_count"/>
 
         </LinearLayout>
 
@@ -123,17 +166,19 @@
 
             <Button
                 android:id="@+id/button_cancel"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/regist_manual_confirm_button"
                 android:text="취소"/>
 
             <Button
                 android:id="@+id/button_confirm"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="30dp"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/regist_manual_confirm_button"
                 android:text="확인"/>
         </LinearLayout>
