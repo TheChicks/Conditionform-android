@@ -51,4 +51,9 @@ dependencies {
 
     def eventBusVersion = '3.0.0'
     compile "org.greenrobot:eventbus:$eventBusVersion"
+
+    // color picker
+    compile 'com.thebluealliance:spectrum:0.4.2'
+
+
 }
