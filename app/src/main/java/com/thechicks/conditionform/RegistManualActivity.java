@@ -26,8 +26,6 @@ import android.widget.Toast;
 
 import com.thebluealliance.spectrum.SpectrumDialog;
 
-import java.util.Calendar;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -88,22 +86,10 @@ public class RegistManualActivity extends AppCompatActivity {
     ArrayAdapter<CharSequence> spinnerTimeIntervalAdapter;
     ArrayAdapter<CharSequence> spinnerTimeCountAdapter;
 
-    //시간 관리용
-    int currentDisplayYear;
-    int currentDisplayMonth;
-    int currentDisplayDay;
-    long currentDayTimestamp;
-
     //시작 날짜
-    int startYear;
-    int startMonth;
-    int startDay;
     long startDateTimestamp;
 
     //끝 날짜
-    int endYear;
-    int endMonth;
-    int endDay;
     long endDateTimestamp;
 
     int dosageTypeIndex;  //복용 타입
@@ -143,7 +129,7 @@ public class RegistManualActivity extends AppCompatActivity {
         rvPill.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         rvPill.setAdapter(mRegistManualPillAdapter);
 
-        setupToday();
+        setupDate();
 
         spinnerDosageType.setPrompt("복용 타입을 선택해주세요.");
         spinnerDosageTypeAdapter = ArrayAdapter.createFromResource(this, R.array.dosage_type,
@@ -253,15 +239,9 @@ public class RegistManualActivity extends AppCompatActivity {
         timeStart = TimeUtils.getCurrentUnixTimeStamp();
     }
 
-    public void setupToday() {
-        final Calendar calendar = Calendar.getInstance();
-        currentDayTimestamp = TimeUtils.getTodayUnixTimeStamp();
-
-        currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
-        currentDisplayMonth = TimeUtils.timestampToMonth(currentDayTimestamp);
-        currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
-
-        Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
+    public void setupDate() {
+        startDateTimestamp = TimeUtils.getTodayUnixTimeStamp();
+        endDateTimestamp = TimeUtils.getTodayUnixTimeStamp();
     }
 
     @OnClick(R.id.imageView_label)
@@ -323,38 +303,38 @@ public class RegistManualActivity extends AppCompatActivity {
     @OnClick(R.id.textView_date_start)
     public void onClickDateStart() {
 
+        int startYear = TimeUtils.timestampToYear(startDateTimestamp);
+        int startMonth = TimeUtils.timestampToMonth(startDateTimestamp);
+        int startDay = TimeUtils.timestampToDay(startDateTimestamp);
+
         new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                startYear = year;
-                startMonth = monthOfYear + 1;
-                startDay = dayOfMonth;
 
-                Log.e(TAG, startYear + "년 " + startMonth + "월 " + startDay + "일");
-
-                startDateTimestamp = TimeUtils.getDayTimeStamp(startYear, startMonth, startDay);
+                Log.e(TAG, year + "년 " + (monthOfYear+1) + "월 " + dayOfMonth + "일");
+                startDateTimestamp = TimeUtils.getDayTimeStamp(year, monthOfYear+1, dayOfMonth);
                 tvDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(startDateTimestamp));
             }
-        }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
+        }, startYear, startMonth - 1, startDay).show();
     }
 
     @OnClick(R.id.textView_date_end)
     public void onClickDateEnd() {
 
+        int endYear = TimeUtils.timestampToYear(endDateTimestamp);
+        int endMonth = TimeUtils.timestampToMonth(endDateTimestamp);
+        int endDay = TimeUtils.timestampToDay(endDateTimestamp);
+
         new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                endYear = year;
-                endMonth = monthOfYear + 1;
-                endDay = dayOfMonth;
 
-                Log.e(TAG, endYear + "년 " + endMonth + "월 " + endDay + "일");
+                Log.e(TAG, year + "년 " + (monthOfYear+1) + "월 " + dayOfMonth + "일");
 
-                endDateTimestamp = TimeUtils.getDayTimeStamp(endYear, endMonth, endDay);
-                Log.e(TAG, " " + endDateTimestamp);
+                endDateTimestamp = TimeUtils.getDayTimeStamp(year, monthOfYear+1, dayOfMonth);
                 tvDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(endDateTimestamp));
             }
-        }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
+        }, endYear, endMonth - 1, endDay).show();
     }
 
     @OnClick(R.id.button_cancel)
