@@ -1,0 +1,221 @@
+package com.thechicks.conditionform.ui;
+
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+
+import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.ui.history.HistoryFragment;
+import com.thechicks.conditionform.ui.home.HomeFragment;
+import com.thechicks.conditionform.ui.search.SearchEditWidget;
+import com.thechicks.conditionform.ui.search.SearchFragment;
+import com.thechicks.conditionform.ui.settings.SettingsFragment;
+import com.thechicks.conditionform.ui.statistics.StatisticsFragment;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class MainActivity extends AppCompatActivity {
+
+    public static final String TAG = MainActivity.class.getSimpleName();
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @Bind(R.id.search_edit_widget)
+    SearchEditWidget mSearchEditWidget;
+
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+
+    @Bind(R.id.navigationView)
+    NavigationView mNavigationView;
+
+    ActionBarDrawerToggle mActionBarDrawerToggle;
+
+    FragmentManager fm;
+
+    boolean isSearchFragment;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
+        setSupportActionBar(mToolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+//            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+//            actionBar.setDisplayShowHomeEnabled(true);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        setupDrawerContent(mNavigationView);
+
+        //Animate the Hamburger Icon
+        mActionBarDrawerToggle = setupDrawerToggle();
+        mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+
+        fm = getSupportFragmentManager();
+
+        //초기 화면 지정
+        Fragment fragmnet = fm.findFragmentById(R.id.container_fragment);
+        if (fragmnet == null) {
+            HomeFragment homeFragment = HomeFragment.newInstance();
+
+            fm.beginTransaction()
+                    .add(R.id.container_fragment, homeFragment)
+                    .commit();
+
+            isSearchFragment = false;
+            showAndHideSearchEditWidget();
+        }
+    }
+
+    private void showAndHideSearchEditWidget(){
+        if(isSearchFragment){
+            mSearchEditWidget.setVisibility(View.VISIBLE);
+        }else {
+            mSearchEditWidget.setVisibility(View.GONE);
+        }
+
+        //Alarm Test
+//        AlarmAlertReceiver.registerNextAlarmWithAlarmManager(MainActivity.this, null);
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                selectDrawerItem(item);
+                return true;
+            }
+        });
+    }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+
+        isSearchFragment = false;
+
+        //체크되어 있다면 현재화면이므로 바꿀 필요없다.
+        if (menuItem.isChecked()) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+
+        Fragment fragment = fm.findFragmentById(R.id.container_fragment);
+        Fragment newFragment = null;
+
+        switch (menuItem.getItemId()) {
+            case R.id.nav_home_fragment:
+                if (fragment instanceof HomeFragment) {
+                    return;
+                }
+                newFragment = HomeFragment.newInstance();
+                break;
+            case R.id.nav_history_fragment:
+                if (fragment instanceof HistoryFragment) {
+                    return;
+                }
+                newFragment = HistoryFragment.newInstance();
+                break;
+            case R.id.nav_statistics_fragment:
+                if (fragment instanceof StatisticsFragment) {
+                    return;
+                }
+                newFragment = StatisticsFragment.newInstance();
+                break;
+            case R.id.nav_search_fragment:
+                if (fragment instanceof SearchFragment) {
+                    return;
+                }
+                isSearchFragment = true;
+                newFragment = SearchFragment.newInstance();
+                break;
+            case R.id.nav_settings_fragment:
+                if (fragment instanceof SettingsFragment) {
+                    return;
+                }
+                newFragment = SettingsFragment.newInstance();
+                break;
+        }
+
+        if (newFragment != null) {
+            // Insert the fragment by replacing any existing fragment
+            fm.beginTransaction().replace(R.id.container_fragment, newFragment).commit();
+        }
+
+        showAndHideSearchEditWidget();
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawerLayout.closeDrawers();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mActionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                Log.d(TAG, " home");
+                return true;
+//            case R.id.action_settings:
+//                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // `onPostCreate` called when activity start-up is complete after `onStart()`
+    @Override
+    public void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mActionBarDrawerToggle.syncState();
+    }
+
+    //런타임에서 설정 변경시 호출
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Pass any configuration change to the drawer toggles
+        mActionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+}

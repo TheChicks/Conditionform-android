@@ -1,5 +1,7 @@
 package com.thechicks.conditionform;
 
+import com.thechicks.conditionform.util.TimeUtils;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
