@@ -2,9 +2,11 @@ package com.thechicks.conditionform;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +29,9 @@ import butterknife.OnClick;
 public class RegistManualActivity extends AppCompatActivity {
 
     public static final String TAG = RegistManualActivity.class.getSimpleName();
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     @Bind(R.id.textView_date_start)
     TextView tvDateStart;
@@ -53,7 +58,6 @@ public class RegistManualActivity extends AppCompatActivity {
 
     boolean mInitSpinner;
 
-
     //시간 관리용
     int currentDisplayYear;
     int currentDisplayMonth;
@@ -78,6 +82,14 @@ public class RegistManualActivity extends AppCompatActivity {
         setContentView(R.layout.activity_regist_manual);
         ButterKnife.bind(this);
 
+        setSupportActionBar(mToolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+//            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+//            actionBar.setDisplayShowHomeEnabled(true);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         mRegistManualPillAdapter = new RegistManualPillAdapter(this);
         rvPill.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvPill.setAdapter(mRegistManualPillAdapter);
@@ -98,6 +110,7 @@ public class RegistManualActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(RegistManualActivity.this, spinnerAdapter.getItem(position) + "fd", Toast.LENGTH_SHORT).show();
+                //Todo: Spinner index로 타입 저장
             }
 
             @Override

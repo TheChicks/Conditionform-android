@@ -39,6 +39,7 @@ public class RegistManualPillAdapter extends RecyclerView.Adapter<RegistManualPi
 
         Pill item = mPillArrayList.get(position);
 
+        //Todo: item remove시 원하는 position의 아이템 삭제 안됨. 마지막꺼만 삭제된다.
         holder.bind(item);
         holder.ivRemove.setOnClickListener(new View.OnClickListener() {
             @Override
