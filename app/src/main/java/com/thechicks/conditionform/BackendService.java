@@ -17,6 +17,6 @@ public interface BackendService {
     //pillInformations/search?word=타이레놀
     @Headers("Accept: application/json")
     @GET("pillInformations/search")
-    Call<JsonArray> getPillInformation(@Query("word") String searchWord);
+    Call<JsonArray> getPillInformation(@Query(value = "word", encoded = true) String searchWord);
 
 }
