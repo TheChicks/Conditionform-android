@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         }else {
             mSearchEditWidget.setVisibility(View.GONE);
         }
+
+        //Alarm Test
+//        AlarmAlertBroadcastReceiver.registerNextAlarmWithAlarmManager(MainActivity.this, null);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
