@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //Alarm Test
-//        AlarmAlertBroadcastReceiver.registerNextAlarmWithAlarmManager(MainActivity.this, null);
+//        AlarmAlertReceiver.registerNextAlarmWithAlarmManager(MainActivity.this, null);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

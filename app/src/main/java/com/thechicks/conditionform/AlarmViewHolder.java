@@ -2,8 +2,6 @@ package com.thechicks.conditionform;
 
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +26,7 @@ public class AlarmViewHolder extends RecyclerView.ViewHolder {
     View mView;
 
     public static RecyclerView.ViewHolder newInstance(ViewGroup parent) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.alarm_item_cardview, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_alarm, parent, false);
         return new AlarmViewHolder(itemView);
     }
 

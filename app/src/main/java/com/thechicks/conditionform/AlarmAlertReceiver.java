@@ -11,9 +11,9 @@ import android.util.Log;
 /**
  * Created by opklnm102 on 2016-05-02.
  */
-public class AlarmAlertBroadcastReceiver extends BroadcastReceiver {
+public class AlarmAlertReceiver extends BroadcastReceiver {
 
-    public static final String TAG = AlarmAlertBroadcastReceiver.class.getSimpleName();
+    public static final String TAG = AlarmAlertReceiver.class.getSimpleName();
 
     private static final String DEFAULT_SNOOZE_MINUTES = "10";
 
@@ -24,7 +24,7 @@ public class AlarmAlertBroadcastReceiver extends BroadcastReceiver {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
-        Intent intent = new Intent(context, AlarmAlertBroadcastReceiver.class);
+        Intent intent = new Intent(context, AlarmAlertReceiver.class);
 
         long triggerTime = TimeUtils.getCurrentUnixTimeStamp() * 1000;
         final long intervalTime = 24 * 60 * 60 * 1000;  //24시간
@@ -54,7 +54,7 @@ public class AlarmAlertBroadcastReceiver extends BroadcastReceiver {
     public static void cancelScheduledInstance(Context context, AlarmInstance instance){
         Log.d(TAG, "cancelScheduledInstance()");
 
-        Intent myIntent = new Intent(context, AlarmAlertBroadcastReceiver.class);
+        Intent myIntent = new Intent(context, AlarmAlertReceiver.class);
         myIntent.putExtra("alarm", new Alarm());
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, instance.hashCode(), myIntent, PendingIntent.FLAG_CANCEL_CURRENT);

@@ -18,14 +18,14 @@ import butterknife.ButterKnife;
  */
 public class PillSearchViewHolder extends RecyclerView.ViewHolder{
 
-    @Bind(R.id.ivPillImg)
-    ImageView ivPillImg;
+    @Bind(R.id.imageView_pill)
+    ImageView ivPill;
 
     @Bind(R.id.textView_pill_name)
     TextView tvPillName;
 
-    @Bind(R.id.tvPillNumber)
-    TextView tvPillNumber;
+    @Bind(R.id.textView_pill_insurance_code)
+    TextView tvPillInsuranceCode;
 
     GradientDrawable gradientDrawable;
 
@@ -35,7 +35,7 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
 
     public static RecyclerView.ViewHolder newInstance(ViewGroup parent, PillSearchListAdapter.OnListItemClickListener listener) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.search_item_cardview, parent, false);
+                .inflate(R.layout.item_list_search, parent, false);
         return new PillSearchViewHolder(itemView, listener);
     }
 
@@ -57,10 +57,10 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
                 .centerCrop()
                 .placeholder(R.mipmap.ic_launcher)
                 .crossFade()
-                .into(ivPillImg);
+                .into(ivPill);
 
         tvPillName.setText(pill.getKoName());
-        tvPillNumber.setText(pill.getInsuranceCode());
+        tvPillInsuranceCode.setText(pill.getInsuranceCode());
 
         mView.setOnClickListener(new View.OnClickListener() {
             @Override

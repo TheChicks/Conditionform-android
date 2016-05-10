@@ -2,7 +2,6 @@
     <string name="app_name">Conditionform</string>
     <string name="action_settings">Settings</string>
 
-
     <!--Navigation Menu Title-->
     <string name="nav_title_home">홈</string>
     <string name="nav_title_history">복용 내역 관리</string>
@@ -13,12 +12,6 @@
     <!--Navigation View Animation-->
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="title_activity_alarm">AlarmActivity</string>
 
     <string-array name="dosage_type">
         <item id="everyDay">매일</item>
