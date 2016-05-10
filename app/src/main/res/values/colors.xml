@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#7899ff</color>
+    <color name="colorPrimaryDark">#6485eb</color>
+    <color name="colorAccent">#6485eb</color>
 
     <color name="colorFAB">#2196F3</color>
+
+    <!--label color-->
+    <color name="color_1">#eb6d73</color>
+    <color name="color_2">#ec8cd2</color>
+    <color name="color_3">#c4bbed</color>
+    <color name="color_4">#8880f0</color>
+    <color name="color_5">#4c75ed</color>
+    <color name="color_6">#6cb0f2</color>
+    <color name="color_7">#67dbe3</color>
+    <color name="color_8">#7bef8e</color>
+    <color name="color_9">#b8e71c</color>
+    <color name="color_10">#f7eb2f</color>
+
+    <array name="label_colors">
+        <item>@color/color_1</item>
+        <item>@color/color_2</item>
+        <item>@color/color_3</item>
+        <item>@color/color_4</item>
+        <item>@color/color_5</item>
+        <item>@color/color_6</item>
+        <item>@color/color_7</item>
+        <item>@color/color_8</item>
+        <item>@color/color_9</item>
+        <item>@color/color_10</item>
+    </array>
+
 </resources>

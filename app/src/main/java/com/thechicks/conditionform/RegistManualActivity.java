@@ -1,7 +1,10 @@
 package com.thechicks.conditionform;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +16,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thebluealliance.spectrum.SpectrumDialog;
+
 import java.util.Calendar;
 
 import butterknife.Bind;
+import butterknife.BindColor;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -32,6 +39,9 @@ public class RegistManualActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+
+    @Bind(R.id.imageView_label)
+    ImageView ivLabel;
 
     @Bind(R.id.textView_date_start)
     TextView tvDateStart;
@@ -76,6 +86,12 @@ public class RegistManualActivity extends AppCompatActivity {
     int endDay;
     long endDateTimestamp;
 
+    //복용 타입
+    int dosageType;
+
+    //label color
+    String strLabelColor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +107,18 @@ public class RegistManualActivity extends AppCompatActivity {
         }
 
         mRegistManualPillAdapter = new RegistManualPillAdapter(this);
-        rvPill.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRegistManualPillAdapter.setOnListItemClickListener(new RegistManualPillAdapter.OnListItemClickListener() {
+            @Override
+            public void onListItemRemove(int position) {
+                mRegistManualPillAdapter.removeItem(position);
+            }
+
+            @Override
+            public void onListItemChange(int position) {
+                mRegistManualPillAdapter.notifyItemChanged(position);
+            }
+        });
+        rvPill.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         rvPill.setAdapter(mRegistManualPillAdapter);
 
         setupToday();
@@ -110,7 +137,9 @@ public class RegistManualActivity extends AppCompatActivity {
                     return;
                 }
                 Toast.makeText(RegistManualActivity.this, spinnerAdapter.getItem(position) + "fd", Toast.LENGTH_SHORT).show();
-                //Todo: Spinner index로 타입 저장
+
+                //Spinner index로 타입 저장
+                dosageType = position;
             }
 
             @Override
@@ -119,10 +148,25 @@ public class RegistManualActivity extends AppCompatActivity {
         });
 
         mRegistManualTimeAdapter = new RegistManualTimeAdapter(this);
-        rvTime.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRegistManualTimeAdapter.setOnListItemClickListener(new RegistManualTimeAdapter.OnListItemClickListener() {
+            @Override
+            public void onListItemRemove(int position) {
+                mRegistManualTimeAdapter.removeItem(position);
+            }
+
+            @Override
+            public void onListItemChange(int position) {
+                mRegistManualTimeAdapter.notifyItemChanged(position);
+            }
+        });
+        rvTime.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
         rvTime.setAdapter(mRegistManualTimeAdapter);
 
         Log.e(TAG, " " +  TimeUtils.getCurrentUnixTimeStamp() );
+
+
+        strLabelColor = "#ffffff";
+        ((GradientDrawable) ivLabel.getBackground()).setColor(Color.parseColor(strLabelColor));  //컬러 설정
     }
 
     public void setupToday() {
@@ -136,12 +180,37 @@ public class RegistManualActivity extends AppCompatActivity {
         Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
     }
 
+    @OnClick(R.id.imageView_label)
+    public void onClickLabel(){
+        //Todo: custom color picker로 change
+
+        new SpectrumDialog.Builder(RegistManualActivity.this)
+                .setColors(R.array.label_colors)
+                .setSelectedColorRes(R.color.color_1)
+                .setDismissOnColorSelected(false)
+                .setOutlineWidth(2)
+                .setOnColorSelectedListener(new SpectrumDialog.OnColorSelectedListener() {
+                    @Override
+                    public void onColorSelected(boolean positiveResult, @ColorInt int color) {
+                        if(positiveResult){
+
+                            strLabelColor = "#" + Integer.toHexString(color).toUpperCase();
+                            ((GradientDrawable) ivLabel.getBackground()).setColor(Color.parseColor(strLabelColor));  //컬러 설정
+
+                            Toast.makeText(RegistManualActivity.this, "Color selected: " + strLabelColor, Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(RegistManualActivity.this, "Dialog cancelled", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).build().show(getSupportFragmentManager(), "label_color");
+    }
+
     @OnClick(R.id.button_pill_add)
     public void onClickPillAdd() {
         Pill pill = new Pill();
         pill.setKoName(etPillName.getText().toString());
 
-        mRegistManualPillAdapter.addItem(pill, 0);
+        mRegistManualPillAdapter.addItem(pill, mRegistManualPillAdapter.getItemCount());
         etPillName.setText("");
     }
 
@@ -149,7 +218,7 @@ public class RegistManualActivity extends AppCompatActivity {
     public void onClickTimeAdd(){
         TimeItem timeItem = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
 
-        mRegistManualTimeAdapter.addItem(timeItem, 0);
+        mRegistManualTimeAdapter.addItem(timeItem, mRegistManualTimeAdapter.getItemCount());
     }
 
     @OnClick(R.id.textView_date_start)
@@ -197,7 +266,7 @@ public class RegistManualActivity extends AppCompatActivity {
     @OnClick(R.id.button_confirm)
     public void onClickConfirm() {
         //Todo: 모델객체에 저장하고 DB에 저장
-
+        Disease disease = new Disease();
     }
 
     @Override

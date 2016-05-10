@@ -34,7 +34,7 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         mContext = context;
         mDiseaseList = new ArrayList<>();
 
-        initData();
+//        initData();
     }
 
     //dummy data
@@ -42,14 +42,10 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         for (int i = 0; i < 20; i++) {
             ArrayList<Pill> pills = new ArrayList<>();
 
-            Pill pill = new Pill();
-            pill.setKoName("ㅇㅇㅇ");
-            pills.add(pill);
-
             if (i % 2 == 0) {
-                addItem(new Disease("#7f62de", "감기", R.mipmap.ic_launcher, pills, 33333333, 333333, VIEW_TYPE_NORMAL, true, true, true, true, true, true, true, false, 2, 2, 8), i);
+//                addItem(new Disease("#7f62de", "감기", R.mipmap.ic_launcher, pills, 33333333, 333333, Disease.DOSAGE_TYPE_EVERYDAY, true, true, true, true, true, true, true, false, 2, 2, 8), i);
             } else {
-                addItem(new Disease("#2c90d7", "안약", R.mipmap.ic_launcher, pills, 33333333, 333333, VIEW_TYPE_INTERVAL, true, true, true, true, true, true, true, false, 2, 2, 8), i);
+//                addItem(new Disease("#2c90d7", "안약", R.mipmap.ic_launcher, pills, 33333333, 333333, Disease.DOSAGE_TYPE_EVERYHOUR, true, true, true, true, true, true, true, false, 2, 2, 8), i);
             }
 //            addItem(new Disease("#554344", "몸살", R.drawable.ic_add_black_24dp, pills, 33333333, 333333, VIEW_TYPE_NORMAL, true, true, true, false, false,true,false,false,3,2,1), i);
 //            addItem(new Disease("#554344", "배탈", R.mipmap.ic_launcher, pills, 33333333, 333333, VIEW_TYPE_NORMAL, true, true, false, false, true,false,false,false,3,2,1), i);
@@ -60,7 +56,17 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     //객체가 가진 뷰타입에 따라 리턴
     @Override
     public int getItemViewType(int position) {
-        return mDiseaseList.get(position).getType();
+        switch (mDiseaseList.get(position).getDosageType()){
+            case Disease.DOSAGE_TYPE_EVERYDAY:
+                return VIEW_TYPE_NORMAL;
+            case Disease.DOSAGE_TYPE_TWODAY:
+                return VIEW_TYPE_NORMAL;
+            case Disease.DOSAGE_TYPE_THREEDAY:
+                return VIEW_TYPE_NORMAL;
+            case Disease.DOSAGE_TYPE_EVERYHOUR:
+                return VIEW_TYPE_INTERVAL;
+        }
+        return -1;
     }
 
     @Override

@@ -1,20 +1,16 @@
 package com.thechicks.conditionform;
 
-import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by Administrator on 2016-05-09.
@@ -32,27 +28,24 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
 
     View mView;
 
-    RegistManualTimeAdapter.OnListItemRemoveListener mListener;
+    RegistManualTimeAdapter.OnListItemClickListener mListener;
 
-    long mCurrentTime;
-    int mHour;
-    int mMinute;
-
-    public static RegistManualTimeViewHolder newInstance(ViewGroup parent, RegistManualTimeAdapter.OnListItemRemoveListener listener) {
+    public static RegistManualTimeViewHolder newInstance(ViewGroup parent, RegistManualTimeAdapter.OnListItemClickListener itemClickListener) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_regist_time, parent, false);
-        return new RegistManualTimeViewHolder(itemView, listener);
+        return new RegistManualTimeViewHolder(itemView, itemClickListener);
     }
 
-    public RegistManualTimeViewHolder(View itemView, RegistManualTimeAdapter.OnListItemRemoveListener listener) {
+    public RegistManualTimeViewHolder(View itemView, RegistManualTimeAdapter.OnListItemClickListener itemClickListener) {
         super(itemView);
 
         mView = itemView;
-        mListener = listener;
+
+        mListener = itemClickListener;
 
         ButterKnife.bind(this, mView);
     }
 
-    public void bind(TimeItem timeItem) {
+    public void bind(final TimeItem timeItem) {
         tvTime.setText(TimeUtils.UnixTimeStampToStringTime(timeItem.getTime()));
 
         switch (timeItem.getType()) {
@@ -70,33 +63,38 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
                 break;
         }
 
-        mCurrentTime = TimeUtils.getCurrentUnixTimeStamp();
-        mHour = TimeUtils.timestampToHour(mCurrentTime);
-        mMinute = TimeUtils.timestampToMinute(mCurrentTime);
-
-        //Todo: timepicker 표시 시간 저장
         tvTime.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+
+                long mCurrentTime = timeItem.getTime();
+                int mHour = TimeUtils.timestampToHour(mCurrentTime);
+                int mMinute = TimeUtils.timestampToMinute(mCurrentTime);
+
                 new TimePickerDialog(mView.getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mHour = hourOfDay;
-                        mMinute = minute;
-                        mCurrentTime = TimeUtils.getHourMinuteUnixTimeStamp(mHour, mMinute);
-                        tvTime.setText(TimeUtils.UnixTimeStampToStringTime(mCurrentTime));
+                        long selectedTime = TimeUtils.getHourMinuteUnixTimeStamp(hourOfDay, minute);
+                        tvTime.setText(TimeUtils.UnixTimeStampToStringTime(selectedTime));
+                        timeItem.setTime(selectedTime);
+
+                        if (mListener != null) {
+                            //시간 변경을 Adapter에 알린다.
+                            mListener.onListItemChange(getAdapterPosition());
+                        }
                     }
                 }, mHour, mMinute, true).show();
             }
         });
 
-//        ivRemove.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(mListener != null){
-//                    mListener.onListItemRemove();
-//                }
-//            }
-//        });
+        ivRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.onListItemRemove(getAdapterPosition());
+                }
+            }
+        });
     }
 }

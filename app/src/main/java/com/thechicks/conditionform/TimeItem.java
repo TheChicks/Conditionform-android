@@ -35,6 +35,7 @@ public class TimeItem {
 
     public void setTime(long time) {
         this.time = time;
+        this.type = determineType(time);
     }
 
     public int determineType(long time){

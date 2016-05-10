@@ -7,26 +7,25 @@ import java.util.ArrayList;
  */
 public class Disease {
 
+    // dosage type
+    public static final int DOSAGE_TYPE_EVERYDAY = 5000;  //매일
+    public static final int DOSAGE_TYPE_TWODAY = 5001;  //2일
+    public static final int DOSAGE_TYPE_THREEDAY = 5002;  //3일
+    public static final int DOSAGE_TYPE_EVERYHOUR = 5003;  //시간마다
+
     String color;  //#ffffff
-    String name;
     int img;
 
-    public int getImg() {
-        return img;
-    }
-
-    public void setImg(int img) {
-        this.img = img;
-    }
+    String name;
 
     ArrayList<Pill> mPillArrayList;
 
     long dateStart;  //시작일
     long dateEnd;  //종료일
 
-    int type;  //식사, 시간마다. type에 따라 뷰가 바뀐다.
+    int dosageType;  //식사, 시간마다. type에 따라 뷰가 바뀐다.
 
-    //type: 식사마다.
+    // dosage type: 매일, 2일, 3일
     // 표시 여부
     boolean showMorning;
     boolean showLunch;
@@ -44,8 +43,7 @@ public class Disease {
     int dosageCurrnt;
     int dosageTotal;
 
-    //Todo: 알람부분 채워 넣기
-
+    ArrayList<TimeItem> mTimeItems;
 
     public String getColor() {
         return color;
@@ -53,6 +51,14 @@ public class Disease {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
     }
 
     public String getName() {
@@ -87,12 +93,12 @@ public class Disease {
         this.dateEnd = dateEnd;
     }
 
-    public int getType() {
-        return type;
+    public int getDosageType() {
+        return dosageType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setDosageType(int dosageType) {
+        this.dosageType = dosageType;
     }
 
     public boolean isShowMorning() {
@@ -183,14 +189,22 @@ public class Disease {
         this.dosageTotal = dosageTotal;
     }
 
-    public Disease(String color, String name, int img, ArrayList<Pill> pillArrayList, long dateStart, long dateEnd, int type, boolean showMorning, boolean showLunch, boolean showDinner, boolean showSleep, boolean morning, boolean lunch, boolean dinner, boolean sleep, int timeInterval, int dosageCurrnt, int dosageTotal) {
+    public ArrayList<TimeItem> getTimeItems() {
+        return mTimeItems;
+    }
+
+    public void setTimeItems(ArrayList<TimeItem> timeItems) {
+        mTimeItems = timeItems;
+    }
+
+    public Disease(String color, int img, String name, ArrayList<Pill> pillArrayList, long dateStart, long dateEnd, int dosageType, boolean showMorning, boolean showLunch, boolean showDinner, boolean showSleep, boolean morning, boolean lunch, boolean dinner, boolean sleep, int timeInterval, int dosageCurrnt, int dosageTotal, ArrayList<TimeItem> timeItems) {
         this.color = color;
-        this.name = name;
         this.img = img;
+        this.name = name;
         mPillArrayList = pillArrayList;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
-        this.type = type;
+        this.dosageType = dosageType;
         this.showMorning = showMorning;
         this.showLunch = showLunch;
         this.showDinner = showDinner;
@@ -202,6 +216,7 @@ public class Disease {
         this.timeInterval = timeInterval;
         this.dosageCurrnt = dosageCurrnt;
         this.dosageTotal = dosageTotal;
+        mTimeItems = timeItems;
     }
 
     public Disease() {

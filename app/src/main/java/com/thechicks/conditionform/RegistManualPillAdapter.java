@@ -14,39 +14,34 @@ public class RegistManualPillAdapter extends RecyclerView.Adapter<RegistManualPi
 
     private final Context mContext;
     private final ArrayList<Pill> mPillArrayList;
-    private OnListItemRemoveListener mOnListItemRemoveListener;
+
+    private OnListItemClickListener mOnListItemClickListener;
+
+    public void setOnListItemClickListener(OnListItemClickListener listener){
+        mOnListItemClickListener = listener;
+    }
+
+    public interface OnListItemClickListener{
+        void onListItemRemove(int position);
+        void onListItemChange(int position);
+    }
 
     public RegistManualPillAdapter(Context context){
         this.mContext = context;
         mPillArrayList = new ArrayList<Pill>();
     }
 
-    public void setOnListItemRemoveListener(OnListItemRemoveListener listener){
-        mOnListItemRemoveListener = listener;
-    }
-
-    public interface OnListItemRemoveListener{
-        void onListItemRemove(int position);
-    }
-
     @Override
     public RegistManualPillViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return RegistManualPillViewHolder.newInstance(parent, mOnListItemRemoveListener);
+        return RegistManualPillViewHolder.newInstance(parent, mOnListItemClickListener);
     }
 
     @Override
-    public void onBindViewHolder(final RegistManualPillViewHolder holder, final int position) {
+    public void onBindViewHolder(RegistManualPillViewHolder holder, int position) {
 
         Pill item = mPillArrayList.get(position);
 
-        //Todo: item remove시 원하는 position의 아이템 삭제 안됨. 마지막꺼만 삭제된다.
         holder.bind(item);
-        holder.ivRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeItem(position);
-            }
-        });
     }
 
     @Override
