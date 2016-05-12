@@ -16,7 +16,7 @@ public interface BackendService {
     //보험코드, 약품명 검색
     //pillInformations/search?word=타이레놀
     @Headers("Accept: application/json")
-    @GET("pillInformations/search")
+    @GET("pills/search")
     Call<JsonArray> getPillInformation(@Query(value = "word", encoded = true) String searchWord);
 
 }
