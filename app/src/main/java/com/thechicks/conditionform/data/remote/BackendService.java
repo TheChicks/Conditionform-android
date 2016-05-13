@@ -14,7 +14,8 @@ import retrofit2.http.Query;
 public interface BackendService {
 
     //보험코드, 약품명 검색
-    //pillInformations/search?word=타이레놀
+    //ex) pills/search?word=아프릴정
+    //    pills/search?word=651501090
     @Headers("Accept: application/json")
     @GET("pills/search")
     Call<JsonArray> getPillInformation(@Query(value = "word", encoded = true) String searchWord);

@@ -25,6 +25,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.thebluealliance.spectrum.SpectrumDialog;
+import com.thechicks.conditionform.alert.AlarmAlertReceiver;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.Pill;
 import com.thechicks.conditionform.R;
