@@ -71,7 +71,7 @@
         android:src="@drawable/ic_add_black_24dp"
         android:tint="#ffffff"
         app:fabSize="normal"
-        app:layout_behavior="com.thechicks.conditionform.FloatingActionButtonFloatonScrollBehavior"/>
+        app:layout_behavior="com.thechicks.conditionform.util.FloatingActionButtonFloatonScrollBehavior"/>
 
     <include layout="@layout/fab_menu"/>
 
