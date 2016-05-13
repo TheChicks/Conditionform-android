@@ -94,11 +94,11 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
         if (disease.isShowMorning()) {  //표시
             cbMorning.setVisibility(View.VISIBLE);
 
-            cbMorning.setChecked(disease.isMorning());
+            cbMorning.setChecked(disease.isTakeMorning());
             cbMorning.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    disease.setMorning(isChecked);
+                    disease.setTakeMorning(isChecked);
                 }
             });
         } else {  //표시X
@@ -107,24 +107,24 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
 
         if (disease.isShowLunch()) {  //표시
             cbLunch.setVisibility(View.VISIBLE);
-            cbLunch.setChecked(disease.isLunch());
+            cbLunch.setChecked(disease.isTakeLunch());
             cbLunch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    disease.setLunch(isChecked);
+                    disease.setTakeLunch(isChecked);
                 }
             });
         } else {  //표시X
             cbLunch.setVisibility(View.GONE);
         }
 
-        if (disease.isShowDinner()) {  //표시
+        if (disease.isShowEvening()) {  //표시
             cbDinner.setVisibility(View.VISIBLE);
-            cbDinner.setChecked(disease.isDinner());
+            cbDinner.setChecked(disease.isTakeEvening());
             cbDinner.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    disease.setDinner(isChecked);
+                    disease.setTakeEvening(isChecked);
                 }
             });
         } else {  //표시X
@@ -133,11 +133,11 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
 
         if (disease.isShowSleep()) {  //표시
             cbSleep.setVisibility(View.VISIBLE);
-            cbSleep.setChecked(disease.isSleep());
+            cbSleep.setChecked(disease.isTakeSleep());
             cbSleep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    disease.setSleep(isChecked);
+                    disease.setTakeSleep(isChecked);
                 }
             });
         } else {  //표시X

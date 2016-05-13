@@ -26,16 +26,18 @@ public class Disease {
 
     // dosage type: 매일, 2일, 3일
     // 표시 여부
+    boolean showWakeup;
     boolean showMorning;
     boolean showLunch;
-    boolean showDinner;
+    boolean showEvening;
     boolean showSleep;
 
     //먹었느지 안먹었는지
-    boolean morning;
-    boolean lunch;
-    boolean dinner;
-    boolean sleep;
+    boolean takeWakeup;
+    boolean takeMorning;
+    boolean takeLunch;
+    boolean takeEvening;
+    boolean takeSleep;
 
     //type: 시간마다. 얼마나 먹었는지 표시
     int timeStartHour;
@@ -135,12 +137,12 @@ public class Disease {
         this.showLunch = showLunch;
     }
 
-    public boolean isShowDinner() {
-        return showDinner;
+    public boolean isShowEvening() {
+        return showEvening;
     }
 
-    public void setShowDinner(boolean showDinner) {
-        this.showDinner = showDinner;
+    public void setShowEvening(boolean showEvening) {
+        this.showEvening = showEvening;
     }
 
     public boolean isShowSleep() {
@@ -151,36 +153,36 @@ public class Disease {
         this.showSleep = showSleep;
     }
 
-    public boolean isMorning() {
-        return morning;
+    public boolean isTakeMorning() {
+        return takeMorning;
     }
 
-    public void setMorning(boolean morning) {
-        this.morning = morning;
+    public void setTakeMorning(boolean takeMorning) {
+        this.takeMorning = takeMorning;
     }
 
-    public boolean isLunch() {
-        return lunch;
+    public boolean isTakeLunch() {
+        return takeLunch;
     }
 
-    public void setLunch(boolean lunch) {
-        this.lunch = lunch;
+    public void setTakeLunch(boolean takeLunch) {
+        this.takeLunch = takeLunch;
     }
 
-    public boolean isDinner() {
-        return dinner;
+    public boolean isTakeEvening() {
+        return takeEvening;
     }
 
-    public void setDinner(boolean dinner) {
-        this.dinner = dinner;
+    public void setTakeEvening(boolean takeEvening) {
+        this.takeEvening = takeEvening;
     }
 
-    public boolean isSleep() {
-        return sleep;
+    public boolean isTakeSleep() {
+        return takeSleep;
     }
 
-    public void setSleep(boolean sleep) {
-        this.sleep = sleep;
+    public void setTakeSleep(boolean takeSleep) {
+        this.takeSleep = takeSleep;
     }
 
     public int getTimeInterval() {
@@ -215,7 +217,7 @@ public class Disease {
         mTimeItems = timeItems;
     }
 
-    public Disease(String color, int img, String name, ArrayList<Pill> pillArrayList, long dateStart, long dateEnd, int dosageType, boolean showMorning, boolean showLunch, boolean showDinner, boolean showSleep, boolean morning, boolean lunch, boolean dinner, boolean sleep, int timeInterval, int dosageCurrnt, int dosageTotal, ArrayList<TimeItem> timeItems) {
+    public Disease(String color, int img, String name, ArrayList<Pill> pillArrayList, long dateStart, long dateEnd, int dosageType, boolean showMorning, boolean showLunch, boolean showEvening, boolean showSleep, boolean takeMorning, boolean takeLunch, boolean takeEvening, boolean takeSleep, int timeInterval, int dosageCurrnt, int dosageTotal, ArrayList<TimeItem> timeItems) {
         this.color = color;
         this.img = img;
         this.name = name;
@@ -225,12 +227,12 @@ public class Disease {
         this.dosageType = dosageType;
         this.showMorning = showMorning;
         this.showLunch = showLunch;
-        this.showDinner = showDinner;
+        this.showEvening = showEvening;
         this.showSleep = showSleep;
-        this.morning = morning;
-        this.lunch = lunch;
-        this.dinner = dinner;
-        this.sleep = sleep;
+        this.takeMorning = takeMorning;
+        this.takeLunch = takeLunch;
+        this.takeEvening = takeEvening;
+        this.takeSleep = takeSleep;
         this.timeInterval = timeInterval;
         this.dosageCurrnt = dosageCurrnt;
         this.dosageTotal = dosageTotal;
@@ -252,12 +254,12 @@ public class Disease {
                 ", dosageType=" + dosageType +
                 ", showMorning=" + showMorning +
                 ", showLunch=" + showLunch +
-                ", showDinner=" + showDinner +
+                ", showEvening=" + showEvening +
                 ", showSleep=" + showSleep +
-                ", morning=" + morning +
-                ", lunch=" + lunch +
-                ", dinner=" + dinner +
-                ", sleep=" + sleep +
+                ", takeMorning=" + takeMorning +
+                ", takeLunch=" + takeLunch +
+                ", takeEvening=" + takeEvening +
+                ", takeSleep=" + takeSleep +
                 ", timeStartHour=" + timeStartHour +
                 ", timeStartMinute=" + timeStartMinute +
                 ", timeInterval=" + timeInterval +

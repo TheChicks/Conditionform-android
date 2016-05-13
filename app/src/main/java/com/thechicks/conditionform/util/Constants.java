@@ -31,6 +31,7 @@ public class Constants {
         public static final String TABLE_NAME = "disease";
 
         public static final String COLUMN_DISEASE_NAME = "disease_name";  //TEXT, 이름
+        public static final String COLUMN_DISEASE_IMAGE = "disease_image";  //INTEGER, 이미지ID
         public static final String COLUMN_DISEASE_LABEL_COLOR = "disease_label_color";  //TEXT, 레이블 색
         public static final String COLUMN_DISEASE_DATE_START = "disease_date_start";  //NUMERIC(datetime), 시작 날짜
         public static final String COLUMN_DISEASE_DATE_END = "disease_date_end";  //NUMERIC(datetime), 끝 날짜
@@ -48,13 +49,25 @@ public class Constants {
 
         public static final String TABLE_NAME = "history";
 
-        public static final String COLUMN_HISTORY_DATE = "history_date";  //NUMERIC(datetime),날짜
-        public static final String COLUMN_HISTORY_CHECK_MORNING = "history_check_morning";  //NUMERIC(boolean), 아침에 먹었나
-        public static final String COLUMN_HISTORY_CHECK_LUNCH = "history_check_lunch";  //NUMERIC(boolean), 점심에 먹었나
-        public static final String COLUMN_HISTORY_CHECK_EVENING = "history_check_evening";  //NUMERIC(boolean), 저녁에 먹었나
-        public static final String COLUMN_HISTORY_CHECK_SLEEP = "history_check_sleep";  //NUMERIC(boolean), 잠자기전에 먹었나
-        public static final String COLUMN_HISTORY_CHECK_WAKEUP = "history_check_wakeup";  //NUMERIC(boolean), 일어나서 먹었나
-        public static final String COLUMN_HISTORY_CHECK_CURRENT = "history_check_current";  //INTEGER, 현재 얼마나 먹었나.
+        public static final String COLUMN_HISTORY_DATE = "history_date";  //NUMERIC(datetime), 날짜
+
+        //매일, 2일, 3일마다
+        public static final String COLUMN_HISTORY_TAKE_MORNING = "history_take_morning";  //NUMERIC(boolean), 아침에 먹었나
+        public static final String COLUMN_HISTORY_TAKE_LUNCH = "history_take_lunch";  //NUMERIC(boolean), 점심에 먹었나
+        public static final String COLUMN_HISTORY_TAKE_EVENING = "history_take_evening";  //NUMERIC(boolean), 저녁에 먹었나
+        public static final String COLUMN_HISTORY_TAKE_SLEEP = "history_take_sleep";  //NUMERIC(boolean), 잠자기전에 먹었나
+        public static final String COLUMN_HISTORY_TAKE_WAKEUP = "history_take_wakeup";  //NUMERIC(boolean), 일어나서 먹었나
+        public static final String COLUMN_HISTORY_ENABLED_MORNING = "history_enabled_morning";  //NUMERIC(boolean), 아침 활성여부
+        public static final String COLUMN_HISTORY_ENABLED_LUNCH = "history_enabled_lunch";  //NUMERIC(boolean), 점심 활성여부
+        public static final String COLUMN_HISTORY_ENABLED_EVENING = "history_enabled_evening";  //NUMERIC(boolean), 저녁 활성여부
+        public static final String COLUMN_HISTORY_ENABLED_SLEEP = "history_enabled_sleep";  //NUMERIC(boolean), 잠자기전 활성여부
+        public static final String COLUMN_HISTORY_ENABLED_WAKEUP = "history_enabled_wakeup";  //NUMERIC(boolean), 일어나서 활성여부
+
+        //시간마다
+        public static final String COLUMN_HISTORY_TAKE_CURRENT = "history_take_current";  //INTEGER, 현재 얼마나 먹었나.
+        public static final String COLUMN_HISTORY_TIME_START_HOUR = "history_time_start_hour";  //INTEGER, 울릴 시작 시간(시)
+        public static final String COLUMN_HISTORY_TIME_START_MINUTE = "history_time_start_minute";  //INTEGER, 울릴 시작 시간(분)
+        public static final String COLUMN_HISTORY_TIME_INTERVAL = "history_time_interval";  //INTEGER, 울릴 시간 간격
 
         public static final String COLUMN_DISEASE_CREATEDAT = "history_createdAt";  //NUMERIC(datetime), 컬럼 생성날짜
         public static final String COLUMN_DISEASE_UPDATEAT = "history_updateAt";  //NUMERIC(datetime), 컬럼 업데이트 날짜
@@ -77,6 +90,7 @@ public class Constants {
 
     }
 
+    //약
     public static final class PillEntray implements BaseColumns {
 
         public static final String TABLE_NAME = "pill";
