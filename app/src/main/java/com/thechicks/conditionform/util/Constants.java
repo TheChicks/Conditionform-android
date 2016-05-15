@@ -40,6 +40,10 @@ public class Constants {
         public static final String COLUMN_DISEASE_DOSAGE_TOTAL = "disease_dosage_total";  //INTEGER, 총 투여 횟수
         public static final String COLUMN_DISEASE_DOSAGE_TOTAL_DAYS = "disease_dosage_total_days";  //INTEGER, 투약 일수
 
+        public static final String COLUMN_DISEASE_FK_HISTORY_ID = "disease_fk_history_id";
+        public static final String COLUMN_DISEASE_FK_ALARM_ID = "disease_fk_alarm_id";
+        public static final String COLUMN_DISEASE_FK_PILL_ID = "disease_fk_pill_id";
+
         public static final String COLUMN_DISEASE_CREATEDAT = "disease_createdAt";  //NUMERIC(datetime), 컬럼 생성날짜
         public static final String COLUMN_DISEASE_UPDATEAT = "disease_updateAt";  //NUMERIC(datetime), 컬럼 업데이트 날짜
 
