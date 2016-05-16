@@ -78,10 +78,34 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
 
         final String SQL_CREATE_PILL_TABLE = "CREATE TABLE " + Constants.PillEntray.TABLE_NAME + " (" +
                 Constants.PillEntray._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Constants.PillEntray.COLUMN_PILL_NAME + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_NAME_KOREA + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_NAME_ENGLISH + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_IMAGE_URL + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_INGREDIENT + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_ASSORTMENT + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_UNITARINESS_OR_COMPLEXNESS + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_MANUFACTURE_ASSORTMENT + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_SELLER + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_FORMULATION + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_TAKING_ROUTE + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_KOREA_FOOD_AND_DRUG_ADMINISTRATION_CATEGORY + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_INSURANCE_CODE + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_TABOO_COMBINATION + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_TABOO_AGE + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_TABOO_PREGNANT + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_CAUTION_OLD_MAN + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_CAUTION_VOLUME_AND_TREATMENT_PERIOD + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_CAUTION_DIVISION + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_PROHIBITION_BLOOD_DONATION + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_SHAPE_INFO + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_PACKING_UNIT + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_STORAGINT_METHOD + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_EFFICACY + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_DOSAGE + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_PRECAUTION + " TEXT, " +
+                Constants.PillEntray.COLUMN_PILL_MEDICATION_GUIDE + " TEXT, " +
                 Constants.PillEntray.COLUMN_Pill_CREATEDAT + " NUMERIC, " +
                 Constants.PillEntray.COLUMN_Pill_UPDATEAT + " NUMERIC " +
-                //Todo: column 추가
                 " );";
 
         final String SQL_CREATE_DISEASE_TABLE = "CREATE TABLE " + Constants.DiseaseEntray.TABLE_NAME + " (" +

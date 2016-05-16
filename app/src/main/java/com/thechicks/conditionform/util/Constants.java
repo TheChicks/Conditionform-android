@@ -3,6 +3,7 @@ package com.thechicks.conditionform.util;
 import android.preference.PreferenceFragment;
 import android.provider.BaseColumns;
 
+import com.google.gson.annotations.SerializedName;
 import com.thechicks.conditionform.BuildConfig;
 
 /**
@@ -114,13 +115,47 @@ public class Constants {
 
         public static final String TABLE_NAME = "pill";
 
-        public static final String COLUMN_PILL_NAME = "pill_name";  //TEXT, 이름
-        //Todo: 컬럼 정의
+        public static final String COLUMN_PILL_NAME_KOREA = "pill_name_korea";  //TEXT, 이름(한)
+        public static final String COLUMN_PILL_NAME_ENGLISH = "pill_name_english";  //TEXT, 이름(영)
+        public static final String COLUMN_PILL_IMAGE_URL = "pill_image_url";  //TEXT, 이미지URL
+        public static final String COLUMN_PILL_INGREDIENT = "pill_ingredient";  //TEXT, 성분명
+        public static final String COLUMN_PILL_ASSORTMENT = "pill_assortment";  //TEXT, 전문/일반 //구분
+        public static final String COLUMN_PILL_UNITARINESS_OR_COMPLEXNESS = "pill_unitariness_or_complexness";  //TEXT, 단일/복합
+        public static final String COLUMN_PILL_MANUFACTURE_ASSORTMENT = "pill_manufacture_assortment";  //TEXT, 제조/수입사
+        public static final String COLUMN_PILL_SELLER = "pill_seller";  //TEXT, 판매사
+        public static final String COLUMN_PILL_FORMULATION = "pill_formulation";  //TEXT, 제형
+        public static final String COLUMN_PILL_TAKING_ROUTE = "pill_taking_route";  //TEXT, 투여경로
+        public static final String COLUMN_PILL_KOREA_FOOD_AND_DRUG_ADMINISTRATION_CATEGORY = "pill_korea_food_and_drug_administration_category";  //TEXT, 식약처 분류
+        public static final String COLUMN_PILL_INSURANCE_CODE = "pill_insurance_code";  //TEXT, 보험코드
 
+        //의약품 안전성 정보(DUR)
+        public static final String COLUMN_PILL_TABOO_COMBINATION = "pill_taboo_combination";  //TEXT, 병용금기
+        public static final String COLUMN_PILL_TABOO_AGE = "pill_taboo_age";  //TEXT, 연령금기
+        public static final String COLUMN_PILL_TABOO_PREGNANT = "pill_taboo_pregnant";  //TEXT, 임부금기
+        public static final String COLUMN_PILL_CAUTION_OLD_MAN = "pill_caution_old_man";  //TEXT, 노인주의
+        public static final String COLUMN_PILL_CAUTION_VOLUME_AND_TREATMENT_PERIOD = "pill_caution_volume_and_treatment_period";  //TEXT, 용량/투여기간주의
+        public static final String COLUMN_PILL_CAUTION_DIVISION = "pill_caution_division";  //TEXT, 분할주의
+        public static final String COLUMN_PILL_PROHIBITION_BLOOD_DONATION = "pill_prohibition_blood_donation";  //TEXT, 헌혈금지
+        public static final String COLUMN_PILL_SHAPE_INFO = "pill_shape_info";  //TEXT, 성상
+        public static final String COLUMN_PILL_PACKING_UNIT = "pill_packing_unit";  //TEXT, 포장단위
+        public static final String COLUMN_PILL_STORAGINT_METHOD = "pill_storagint_method";  //TEXT, 저장방법
+        public static final String COLUMN_PILL_EFFICACY = "pill_efficacy";  //TEXT, 효능효과
+        public static final String COLUMN_PILL_DOSAGE = "pill_dosage";  //TEXT, 용법용량
+        public static final String COLUMN_PILL_PRECAUTION = "pill_precaution";  //TEXT, 사용상 주의사항
+        public static final String COLUMN_PILL_MEDICATION_GUIDE = "pill_medication_guide";  //TEXT, 복약지도
 
         public static final String COLUMN_Pill_CREATEDAT = "pill_createdAt";  //NUMERIC(datetime), 컬럼 생성날짜
         public static final String COLUMN_Pill_UPDATEAT = "pill_updateAt";  //NUMERIC(datetime), 컬럼 업데이트 날짜
 
-
+        public static final String[] PROJECTION_ALL = {_ID, COLUMN_PILL_NAME_KOREA, COLUMN_PILL_NAME_ENGLISH,
+                COLUMN_PILL_IMAGE_URL, COLUMN_PILL_INGREDIENT, COLUMN_PILL_ASSORTMENT,
+                COLUMN_PILL_UNITARINESS_OR_COMPLEXNESS, COLUMN_PILL_MANUFACTURE_ASSORTMENT, COLUMN_PILL_SELLER,
+                COLUMN_PILL_FORMULATION, COLUMN_PILL_TAKING_ROUTE, COLUMN_PILL_KOREA_FOOD_AND_DRUG_ADMINISTRATION_CATEGORY,
+                COLUMN_PILL_INSURANCE_CODE, COLUMN_PILL_TABOO_COMBINATION, COLUMN_PILL_TABOO_AGE,
+                COLUMN_PILL_TABOO_PREGNANT, COLUMN_PILL_CAUTION_OLD_MAN, COLUMN_PILL_CAUTION_VOLUME_AND_TREATMENT_PERIOD,
+                COLUMN_PILL_CAUTION_DIVISION, COLUMN_PILL_PROHIBITION_BLOOD_DONATION, COLUMN_PILL_SHAPE_INFO,
+                COLUMN_PILL_PACKING_UNIT, COLUMN_PILL_STORAGINT_METHOD, COLUMN_PILL_EFFICACY,
+                COLUMN_PILL_DOSAGE, COLUMN_PILL_PRECAUTION, COLUMN_PILL_MEDICATION_GUIDE,
+                COLUMN_Pill_CREATEDAT, COLUMN_Pill_UPDATEAT};
     }
 }
