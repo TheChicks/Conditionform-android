@@ -1,6 +1,8 @@
 package com.thechicks.conditionform.data.database;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -24,10 +26,10 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
 
     //double check
     // 생성 시점에만 동기화를 적용하고, 생성 이후에는 동기화를 제거하는 방법.
-    public static ConditionformDbHelper getInstance(Context context){
-        if(instance == null){
-            synchronized(ConditionformDbHelper.class){
-                if(instance == null){
+    public static ConditionformDbHelper getInstance(Context context) {
+        if (instance == null) {
+            synchronized (ConditionformDbHelper.class) {
+                if (instance == null) {
                     instance = new ConditionformDbHelper(context);
                     db = instance.getWritableDatabase();
                 }
@@ -45,6 +47,32 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //table 생성 sql문 정의
+        final String SQL_CREATE_DISEASE_TABLE = "CREATE TABLE " + Constants.DiseaseEntray.TABLE_NAME + " (" +
+                Constants.DiseaseEntray._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_NAME + " TEXT NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR + " INTEGER NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DATE_START + " NUMERIC NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END + " NUMERIC NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE + " INTEGER NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME + " INTEGER NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL + " INTEGER NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS + " INTEGER NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_CREATEDAT + " NUMERIC, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_UPDATEAT + " NUMERIC " +
+
+                /*
+                Constants.DiseaseEntray.COLUMN_DISEASE_FK_HISTORY_ID + " INTEGER, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_FK_ALARM_ID + " INTEGER, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_FK_PILL_ID + " INTEGER, " +
+                " FOREIGN KEY (" + Constants.DiseaseEntray.COLUMN_DISEASE_FK_HISTORY_ID + ") REFERENCES " +
+                Constants.HistoryEntray.TABLE_NAME + " (" + Constants.HistoryEntray._ID + ")," +
+                " FOREIGN KEY (" + Constants.DiseaseEntray.COLUMN_DISEASE_FK_ALARM_ID + ") REFERENCES " +
+                Constants.AlarmEntray.TABLE_NAME + " (" + Constants.AlarmEntray._ID + ")," +
+                " FOREIGN KEY (" + Constants.DiseaseEntray.COLUMN_DISEASE_FK_PILL_ID + ") REFERENCES " +
+                Constants.PillEntray.TABLE_NAME + " (" + Constants.PillEntray._ID + ")" +
+                */
+                " );";
+
         final String SQL_CREATE_HISTORY_TABLE = "CREATE TABLE " + Constants.HistoryEntray.TABLE_NAME + " (" +
                 Constants.HistoryEntray._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Constants.HistoryEntray.COLUMN_HISTORY_DATE + " NUMERIC, " +
@@ -63,7 +91,10 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
                 Constants.HistoryEntray.COLUMN_HISTORY_TIME_START_MINUTE + " INTEGER, " +
                 Constants.HistoryEntray.COLUMN_HISTORY_TIME_INTERVAL + " INTEGER, " +
                 Constants.HistoryEntray.COLUMN_HISTORY_CREATEDAT + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_UPDATEAT + " NUMERIC " +
+                Constants.HistoryEntray.COLUMN_HISTORY_UPDATEAT + " NUMERIC, " +
+                Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID + " INTEGER, " +
+                " FOREIGN KEY (" + Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID + ") REFERENCES " +
+                Constants.DiseaseEntray.TABLE_NAME + " (" + Constants.DiseaseEntray._ID + ")" +
                 " );";
 
         final String SQL_CREATE_ALARM_TABLE = "CREATE TABLE " + Constants.AlarmEntray.TABLE_NAME + " (" +
@@ -73,7 +104,10 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
                 Constants.AlarmEntray.COLUMN_ALARM_TIME + " NUMERIC, " +
                 Constants.AlarmEntray.COLUMN_ALARM_DATE + " NUMERIC, " +
                 Constants.AlarmEntray.COLUMN_ALARM_CREATEDAT + " NUMERIC, " +
-                Constants.AlarmEntray.COLUMN_ALARM_UPDATEAT + " NUMERIC " +
+                Constants.AlarmEntray.COLUMN_ALARM_UPDATEAT + " NUMERIC, " +
+                Constants.AlarmEntray.COLUMN_ALARM_FK_DISEASE_ID + " INTEGER, " +
+                " FOREIGN KEY (" + Constants.AlarmEntray.COLUMN_ALARM_FK_DISEASE_ID + ") REFERENCES " +
+                Constants.DiseaseEntray.TABLE_NAME + " (" + Constants.DiseaseEntray._ID + ")" +
                 " );";
 
         final String SQL_CREATE_PILL_TABLE = "CREATE TABLE " + Constants.PillEntray.TABLE_NAME + " (" +
@@ -105,37 +139,30 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
                 Constants.PillEntray.COLUMN_PILL_PRECAUTION + " TEXT, " +
                 Constants.PillEntray.COLUMN_PILL_MEDICATION_GUIDE + " TEXT, " +
                 Constants.PillEntray.COLUMN_Pill_CREATEDAT + " NUMERIC, " +
-                Constants.PillEntray.COLUMN_Pill_UPDATEAT + " NUMERIC " +
+                Constants.PillEntray.COLUMN_Pill_UPDATEAT + " NUMERIC, " +
+                Constants.PillEntray.COLUMN_PILL_FK_DISEASE_ID + " INTEGER, " +
+                " FOREIGN KEY (" + Constants.PillEntray.COLUMN_PILL_FK_DISEASE_ID + ") REFERENCES " +
+                Constants.DiseaseEntray.TABLE_NAME + " (" + Constants.DiseaseEntray._ID + ")" +
                 " );";
 
-        final String SQL_CREATE_DISEASE_TABLE = "CREATE TABLE " + Constants.DiseaseEntray.TABLE_NAME + " (" +
-                Constants.DiseaseEntray._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_NAME + " TEXT NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DATE_START + " NUMERIC NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END + " NUMERIC NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_CREATEDAT + " NUMERIC, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_UPDATEAT + " NUMERIC, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_FK_HISTORY_ID + " INTEGER, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_FK_ALARM_ID + " INTEGER, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_FK_PILL_ID + " INTEGER, " +
-                " FOREIGN KEY (" + Constants.DiseaseEntray.COLUMN_DISEASE_FK_HISTORY_ID + ") REFERENCES " +
-                Constants.HistoryEntray.TABLE_NAME + " (" + Constants.HistoryEntray._ID + ")," +
-                " FOREIGN KEY (" + Constants.DiseaseEntray.COLUMN_DISEASE_FK_ALARM_ID + ") REFERENCES " +
-                Constants.AlarmEntray.TABLE_NAME + " (" + Constants.AlarmEntray._ID + ")," +
-                " FOREIGN KEY (" + Constants.DiseaseEntray.COLUMN_DISEASE_FK_PILL_ID + ") REFERENCES " +
+        final String SQL_CREATE_PRESCRIPTION_TABLE = "CREATE TABLE " + Constants.PrescriptionEntray.TABLE_NAME + " (" +
+                Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_DISEASE_ID + " INTEGER, " +
+                Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_PILL_ID + " INTEGER, " +
+                Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_CREATEDAT + " NUMERIC, " +
+                Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_UPDATEAT + " NUMERIC, " +
+                " PRIMARY KEY (" + Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_DISEASE_ID + ", " + Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_PILL_ID + "), " +
+                " FOREIGN KEY (" + Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_DISEASE_ID + ") REFERENCES " +
+                Constants.DiseaseEntray.TABLE_NAME + " (" + Constants.DiseaseEntray._ID + ")," +
+                " FOREIGN KEY (" + Constants.PrescriptionEntray.COLUMN_PRESCRIPTION_PILL_ID + ") REFERENCES " +
                 Constants.PillEntray.TABLE_NAME + " (" + Constants.PillEntray._ID + ")" +
                 " );";
 
         //table 생성 sql 실행
+        db.execSQL(SQL_CREATE_DISEASE_TABLE);
         db.execSQL(SQL_CREATE_HISTORY_TABLE);
         db.execSQL(SQL_CREATE_ALARM_TABLE);
         db.execSQL(SQL_CREATE_PILL_TABLE);
-        db.execSQL(SQL_CREATE_DISEASE_TABLE);
+        db.execSQL(SQL_CREATE_PRESCRIPTION_TABLE);
     }
 
     @Override
@@ -175,5 +202,54 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
     }
 
     //Todo: CRUD 구현
+    public long insert(ContentValues cv) {
+        //execSQL()를 이용해서 직접 SQL문으로 레코드를 추가할 수도 있다.
+
+        return db.insert(Constants.DiseaseEntray.TABLE_NAME,
+                null,
+                cv);
+    }
+
+    public Cursor query(String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+        return getReadableDatabase().query(Constants.DiseaseEntray.TABLE_NAME,
+                columns,
+                selection,
+                selectionArgs,
+                groupBy,
+                having,
+                orderBy);
+    }
+
+    public int update(ContentValues cv, String whereClause, String[] whereArgs) {
+        //갱신된 레코드수 리턴
+        return db.update(Constants.DiseaseEntray.TABLE_NAME,
+                cv,
+                whereClause,
+                whereArgs);
+    }
+
+    public int delete(String whereClause, String[] whereArgs) {
+        //삭제된 레코드수 리턴
+        return db.delete(Constants.DiseaseEntray.TABLE_NAME,
+                whereClause,
+                whereArgs);
+    }
+
+    //메인 화면 쿼리
+    //color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
+    // showWakeup, showMorning, showLunch, showEvening, showSleep
+    // takeWakeup, takeMorning, takeLunch, takeEvening, takeSleep
+    // timeStartHour, timeStartMinute, timeInterval, dosageCurrnt, dosageTotal
+
+
+    // 식사일때 저장
+    // color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
+    // TimeList
+
+
+    //시간일때 저장
+    // color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
+    // timeStartHour, timeStartMinute, timeInterval,
+
 
 }

@@ -1,9 +1,7 @@
 package com.thechicks.conditionform.util;
 
-import android.preference.PreferenceFragment;
 import android.provider.BaseColumns;
 
-import com.google.gson.annotations.SerializedName;
 import com.thechicks.conditionform.BuildConfig;
 
 /**
@@ -41,9 +39,9 @@ public class Constants {
         public static final String COLUMN_DISEASE_DOSAGE_TOTAL = "disease_dosage_total";  //INTEGER, 총 투여 횟수
         public static final String COLUMN_DISEASE_DOSAGE_TOTAL_DAYS = "disease_dosage_total_days";  //INTEGER, 투약 일수
 
-        public static final String COLUMN_DISEASE_FK_HISTORY_ID = "disease_fk_history_id";
-        public static final String COLUMN_DISEASE_FK_ALARM_ID = "disease_fk_alarm_id";
-        public static final String COLUMN_DISEASE_FK_PILL_ID = "disease_fk_pill_id";
+//        public static final String COLUMN_DISEASE_FK_HISTORY_ID = "disease_fk_history_id";  //외래키, 히스토리
+//        public static final String COLUMN_DISEASE_FK_ALARM_ID = "disease_fk_alarm_id";  //외래키, 알람
+//        public static final String COLUMN_DISEASE_FK_PILL_ID = "disease_fk_pill_id";  //외래키, 약
 
         public static final String COLUMN_DISEASE_CREATEDAT = "disease_createdAt";  //NUMERIC(datetime), 컬럼 생성날짜
         public static final String COLUMN_DISEASE_UPDATEAT = "disease_updateAt";  //NUMERIC(datetime), 컬럼 업데이트 날짜
@@ -79,6 +77,8 @@ public class Constants {
         public static final String COLUMN_HISTORY_TIME_START_MINUTE = "history_time_start_minute";  //INTEGER, 울릴 시작 시간(분)
         public static final String COLUMN_HISTORY_TIME_INTERVAL = "history_time_interval";  //INTEGER, 울릴 시간 간격
 
+        public static final String COLUMN_HISTORY_FK_DISEASE_ID = "history_fk_disease_id";  //외래키, 병
+
         public static final String COLUMN_HISTORY_CREATEDAT = "history_createdAt";  //NUMERIC(datetime), 컬럼 생성날짜
         public static final String COLUMN_HISTORY_UPDATEAT = "history_updateAt";  //NUMERIC(datetime), 컬럼 업데이트 날짜
 
@@ -101,6 +101,8 @@ public class Constants {
         public static final String COLUMN_ALARM_RINGTONE_PATH = "alarm_ringtone_path";  //TEXT, 소리 PATH
         public static final String COLUMN_ALARM_TIME = "alarm_time";  //NUMERIC(datetime), 울릴 시간
         public static final String COLUMN_ALARM_DATE = "alarm_date";  //NUMERIC(datetime), 울릴 날짜
+
+        public static final String COLUMN_ALARM_FK_DISEASE_ID = "alarm_fk_disease_id";  //외래키, 병
 
         public static final String COLUMN_ALARM_CREATEDAT = "alarm_createdAt";  //NUMERIC(datetime),컬럼 생성날짜
         public static final String COLUMN_ALARM_UPDATEAT = "alarm_updateAt";  //NUMERIC(datetime),컬럼 업데이트 날짜
@@ -144,6 +146,8 @@ public class Constants {
         public static final String COLUMN_PILL_PRECAUTION = "pill_precaution";  //TEXT, 사용상 주의사항
         public static final String COLUMN_PILL_MEDICATION_GUIDE = "pill_medication_guide";  //TEXT, 복약지도
 
+        public static final String COLUMN_PILL_FK_DISEASE_ID = "pill_fk_disease_id";  //외래키, 병
+
         public static final String COLUMN_Pill_CREATEDAT = "pill_createdAt";  //NUMERIC(datetime), 컬럼 생성날짜
         public static final String COLUMN_Pill_UPDATEAT = "pill_updateAt";  //NUMERIC(datetime), 컬럼 업데이트 날짜
 
@@ -157,5 +161,20 @@ public class Constants {
                 COLUMN_PILL_PACKING_UNIT, COLUMN_PILL_STORAGINT_METHOD, COLUMN_PILL_EFFICACY,
                 COLUMN_PILL_DOSAGE, COLUMN_PILL_PRECAUTION, COLUMN_PILL_MEDICATION_GUIDE,
                 COLUMN_Pill_CREATEDAT, COLUMN_Pill_UPDATEAT};
+    }
+
+    //Disease와 Pill의 관계를 나타내는 테이블
+    public static final class PrescriptionEntray implements BaseColumns {
+
+        public static final String TABLE_NAME = "prescription";
+
+        public static final String COLUMN_PRESCRIPTION_DISEASE_ID = "prescription_disease_id";  //INTEGER, disease ID
+        public static final String COLUMN_PRESCRIPTION_PILL_ID = "prescription_pill_id";  //INTEGER, pill ID
+
+        public static final String COLUMN_PRESCRIPTION_CREATEDAT = "prescription_createdAt";  //NUMERIC(datetime), 컬럼 생성날짜
+        public static final String COLUMN_PRESCRIPTION_UPDATEAT = "prescription_updateAt";  //NUMERIC(datetime), 컬럼 업데이트 날짜
+
+        public static final String[] PROJECTION_ALL = {_ID, COLUMN_PRESCRIPTION_DISEASE_ID,
+                COLUMN_PRESCRIPTION_PILL_ID, COLUMN_PRESCRIPTION_CREATEDAT, COLUMN_PRESCRIPTION_UPDATEAT};
     }
 }
