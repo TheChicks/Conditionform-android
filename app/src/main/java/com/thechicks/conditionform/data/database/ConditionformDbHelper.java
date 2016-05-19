@@ -17,7 +17,7 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
     public static final String TAG = ConditionformDbHelper.class.getSimpleName();
 
     private static ConditionformDbHelper instance;
-    private static SQLiteDatabase db;
+    private static SQLiteDatabase mDb;
 
     private static final int VER_RELEASE_A = 0x01;  //app version 1.0.0
     private static final int CUR_DATABASE_VERSION = VER_RELEASE_A;
@@ -30,8 +30,8 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
         if (instance == null) {
             synchronized (ConditionformDbHelper.class) {
                 if (instance == null) {
-                    instance = new ConditionformDbHelper(context);
-                    db = instance.getWritableDatabase();
+                    instance = new ConditionformDbHelper(context.getApplicationContext());
+                    mDb = instance.getWritableDatabase();
                 }
             }
         }
@@ -58,11 +58,11 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
                 Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME + " INTEGER, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL + " INTEGER, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS + " INTEGER, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP + " NUMERIC DEFAULT 0, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING + " NUMERIC DEFAULT 0, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH + " NUMERIC DEFAULT 0, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING + " NUMERIC DEFAULT 0, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP + " NUMERIC DEFAULT 0, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP + " NUMERIC DEFAULT 1, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING + " NUMERIC DEFAULT 1, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH + " NUMERIC DEFAULT 1, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING + " NUMERIC DEFAULT 1, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP + " NUMERIC DEFAULT 1, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_HOUR + " INTEGER, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE + " INTEGER, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL + " INTEGER, " +
@@ -206,7 +206,7 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
     public long insert(String table, ContentValues cv) {
         //execSQL()를 이용해서 직접 SQL문으로 레코드를 추가할 수도 있다.
         //생성된 레코드 id 리턴
-        return db.insert(table,
+        return mDb.insert(table,
                 null,
                 cv);
     }
@@ -223,7 +223,7 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
 
     public int update(String table, ContentValues cv, String whereClause, String[] whereArgs) {
         //갱신된 레코드수 리턴
-        return db.update(table,
+        return mDb.update(table,
                 cv,
                 whereClause,
                 whereArgs);
@@ -231,7 +231,7 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
 
     public int delete(String table, String whereClause, String[] whereArgs) {
         //삭제된 레코드수 리턴
-        return db.delete(table,
+        return mDb.delete(table,
                 whereClause,
                 whereArgs);
     }

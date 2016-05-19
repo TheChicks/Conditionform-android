@@ -24,4 +24,6 @@ public interface IConditionformDao {
 
     public List<History> findAllDisease();
 
+    public List<Disease> findDiseaseByDate(long timeStamp);
+
 }

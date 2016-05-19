@@ -91,7 +91,7 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
         //Todo: CheckBox 리스너 제거,
         //이미지 표시 여부 결정
         //약 먹은거 체크
-        if (disease.isShowMorning()) {  //표시
+        if (disease.isEnabledMorning()) {  //표시
             cbMorning.setVisibility(View.VISIBLE);
 
             cbMorning.setChecked(disease.isTakeMorning());
@@ -105,7 +105,7 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
             cbMorning.setVisibility(View.GONE);
         }
 
-        if (disease.isShowLunch()) {  //표시
+        if (disease.isEnabledLunch()) {  //표시
             cbLunch.setVisibility(View.VISIBLE);
             cbLunch.setChecked(disease.isTakeLunch());
             cbLunch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -118,7 +118,7 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
             cbLunch.setVisibility(View.GONE);
         }
 
-        if (disease.isShowEvening()) {  //표시
+        if (disease.isEnabledEvening()) {  //표시
             cbDinner.setVisibility(View.VISIBLE);
             cbDinner.setChecked(disease.isTakeEvening());
             cbDinner.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -131,7 +131,7 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
             cbDinner.setVisibility(View.GONE);
         }
 
-        if (disease.isShowSleep()) {  //표시
+        if (disease.isEnabledSleep()) {  //표시
             cbSleep.setVisibility(View.VISIBLE);
             cbSleep.setChecked(disease.isTakeSleep());
             cbSleep.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

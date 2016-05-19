@@ -175,9 +175,9 @@ public class HistoryListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         notifyItemRemoved(position);
     }
 
-    public void setItemList(List<History> histories){
+    public void setItemList(List<History> historyList){
 
-        mHistoryArrayList = histories;
+        mHistoryArrayList = historyList;
 
         sortHistoryList(mHistoryArrayList);
         insertHeaderView();

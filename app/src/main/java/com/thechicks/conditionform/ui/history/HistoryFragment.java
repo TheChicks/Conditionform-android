@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.database.ConditionformDao;
+import com.thechicks.conditionform.util.AsyncHandler;
 
 import java.util.List;
 
@@ -93,7 +94,19 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        List<History> histories = conditionformDao.findAllDisease();
-        mHistoryListAdapter.setItemList(histories);
+
+        AsyncHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final List<History> histories = conditionformDao.findAllDisease();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHistoryListAdapter.setItemList(histories);
+                    }
+                });
+            }
+        });
     }
 }

@@ -21,12 +21,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.ui.history.History;
 import com.thechicks.conditionform.ui.regist.RegistManualActivity;
+import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.TimeUtils;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -77,6 +81,8 @@ public class HomeFragment extends Fragment {
     Animation animShrink;
 
     DiseaseListAdapter mDiseaseListAdapter;
+
+    ConditionformDao conditionformDao;
 
     //시간 관리용
     int currentDisplayYear;
@@ -155,6 +161,8 @@ public class HomeFragment extends Fragment {
 
         animationLoad();
         setupToday();
+
+        conditionformDao = new ConditionformDao(getActivity());
     }
 
     private void animationLoad() {
@@ -177,8 +185,6 @@ public class HomeFragment extends Fragment {
         Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
 
         tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
-
-        //Todo: 데이터 로드
     }
 
     //이전 날짜로 이동
@@ -193,7 +199,19 @@ public class HomeFragment extends Fragment {
 
         tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
 
-        //Todo: 데이터 로드
+        //데이터 로드
+        AsyncHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final List<Disease> diseaseList = conditionformDao.findDiseaseByDate(currentDayTimestamp);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDiseaseListAdapter.setItemList(diseaseList);
+                    }
+                });
+            }
+        });
     }
 
     //다음 날짜로 이동
@@ -208,8 +226,20 @@ public class HomeFragment extends Fragment {
 
         tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
 
-        //Todo: 데이터 로드
+        //데이터 로드
+        AsyncHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final List<Disease> diseaseList = conditionformDao.findDiseaseByDate(currentDayTimestamp);
 
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDiseaseListAdapter.setItemList(diseaseList);
+                    }
+                });
+            }
+        });
     }
 
     //DatePicker 표시하고 넘어온 Date로 변화
@@ -227,10 +257,22 @@ public class HomeFragment extends Fragment {
                 currentDayTimestamp = TimeUtils.getDayTimeStamp(currentDisplayYear, currentDisplayMonth, currentDisplayDay);
 
                 tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
+
+                //데이터 로드
+                AsyncHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        final List<Disease> diseaseList = conditionformDao.findDiseaseByDate(currentDayTimestamp);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mDiseaseListAdapter.setItemList(diseaseList);
+                            }
+                        });
+                    }
+                });
             }
         }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
-
-        //Todo: 데이터 로드
     }
 
     @OnClick(R.id.fab_menu_open)
@@ -321,5 +363,24 @@ public class HomeFragment extends Fragment {
         fabRegisterManual.setClickable(false);
 
         fabStatus = false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        AsyncHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                final List<Disease> diseaseList = conditionformDao.findDiseaseByDate(currentDayTimestamp);
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDiseaseListAdapter.setItemList(diseaseList);
+                    }
+                });
+            }
+        });
     }
 }

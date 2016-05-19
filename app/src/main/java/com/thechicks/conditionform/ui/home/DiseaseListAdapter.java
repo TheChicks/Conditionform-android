@@ -9,6 +9,7 @@ import com.thechicks.conditionform.data.model.Pill;
 import com.thechicks.conditionform.util.Constants;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Dong on 2016-04-09.
@@ -19,16 +20,16 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public static final int VIEW_TYPE_INTERVAL = 1;  //시간마다
 
     private final Context mContext;
-    private final ArrayList<Disease> mDiseaseList;
+    private List<Disease> mDiseaseList;
 
     //item click event
     private OnListItemClickListener mOnListItemClickListener;
 
-    public interface OnListItemClickListener{
+    public interface OnListItemClickListener {
         void onListItemClick(Disease disease);
     }
 
-    public void setOnListItemClickListener(OnListItemClickListener listener){
+    public void setOnListItemClickListener(OnListItemClickListener listener) {
         mOnListItemClickListener = listener;
     }
 
@@ -58,7 +59,7 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     //객체가 가진 뷰타입에 따라 리턴
     @Override
     public int getItemViewType(int position) {
-        switch (mDiseaseList.get(position).getDosageType()){
+        switch (mDiseaseList.get(position).getDosageType()) {
             case Constants.DOSAGE_TYPE_EVERYDAY:
                 return VIEW_TYPE_NORMAL;
             case Constants.DOSAGE_TYPE_TWODAY:
@@ -109,5 +110,11 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     public void removeItem(int position) {
         mDiseaseList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void setItemList(List<Disease> diseaseList){
+
+        mDiseaseList = diseaseList;
+        notifyDataSetChanged();
     }
 }

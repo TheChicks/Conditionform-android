@@ -48,11 +48,11 @@ public class ConditionformDao implements IConditionformDao {
         cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE, disease.getTimeStartMinute());
         cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL, disease.getTimeInterval());
 //        }else {
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP, disease.isShowWakeup() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING, disease.isShowMorning() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH, disease.isShowLunch() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING, disease.isShowEvening() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP, disease.isShowSleep() ? 1 : 0);
+        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP, disease.isEnabledWakeup() ? 1 : 0);
+        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING, disease.isEnabledMorning() ? 1 : 0);
+        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH, disease.isEnabledLunch() ? 1 : 0);
+        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING, disease.isEnabledEvening() ? 1 : 0);
+        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP, disease.isEnabledSleep() ? 1 : 0);
 //        }
 
         cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME, disease.getDosageOneTime());
@@ -123,7 +123,7 @@ public class ConditionformDao implements IConditionformDao {
 
         long rowId = mDbHelper.insert(Constants.PrescriptionEntray.TABLE_NAME, cv);
 
-        if(rowId < 0){
+        if (rowId < 0) {
             return false;
         }
         return true;
@@ -138,12 +138,82 @@ public class ConditionformDao implements IConditionformDao {
     // color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
     // timeStartHour, timeStartMinute, timeInterval,
 
+    /*
+    메인 화면 쿼리
+    disease
+      color, img, name, dosageType,
+      enabledWakeup, enabledMorning, enabledLunch, enabledEvening, enabledSleep
+      timeInterval
 
-    //메인 화면 쿼리
-    //color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
-    // showWakeup, showMorning, showLunch, showEvening, showSleep
-    // takeWakeup, takeMorning, takeLunch, takeEvening, takeSleep
-    // timeStartHour, timeStartMinute, timeInterval, dosageCurrnt, dosageTotal
+    history
+      takeWakeup, takeMorning, takeLunch, takeEvening, takeSleep
+      dosageCurrnt, dosageTotal
+     */
+    @Override
+    public List<Disease> findDiseaseByDate(long timeStamp) {
+
+        final String[] HOME_LIST_COLUMN = {Constants.DiseaseEntray.COLUMN_DISEASE_NAME,
+                Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE, Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR,
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE, Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP,
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING, Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH,
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING, Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP,
+                Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL, Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL,
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP, Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING,
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH, Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING,
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP, Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT
+        };
+
+        SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
+
+
+        sqLiteQueryBuilder.setTables(Constants.DiseaseEntray.TABLE_NAME +
+                " INNER JOIN " + Constants.HistoryEntray.TABLE_NAME + " ON " +
+                Constants.DiseaseEntray.TABLE_NAME + "." + Constants.DiseaseEntray._ID + " = " + Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID);
+
+        //Todo: createdAt으로 정렬
+//        String SORT_ORDER_CREATEDAT_DESC = Constants.DiseaseEntray.COLUMN_DISEASE_CREATEDAT + " DESC";
+
+        List<Disease> diseaseList = new ArrayList<>();
+
+        Cursor cursor = sqLiteQueryBuilder.query(mDbHelper.getReadableDatabase(),
+                HOME_LIST_COLUMN,
+                Constants.HistoryEntray.COLUMN_HISTORY_DATE + " = ?",
+                new String[]{Long.toString(timeStamp)},
+                null,
+                null,
+                null);
+
+        Log.e(TAG, " cursor count=" + cursor.getCount());
+
+        while (cursor.moveToNext()) {
+            Disease disease = new Disease();
+            disease.setName(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_NAME)));
+            disease.setImg(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE)));
+            disease.setColor(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR)));
+            disease.setDosageType(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE)));
+            disease.setEnabledWakeup(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP)) == 1 ? true : false);
+            disease.setEnabledMorning(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING)) == 1 ? true : false);
+            disease.setEnabledLunch(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH)) == 1 ? true : false);
+            disease.setEnabledEvening(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING)) == 1 ? true : false);
+            disease.setEnabledSleep(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP)) == 1 ? true : false);
+            disease.setTimeInterval(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL)));
+            disease.setTakeWakeup(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP)) == 1 ? true : false);
+            disease.setTakeMorning(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING)) == 1 ? true : false);
+            disease.setTakeLunch(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH)) == 1 ? true : false);
+            disease.setTakeEvening(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING)) == 1 ? true : false);
+            disease.setTakeSleep(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP)) == 1 ? true : false);
+            disease.setDosageCurrnt(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT)));
+            disease.setDosageTotal(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL)));
+            diseaseList.add(disease);
+
+            Log.e(TAG, " " + disease);
+        }
+
+        cursor.close();
+
+        return diseaseList;
+    }
+
 
     /*
     복용 내역 관리 쿼리
@@ -152,17 +222,12 @@ public class ConditionformDao implements IConditionformDao {
     @Override
     public List<History> findAllDisease() {
 
-        List<History> historyList = new ArrayList<>();
-
-        SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
-
-//        sqLiteQueryBuilder.setTables(Constants.DiseaseEntray);
-
         final String[] HISTORY_LIST_COLUMN = {Constants.DiseaseEntray.COLUMN_DISEASE_NAME,
                 Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE, Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR,
                 Constants.DiseaseEntray.COLUMN_DISEASE_DATE_START, Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END,
                 Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE, Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL};
 
+        List<History> historyList = new ArrayList<>();
 
         Cursor cursor = mDbHelper.query(Constants.DiseaseEntray.TABLE_NAME,
                 HISTORY_LIST_COLUMN,
@@ -192,4 +257,6 @@ public class ConditionformDao implements IConditionformDao {
 
         return historyList;
     }
+
+
 }
