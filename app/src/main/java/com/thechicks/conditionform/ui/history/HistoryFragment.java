@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.data.database.ConditionformDao;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,6 +35,8 @@ public class HistoryFragment extends Fragment {
     RecyclerView rvHistory;
 
     HistoryListAdapter mHistoryListAdapter;
+
+    ConditionformDao conditionformDao;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -72,7 +77,7 @@ public class HistoryFragment extends Fragment {
         mHistoryListAdapter = new HistoryListAdapter(getActivity());
         mHistoryListAdapter.setOnListItemClickListener(new HistoryListAdapter.OnListItemClickListener() {
             @Override
-            public void onListItemClick(HistoryItem historyItem) {
+            public void onListItemClick(History history) {
                 //Todo: 복용내역 상세정보로 이동
 //                Intent intent = new Intent(getActivity(), 이동할 액티비티);
 //                startActivity(intent);
@@ -81,5 +86,14 @@ public class HistoryFragment extends Fragment {
             }
         });
         rvHistory.setAdapter(mHistoryListAdapter);
+
+        conditionformDao = new ConditionformDao(getActivity());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        List<History> histories = conditionformDao.findAllDisease();
+        mHistoryListAdapter.setItemList(histories);
     }
 }

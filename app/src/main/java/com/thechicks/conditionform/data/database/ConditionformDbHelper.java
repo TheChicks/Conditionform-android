@@ -50,13 +50,22 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_DISEASE_TABLE = "CREATE TABLE " + Constants.DiseaseEntray.TABLE_NAME + " (" +
                 Constants.DiseaseEntray._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_NAME + " TEXT NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE + " INTEGER, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR + " INTEGER NOT NULL, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_DATE_START + " NUMERIC NOT NULL, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END + " NUMERIC NOT NULL, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL + " INTEGER NOT NULL, " +
-                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS + " INTEGER NOT NULL, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME + " INTEGER, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL + " INTEGER, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS + " INTEGER, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP + " NUMERIC DEFAULT 0, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING + " NUMERIC DEFAULT 0, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH + " NUMERIC DEFAULT 0, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING + " NUMERIC DEFAULT 0, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP + " NUMERIC DEFAULT 0, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_HOUR + " INTEGER, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE + " INTEGER, " +
+                Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL + " INTEGER, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_CREATEDAT + " NUMERIC, " +
                 Constants.DiseaseEntray.COLUMN_DISEASE_UPDATEAT + " NUMERIC " +
 
@@ -76,20 +85,12 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_HISTORY_TABLE = "CREATE TABLE " + Constants.HistoryEntray.TABLE_NAME + " (" +
                 Constants.HistoryEntray._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Constants.HistoryEntray.COLUMN_HISTORY_DATE + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_ENABLED_WAKEUP + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_ENABLED_MORNING + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_ENABLED_LUNCH + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_ENABLED_EVENING + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_ENABLED_SLEEP + " NUMERIC, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT + " INTEGER, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TIME_START_HOUR + " INTEGER, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TIME_START_MINUTE + " INTEGER, " +
-                Constants.HistoryEntray.COLUMN_HISTORY_TIME_INTERVAL + " INTEGER, " +
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP + " NUMERIC DEFAULT 0, " +
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING + " NUMERIC DEFAULT 0, " +
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH + " NUMERIC DEFAULT 0, " +
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING + " NUMERIC DEFAULT 0, " +
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP + " NUMERIC DEFAULT 0, " +
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT + " INTEGER DEFAULT 0, " +
                 Constants.HistoryEntray.COLUMN_HISTORY_CREATEDAT + " NUMERIC, " +
                 Constants.HistoryEntray.COLUMN_HISTORY_UPDATEAT + " NUMERIC, " +
                 Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID + " INTEGER, " +
@@ -201,17 +202,17 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
         context.deleteDatabase(DATABASE_NAME);
     }
 
-    //Todo: CRUD 구현
-    public long insert(ContentValues cv) {
+    //CRUD 구현
+    public long insert(String table, ContentValues cv) {
         //execSQL()를 이용해서 직접 SQL문으로 레코드를 추가할 수도 있다.
-
-        return db.insert(Constants.DiseaseEntray.TABLE_NAME,
+        //생성된 레코드 id 리턴
+        return db.insert(table,
                 null,
                 cv);
     }
 
-    public Cursor query(String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
-        return getReadableDatabase().query(Constants.DiseaseEntray.TABLE_NAME,
+    public Cursor query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy) {
+        return getReadableDatabase().query(table,
                 columns,
                 selection,
                 selectionArgs,
@@ -220,36 +221,18 @@ public class ConditionformDbHelper extends SQLiteOpenHelper {
                 orderBy);
     }
 
-    public int update(ContentValues cv, String whereClause, String[] whereArgs) {
+    public int update(String table, ContentValues cv, String whereClause, String[] whereArgs) {
         //갱신된 레코드수 리턴
-        return db.update(Constants.DiseaseEntray.TABLE_NAME,
+        return db.update(table,
                 cv,
                 whereClause,
                 whereArgs);
     }
 
-    public int delete(String whereClause, String[] whereArgs) {
+    public int delete(String table, String whereClause, String[] whereArgs) {
         //삭제된 레코드수 리턴
-        return db.delete(Constants.DiseaseEntray.TABLE_NAME,
+        return db.delete(table,
                 whereClause,
                 whereArgs);
     }
-
-    //메인 화면 쿼리
-    //color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
-    // showWakeup, showMorning, showLunch, showEvening, showSleep
-    // takeWakeup, takeMorning, takeLunch, takeEvening, takeSleep
-    // timeStartHour, timeStartMinute, timeInterval, dosageCurrnt, dosageTotal
-
-
-    // 식사일때 저장
-    // color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
-    // TimeList
-
-
-    //시간일때 저장
-    // color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
-    // timeStartHour, timeStartMinute, timeInterval,
-
-
 }

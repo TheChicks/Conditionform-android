@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.Pill;
+import com.thechicks.conditionform.util.Constants;
 
 import java.util.ArrayList;
 
@@ -58,13 +59,13 @@ public class DiseaseListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public int getItemViewType(int position) {
         switch (mDiseaseList.get(position).getDosageType()){
-            case Disease.DOSAGE_TYPE_EVERYDAY:
+            case Constants.DOSAGE_TYPE_EVERYDAY:
                 return VIEW_TYPE_NORMAL;
-            case Disease.DOSAGE_TYPE_TWODAY:
+            case Constants.DOSAGE_TYPE_TWODAY:
                 return VIEW_TYPE_NORMAL;
-            case Disease.DOSAGE_TYPE_THREEDAY:
+            case Constants.DOSAGE_TYPE_THREEDAY:
                 return VIEW_TYPE_NORMAL;
-            case Disease.DOSAGE_TYPE_EVERYHOUR:
+            case Constants.DOSAGE_TYPE_EVERYHOUR:
                 return VIEW_TYPE_INTERVAL;
         }
         return -1;

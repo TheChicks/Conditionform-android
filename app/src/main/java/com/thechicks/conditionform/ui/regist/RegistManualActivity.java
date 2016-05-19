@@ -25,12 +25,15 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.thebluealliance.spectrum.SpectrumDialog;
-import com.thechicks.conditionform.alert.AlarmAlertReceiver;
+import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.Pill;
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.model.TimeItem;
+import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.TimeUtils;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -362,19 +365,19 @@ public class RegistManualActivity extends AppCompatActivity {
 
         switch (dosageTypeIndex) {
             case 0:  //매일
-                disease.setDosageType(Disease.DOSAGE_TYPE_EVERYDAY);
+                disease.setDosageType(Constants.DOSAGE_TYPE_EVERYDAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
                 break;
             case 1:  //2일마다
-                disease.setDosageType(Disease.DOSAGE_TYPE_TWODAY);
+                disease.setDosageType(Constants.DOSAGE_TYPE_TWODAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
                 break;
             case 2:  //3일마다
-                disease.setDosageType(Disease.DOSAGE_TYPE_THREEDAY);
+                disease.setDosageType(Constants.DOSAGE_TYPE_THREEDAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
                 break;
             case 3:  //시간마다
-                disease.setDosageType(Disease.DOSAGE_TYPE_EVERYHOUR);
+                disease.setDosageType(Constants.DOSAGE_TYPE_EVERYHOUR);
                 disease.setTimeStartHour(TimeUtils.timestampToHour(timeStart));
                 disease.setTimeStartMinute(TimeUtils.timestampToMinute(timeStart));
                 disease.setTimeInterval(timeInterval);
@@ -383,8 +386,36 @@ public class RegistManualActivity extends AppCompatActivity {
         }
 
         //Todo: DB에 저장
+        ConditionformDao conditionformDao = new ConditionformDao(this);
+        long diseaseRowId = conditionformDao.addDisease(disease);
 
+        //약이름 저장
+        ArrayList<Pill> pills = disease.getPillArrayList();
+        for(int i=0; i<pills.size(); i++){
+            long pillRowId = conditionformDao.addPill(diseaseRowId, pills.get(i));
+
+            //관계 저장
+            conditionformDao.addPrescription(diseaseRowId, pillRowId);
+        }
+
+        //날짜별로 히스토리 생성
+        long dateStart = disease.getDateStart();
+        long dateEnd = disease.getDateEnd();
+        long dateBetween;
+
+        conditionformDao.addHistory(diseaseRowId, dateStart);
+        while (true){
+            dateBetween = TimeUtils.getTomorrowUnixTimeStamp(dateStart);
+            conditionformDao.addHistory(diseaseRowId, dateBetween);
+            if(dateBetween == dateEnd){
+                break;
+            }
+            dateStart = dateBetween;
+        }
+
+        //Todo: 시간으로 알람 저장
         //Todo: 알람 등록
+
 
         Log.d(TAG, " " + disease);
 

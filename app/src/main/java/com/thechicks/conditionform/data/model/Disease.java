@@ -7,12 +7,6 @@ import java.util.ArrayList;
  */
 public class Disease {
 
-    // dosage type
-    public static final int DOSAGE_TYPE_EVERYDAY = 5000;  //매일
-    public static final int DOSAGE_TYPE_TWODAY = 5001;  //2일
-    public static final int DOSAGE_TYPE_THREEDAY = 5002;  //3일
-    public static final int DOSAGE_TYPE_EVERYHOUR = 5003;  //시간마다
-
     String color;  //#ffffff
     int img;
     String name;
@@ -48,6 +42,40 @@ public class Disease {
 
     ArrayList<TimeItem> mTimeItems;
 
+    int dosageOneTime;
+    int dosageTotalDays;
+
+    public boolean isShowWakeup() {
+        return showWakeup;
+    }
+
+    public void setShowWakeup(boolean showWakeup) {
+        this.showWakeup = showWakeup;
+    }
+
+    public boolean isTakeWakeup() {
+        return takeWakeup;
+    }
+
+    public void setTakeWakeup(boolean takeWakeup) {
+        this.takeWakeup = takeWakeup;
+    }
+
+    public int getDosageOneTime() {
+        return dosageOneTime;
+    }
+
+    public void setDosageOneTime(int dosageOneTime) {
+        this.dosageOneTime = dosageOneTime;
+    }
+
+    public int getDosageTotalDays() {
+        return dosageTotalDays;
+    }
+
+    public void setDosageTotalDays(int dosageTotalDays) {
+        this.dosageTotalDays = dosageTotalDays;
+    }
 
     public int getTimeStartHour() {
         return timeStartHour;

@@ -68,30 +68,30 @@ public class HistoryNormalViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, mView);
     }
 
-    public void bind(final HistoryItem historyItem){
+    public void bind(final History history){
 
         //레이블 이미지
-        ivLabel.setImageResource(historyItem.getImg());
+        ivLabel.setImageResource(history.getImg());
 
         //레이블 텍스트
-        tvLabel.setText(historyItem.getName());
+        tvLabel.setText(history.getName());
 
         //레이블 색 적용
-        llHead.setBackgroundColor(Color.parseColor(historyItem.getColor()));
-        gradientDrawable.setStroke(border, Color.parseColor(historyItem.getColor()));
+        llHead.setBackgroundColor(Color.parseColor(history.getColor()));
+        gradientDrawable.setStroke(border, Color.parseColor(history.getColor()));
         llContent.setBackground(gradientDrawable);
 
-         tvDosageType.setText(historyItem.getStrDosageType());
+         tvDosageType.setText(history.getStrDosageType());
 
-         tvDosageDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(historyItem.getDateStart()));
+         tvDosageDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(history.getDateStart()));
 
-         tvDosageDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(historyItem.getDateEnd()));
+         tvDosageDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(history.getDateEnd()));
 
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(mListener != null){
-                    mListener.onListItemClick(historyItem);
+                    mListener.onListItemClick(history);
                 }
             }
         });

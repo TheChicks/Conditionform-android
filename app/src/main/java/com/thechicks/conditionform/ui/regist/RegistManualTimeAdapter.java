@@ -37,6 +37,8 @@ public class RegistManualTimeAdapter extends RecyclerView.Adapter<RegistManualTi
 
     private void initData(){
         //Todo: default로 설정된 식사시간으로 3개 추가
+        //Todo: 시간 5개로 고정하고 활성시킬지 안시킬지 결정하게 하자
+
         TimeItem timeItem1 = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
         addItem(timeItem1, getItemCount());
 
@@ -45,6 +47,12 @@ public class RegistManualTimeAdapter extends RecyclerView.Adapter<RegistManualTi
 
         TimeItem timeItem3 = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
         addItem(timeItem3, getItemCount());
+
+        TimeItem timeItem4 = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
+        addItem(timeItem4, getItemCount());
+
+        TimeItem timeItem5 = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
+        addItem(timeItem5, getItemCount());
     }
 
     @Override

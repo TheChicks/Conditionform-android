@@ -23,6 +23,13 @@ public class Constants {
     public static final String PREF_TIME_LUNCH = "perf_time_lunch";
     public static final String PREF_TIME_EVENING = "perf_time_evening";
 
+    // dosage type
+    public static final int DOSAGE_TYPE_EVERYDAY = 5000;  //매일
+    public static final int DOSAGE_TYPE_TWODAY = 5001;  //2일
+    public static final int DOSAGE_TYPE_THREEDAY = 5002;  //3일
+    public static final int DOSAGE_TYPE_EVERYHOUR = 5003;  //시간마다
+
+
     //SQLite
     //병
     public static final class DiseaseEntray implements BaseColumns {
@@ -39,6 +46,16 @@ public class Constants {
         public static final String COLUMN_DISEASE_DOSAGE_TOTAL = "disease_dosage_total";  //INTEGER, 총 투여 횟수
         public static final String COLUMN_DISEASE_DOSAGE_TOTAL_DAYS = "disease_dosage_total_days";  //INTEGER, 투약 일수
 
+        public static final String COLUMN_DISEASE_ENABLED_WAKEUP = "disease_enabled_wakeup";  //NUMERIC(boolean), 일어나서 활성여부
+        public static final String COLUMN_DISEASE_ENABLED_MORNING = "disease_enabled_morning";  //NUMERIC(boolean), 아침 활성여부
+        public static final String COLUMN_DISEASE_ENABLED_LUNCH = "disease_enabled_lunch";  //NUMERIC(boolean), 점심 활성여부
+        public static final String COLUMN_DISEASE_ENABLED_EVENING = "disease_enabled_evening";  //NUMERIC(boolean), 저녁 활성여부
+        public static final String COLUMN_DISEASE_ENABLED_SLEEP = "disease_enabled_sleep";  //NUMERIC(boolean), 잠자기전 활성여부
+
+        public static final String COLUMN_DISEASE_TIME_START_HOUR = "disease_time_start_hour";  //INTEGER, 울릴 시작 시간(시)
+        public static final String COLUMN_DISEASE_TIME_START_MINUTE = "disease_time_start_minute";  //INTEGER, 울릴 시작 시간(분)
+        public static final String COLUMN_DISEASE_TIME_INTERVAL = "disease_time_interval";  //INTEGER, 울릴 시간 간격
+
 //        public static final String COLUMN_DISEASE_FK_HISTORY_ID = "disease_fk_history_id";  //외래키, 히스토리
 //        public static final String COLUMN_DISEASE_FK_ALARM_ID = "disease_fk_alarm_id";  //외래키, 알람
 //        public static final String COLUMN_DISEASE_FK_PILL_ID = "disease_fk_pill_id";  //외래키, 약
@@ -49,7 +66,12 @@ public class Constants {
         public static final String[] PROJECTION_ALL = {_ID, COLUMN_DISEASE_NAME, COLUMN_DISEASE_IMAGE,
                 COLUMN_DISEASE_LABEL_COLOR, COLUMN_DISEASE_DATE_START, COLUMN_DISEASE_DATE_END,
                 COLUMN_DISEASE_DOSAGE_TYPE, COLUMN_DISEASE_DOSAGE_ONE_TIME, COLUMN_DISEASE_DOSAGE_TOTAL,
-                COLUMN_DISEASE_DOSAGE_TOTAL_DAYS, COLUMN_DISEASE_CREATEDAT, COLUMN_DISEASE_UPDATEAT};
+                COLUMN_DISEASE_DOSAGE_TOTAL_DAYS, COLUMN_DISEASE_ENABLED_WAKEUP, COLUMN_DISEASE_ENABLED_MORNING,
+                COLUMN_DISEASE_ENABLED_LUNCH, COLUMN_DISEASE_ENABLED_EVENING, COLUMN_DISEASE_ENABLED_SLEEP,
+                COLUMN_DISEASE_TIME_START_HOUR, COLUMN_DISEASE_TIME_START_MINUTE, COLUMN_DISEASE_TIME_INTERVAL,
+                COLUMN_DISEASE_CREATEDAT, COLUMN_DISEASE_UPDATEAT};
+
+        public static final String SORT_ORDER_DATE_START_DESC = COLUMN_DISEASE_DATE_START + " DESC";
     }
 
     //히스토리
@@ -65,17 +87,9 @@ public class Constants {
         public static final String COLUMN_HISTORY_TAKE_LUNCH = "history_take_lunch";  //NUMERIC(boolean), 점심에 먹었나
         public static final String COLUMN_HISTORY_TAKE_EVENING = "history_take_evening";  //NUMERIC(boolean), 저녁에 먹었나
         public static final String COLUMN_HISTORY_TAKE_SLEEP = "history_take_sleep";  //NUMERIC(boolean), 잠자기전에 먹었나
-        public static final String COLUMN_HISTORY_ENABLED_WAKEUP = "history_enabled_wakeup";  //NUMERIC(boolean), 일어나서 활성여부
-        public static final String COLUMN_HISTORY_ENABLED_MORNING = "history_enabled_morning";  //NUMERIC(boolean), 아침 활성여부
-        public static final String COLUMN_HISTORY_ENABLED_LUNCH = "history_enabled_lunch";  //NUMERIC(boolean), 점심 활성여부
-        public static final String COLUMN_HISTORY_ENABLED_EVENING = "history_enabled_evening";  //NUMERIC(boolean), 저녁 활성여부
-        public static final String COLUMN_HISTORY_ENABLED_SLEEP = "history_enabled_sleep";  //NUMERIC(boolean), 잠자기전 활성여부
 
         //시간마다
         public static final String COLUMN_HISTORY_TAKE_CURRENT = "history_take_current";  //INTEGER, 현재 얼마나 먹었나.
-        public static final String COLUMN_HISTORY_TIME_START_HOUR = "history_time_start_hour";  //INTEGER, 울릴 시작 시간(시)
-        public static final String COLUMN_HISTORY_TIME_START_MINUTE = "history_time_start_minute";  //INTEGER, 울릴 시작 시간(분)
-        public static final String COLUMN_HISTORY_TIME_INTERVAL = "history_time_interval";  //INTEGER, 울릴 시간 간격
 
         public static final String COLUMN_HISTORY_FK_DISEASE_ID = "history_fk_disease_id";  //외래키, 병
 
@@ -84,10 +98,8 @@ public class Constants {
 
         public static final String[] PROJECTION_ALL = {_ID, COLUMN_HISTORY_DATE, COLUMN_HISTORY_TAKE_WAKEUP,
                 COLUMN_HISTORY_TAKE_MORNING, COLUMN_HISTORY_TAKE_LUNCH, COLUMN_HISTORY_TAKE_EVENING,
-                COLUMN_HISTORY_TAKE_SLEEP, COLUMN_HISTORY_ENABLED_WAKEUP, COLUMN_HISTORY_ENABLED_MORNING,
-                COLUMN_HISTORY_ENABLED_LUNCH, COLUMN_HISTORY_ENABLED_EVENING, COLUMN_HISTORY_ENABLED_SLEEP,
-                COLUMN_HISTORY_TAKE_CURRENT, COLUMN_HISTORY_TIME_START_HOUR, COLUMN_HISTORY_TIME_START_MINUTE,
-                COLUMN_HISTORY_TIME_INTERVAL, COLUMN_HISTORY_CREATEDAT, COLUMN_HISTORY_UPDATEAT};
+                COLUMN_HISTORY_TAKE_SLEEP, COLUMN_HISTORY_TAKE_CURRENT, COLUMN_HISTORY_CREATEDAT,
+                COLUMN_HISTORY_UPDATEAT};
     }
 
     //알람
