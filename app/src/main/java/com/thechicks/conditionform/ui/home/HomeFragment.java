@@ -3,13 +3,11 @@ package com.thechicks.conditionform.ui.home;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -331,11 +329,13 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
         registAutoDialog.show(getChildFragmentManager(), "fragment_regist_auto");
     }
 
+    public static final int REQUEST_CODE_REGIST_MANUAL = 1002;
+
     //직접 등록 화면으로 연결
     @OnClick(R.id.fab_menu_register_manual)
     public void onClickFabMenuRegisterManual() {
         Intent intent = new Intent(getActivity(), RegistManualActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_REGIST_MANUAL);
     }
 
     private void expandFab() {
@@ -397,37 +397,42 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
         Intent intentGallery = new Intent(Intent.ACTION_PICK);
         intentGallery.setType(MediaStore.Images.Media.CONTENT_TYPE);
         intentGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intentGallery, GALLERY);
+        startActivityForResult(intentGallery, REQUEST_CODE_GALLERY);
     }
 
     //암시적 인텐트로 카메라 호출
     @Override
     public void onClickCamera() {
         Intent intentCameraCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intentCameraCapture, CAMERA_CAPTURE);
+        startActivityForResult(intentCameraCapture, REQUEST_CODE_CAMERA_CAPTURE);
     }
 
-    public static final int CAMERA_CAPTURE = 1000;
-    public static final int GALLERY = 10001;
+    public static final int REQUEST_CODE_CAMERA_CAPTURE = 1000;
+    public static final int REQUEST_CODE_GALLERY = 10001;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case CAMERA_CAPTURE:
+            case REQUEST_CODE_REGIST_MANUAL:
+                if(resultCode == Activity.RESULT_OK){
+                    Toast.makeText(getActivity(), "등록 성공!", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity(), "등록 실패! 다시 등록해주세요~", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case REQUEST_CODE_CAMERA_CAPTURE:
                 if (resultCode == Activity.RESULT_OK) {
                     //사진 Uri 인텐트로 전송
-
                     Intent intent = new Intent(getActivity(), RegistAutoActivity.class);
                     intent.setData(data.getData());  //사진 Uri 넘김
                     startActivity(intent);
                 }
                 break;
-            case GALLERY:
+            case REQUEST_CODE_GALLERY:
                 if (resultCode == Activity.RESULT_OK) {
-
-
+                    //사진 Uri 인텐트로 전송
                     Intent intent = new Intent(getActivity(), RegistAutoActivity.class);
                     intent.setData(data.getData());  //사진 Uri 넘김
                     startActivity(intent);

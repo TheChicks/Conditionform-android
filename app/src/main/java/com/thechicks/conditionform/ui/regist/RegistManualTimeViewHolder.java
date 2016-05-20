@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -93,15 +94,14 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-//        cbEnabled
-
-//        ivRemove.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (mListener != null) {
-//                    mListener.onListItemRemove(getAdapterPosition());
-//                }
-//            }
-//        });
+        cbEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (mListener != null) {
+                    //체크박스 변경을 Adapter에 알린다.
+                    mListener.onListItemCheck(getAdapterPosition(), isChecked);
+                }
+            }
+        });
     }
 }

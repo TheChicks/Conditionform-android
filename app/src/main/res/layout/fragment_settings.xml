@@ -16,7 +16,7 @@
         android:layout_marginTop="0dp"
         android:gravity="center_vertical"
         android:padding="16dp"
-        android:text="기본 식사 시간 설정"
+        android:text="기본 시간 설정"
         android:textColor="@color/bright_foreground_material_light"
         android:textSize="15sp"
         android:textStyle="bold"/>

@@ -112,6 +112,12 @@ public class RegistManualActivity extends AppCompatActivity {
     //label color
     String strLabelColor;
 
+    boolean enabledWakeUp;
+    boolean enabledMorning;
+    boolean enabledLunch;
+    boolean enabledEvening;
+    boolean enabledSleep;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -228,8 +234,24 @@ public class RegistManualActivity extends AppCompatActivity {
         mRegistManualTimeAdapter = new RegistManualTimeAdapter(this);
         mRegistManualTimeAdapter.setOnListItemClickListener(new RegistManualTimeAdapter.OnListItemClickListener() {
             @Override
-            public void onListItemRemove(int position) {
-                mRegistManualTimeAdapter.removeItem(position);
+            public void onListItemCheck(int position, boolean isChecked) {
+                switch (position) {
+                    case 0:
+                        enabledWakeUp = isChecked;
+                        break;
+                    case 1:
+                        enabledMorning = isChecked;
+                        break;
+                    case 2:
+                        enabledLunch = isChecked;
+                        break;
+                    case 3:
+                        enabledEvening = isChecked;
+                        break;
+                    case 4:
+                        enabledSleep = isChecked;
+                        break;
+                }
             }
 
             @Override
@@ -249,6 +271,12 @@ public class RegistManualActivity extends AppCompatActivity {
         timeInterval = 0;
         dosageCountTotal = 0;
         timeStart = TimeUtils.getCurrentUnixTimeStamp();
+
+        enabledWakeUp = false;
+        enabledMorning = false;
+        enabledLunch = false;
+        enabledEvening = false;
+        enabledSleep = false;
     }
 
     public void setupDate() {
@@ -318,7 +346,7 @@ public class RegistManualActivity extends AppCompatActivity {
                 .show();
     }
 
-//    @OnClick(R.id.button_time_add)
+    //    @OnClick(R.id.button_time_add)
     public void onClickTimeAdd() {
         TimeItem timeItem = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
 
@@ -399,34 +427,31 @@ public class RegistManualActivity extends AppCompatActivity {
                 disease.setDosageType(Constants.DOSAGE_TYPE_EVERYDAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
 
-                //Todo: 수정
-                disease.setEnabledWakeup(true);
-                disease.setEnabledMorning(true);
-                disease.setEnabledLunch(true);
-                disease.setEnabledEvening(true);
-                disease.setEnabledSleep(true);
+                disease.setEnabledWakeup(enabledWakeUp);
+                disease.setEnabledMorning(enabledMorning);
+                disease.setEnabledLunch(enabledLunch);
+                disease.setEnabledEvening(enabledEvening);
+                disease.setEnabledSleep(enabledSleep);
                 break;
             case 1:  //2일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_TWODAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
 
-                //Todo: 수정
-                disease.setEnabledWakeup(true);
-                disease.setEnabledMorning(true);
-                disease.setEnabledLunch(true);
-                disease.setEnabledEvening(true);
-                disease.setEnabledSleep(true);
+                disease.setEnabledWakeup(enabledWakeUp);
+                disease.setEnabledMorning(enabledMorning);
+                disease.setEnabledLunch(enabledLunch);
+                disease.setEnabledEvening(enabledEvening);
+                disease.setEnabledSleep(enabledSleep);
                 break;
             case 2:  //3일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_THREEDAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
 
-                //Todo: 수정
-                disease.setEnabledWakeup(true);
-                disease.setEnabledMorning(true);
-                disease.setEnabledLunch(true);
-                disease.setEnabledEvening(true);
-                disease.setEnabledSleep(true);
+                disease.setEnabledWakeup(enabledWakeUp);
+                disease.setEnabledMorning(enabledMorning);
+                disease.setEnabledLunch(enabledLunch);
+                disease.setEnabledEvening(enabledEvening);
+                disease.setEnabledSleep(enabledSleep);
                 break;
             case 3:  //시간마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_EVERYHOUR);
@@ -474,14 +499,12 @@ public class RegistManualActivity extends AppCompatActivity {
                 //Todo: 알람 등록
 
 
+                //Parent Activity에 결과값 전달
+                setResult(RESULT_OK);
+                finish();
             }
         });
-
-
         Log.d(TAG, " " + disease);
-
-        //Todo: Parent Activity에 결과값 전달
-//        finish();
     }
 
     @Override
