@@ -62,5 +62,4 @@ public class PillSearchListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         mPillArrayList = data;
         notifyDataSetChanged();
     }
-
 }

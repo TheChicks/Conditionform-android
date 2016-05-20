@@ -1,6 +1,10 @@
 package com.thechicks.conditionform.ui;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.thechicks.conditionform.R;
+
+import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,20 +49,38 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Intent receiveIntent = getActivity().getIntent();
+
+        Uri captureUri = receiveIntent.getData();  //
+
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), captureUri);
+            ivCapture.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick(R.id.button_capture_edit)
-    public void onClickCaptureEdit(){
+    public void onClickCaptureEdit() {
+        //Todo: 편집 앱 실행
 
     }
 
     @OnClick(R.id.button_capture_repeat)
-    public void onClickCaptureRepeat(){
+    public void onClickCaptureRepeat() {
+        //Todo: 다시찍기
 
     }
 
     @OnClick(R.id.button_capture_confirm)
-    public void onClickCaptureConfirm(){
+    public void onClickCaptureConfirm() {
+        //Todo: 파일로 만들어 서버에 전송
+
+
+
+
 
     }
 }

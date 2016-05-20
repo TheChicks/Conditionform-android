@@ -417,23 +417,19 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
         switch (requestCode) {
             case CAMERA_CAPTURE:
                 if (resultCode == Activity.RESULT_OK) {
-                    //Todo: 인텐트로 만든다.
-
-//                    Bitmap captureImg = (Bitmap) data.getExtras().get("data");
+                    //사진 Uri 인텐트로 전송
 
                     Intent intent = new Intent(getActivity(), RegistAutoActivity.class);
-//                    intent.putExtra("data", );  //사진 Uri 넘김
-                    intent.setData(data.getData());
+                    intent.setData(data.getData());  //사진 Uri 넘김
                     startActivity(intent);
                 }
                 break;
             case GALLERY:
                 if (resultCode == Activity.RESULT_OK) {
-                    //Todo: 인텐트로 만든다.
+
 
                     Intent intent = new Intent(getActivity(), RegistAutoActivity.class);
-//                    intent.putExtra("data", data.getData());  //사진 Uri 넘김
-                    intent.setData(data.getData());
+                    intent.setData(data.getData());  //사진 Uri 넘김
                     startActivity(intent);
                 }
                 break;
