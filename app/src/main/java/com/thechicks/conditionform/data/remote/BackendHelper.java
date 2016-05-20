@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.thechicks.conditionform.BuildConfig;
 import com.thechicks.conditionform.util.Constants;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -56,9 +57,13 @@ public class BackendHelper {
         return logging;
     }
 
+    //보험코드, 약품명 검색
     public Call<JsonArray> getPillInformation(String searchWord){
         return service.getPillInformation(searchWord);
     }
 
-
+    //처방전 사진 보내서 Ocr Result 결과 받기
+    public Call<JsonArray> getOcrResult(MultipartBody.Part file){
+        return service.getOcrResult(file);
+    }
 }
