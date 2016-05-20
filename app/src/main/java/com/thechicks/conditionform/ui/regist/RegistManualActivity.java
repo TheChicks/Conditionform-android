@@ -2,17 +2,21 @@ package com.thechicks.conditionform.ui.regist;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -33,6 +37,7 @@ import com.thechicks.conditionform.data.model.TimeItem;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.TimeUtils;
+import com.thechicks.conditionform.util.ViewUtils;
 
 import java.util.ArrayList;
 
@@ -55,9 +60,6 @@ public class RegistManualActivity extends AppCompatActivity {
 
     @Bind(R.id.editText_disease_name)
     EditText etDiseaseName;
-
-    @Bind(R.id.editText_pill_name)
-    EditText etPillName;
 
     @Bind(R.id.textView_date_start)
     TextView tvDateStart;
@@ -281,14 +283,42 @@ public class RegistManualActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_pill_add)
     public void onClickPillAdd() {
-        Pill pill = new Pill();
-        pill.setKoName(etPillName.getText().toString());
 
-        mRegistManualPillAdapter.addItem(pill, mRegistManualPillAdapter.getItemCount());
-        etPillName.setText("");
+        //show dialog
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        int margin = ViewUtils.dpToPixel(this, 10);
+        params.setMargins(margin, 0, margin, 0);
+
+        final AppCompatEditText editText = new AppCompatEditText(this);
+        editText.setLayoutParams(params);
+
+        new AlertDialog.Builder(this)
+                .setTitle("약 추가")
+                .setMessage("추가할 이름을 입력해주세요.")
+                .setView(editText)
+                .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Pill pill = new Pill();
+                        pill.setKoName(editText.getText().toString());
+
+                        mRegistManualPillAdapter.addItem(pill, mRegistManualPillAdapter.getItemCount());
+                    }
+                })
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
-    @OnClick(R.id.button_time_add)
+//    @OnClick(R.id.button_time_add)
     public void onClickTimeAdd() {
         TimeItem timeItem = new TimeItem(TimeUtils.getCurrentUnixTimeStamp());
 
@@ -321,8 +351,8 @@ public class RegistManualActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                Log.e(TAG, year + "년 " + (monthOfYear+1) + "월 " + dayOfMonth + "일");
-                startDateTimestamp = TimeUtils.getDayTimeStamp(year, monthOfYear+1, dayOfMonth);
+                Log.e(TAG, year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일");
+                startDateTimestamp = TimeUtils.getDayTimeStamp(year, monthOfYear + 1, dayOfMonth);
                 tvDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(startDateTimestamp));
             }
         }, startYear, startMonth - 1, startDay).show();
@@ -339,9 +369,9 @@ public class RegistManualActivity extends AppCompatActivity {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                Log.e(TAG, year + "년 " + (monthOfYear+1) + "월 " + dayOfMonth + "일");
+                Log.e(TAG, year + "년 " + (monthOfYear + 1) + "월 " + dayOfMonth + "일");
 
-                endDateTimestamp = TimeUtils.getDayTimeStamp(year, monthOfYear+1, dayOfMonth);
+                endDateTimestamp = TimeUtils.getDayTimeStamp(year, monthOfYear + 1, dayOfMonth);
                 tvDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(endDateTimestamp));
             }
         }, endYear, endMonth - 1, endDay).show();
@@ -416,7 +446,7 @@ public class RegistManualActivity extends AppCompatActivity {
 
                 //약이름 저장
                 ArrayList<Pill> pills = disease.getPillArrayList();
-                for(int i=0; i<pills.size(); i++){
+                for (int i = 0; i < pills.size(); i++) {
                     long pillRowId = conditionformDao.addPill(diseaseRowId, pills.get(i));
 
                     //관계 저장
@@ -429,10 +459,10 @@ public class RegistManualActivity extends AppCompatActivity {
                 long dateBetween;
 
                 conditionformDao.addHistory(diseaseRowId, dateStart);
-                while (true){
+                while (true) {
                     dateBetween = TimeUtils.getTomorrowUnixTimeStamp(dateStart);
                     conditionformDao.addHistory(diseaseRowId, dateBetween);
-                    if(dateBetween == dateEnd){
+                    if (dateBetween == dateEnd) {
                         break;
                     }
                     dateStart = dateBetween;
@@ -441,14 +471,11 @@ public class RegistManualActivity extends AppCompatActivity {
                 //Todo: 시간으로 알람 저장
 
 
-
                 //Todo: 알람 등록
-
 
 
             }
         });
-
 
 
         Log.d(TAG, " " + disease);

@@ -43,13 +43,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/editText_pill_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:hint="약 이름"/>
-
             <android.support.v7.widget.RecyclerView
                 android:layout_margin="8dp"
                 android:id="@+id/recyclerView_pill"
@@ -108,14 +101,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <Button
-                android:id="@+id/button_time_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="@drawable/regist_manual_button"
-                android:text="시간 추가"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_margin="8dp"

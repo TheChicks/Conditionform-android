@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -27,8 +28,8 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.textView_time)
     TextView tvTime;
 
-    @Bind(R.id.imageView_time_remove)
-    ImageView ivRemove;
+    @Bind(R.id.checkBox_time)
+    CheckBox cbEnabled;
 
     View mView;
 
@@ -92,13 +93,15 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        ivRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onListItemRemove(getAdapterPosition());
-                }
-            }
-        });
+//        cbEnabled
+
+//        ivRemove.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mListener != null) {
+//                    mListener.onListItemRemove(getAdapterPosition());
+//                }
+//            }
+//        });
     }
 }
