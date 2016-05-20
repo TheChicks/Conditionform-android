@@ -1,4 +1,5 @@
 <LinearLayout
+    android:padding="4dp"
     android:id="@+id/linearLayout_settings"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,7 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:autoText="false"
         android:gravity="center_vertical"
         android:padding="16dp"
         android:text="기본 식사 시간 설정"
@@ -21,22 +21,71 @@
         android:textSize="15sp"
         android:textStyle="bold"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/background_material_light"
-        android:orientation="horizontal">
+        android:padding="4dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/imageView_wakeUp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:src="@android:drawable/presence_busy"/>
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageView_wakeUp"
+            android:layout_toRightOf="@id/imageView_wakeUp"
+            android:padding="12dp"
+            android:text="일어나서"
+            android:textColor="@color/bright_foreground_material_light"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textView_time_wakeUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="07:00"
+            android:textColor="@color/bright_foreground_material_light"
+            android:textSize="15sp"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/background_material_light"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView_morning"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/presence_busy"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageView_morning"
+            android:layout_toRightOf="@id/imageView_morning"
+            android:padding="12dp"
             android:text="아침"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"
@@ -44,38 +93,40 @@
 
         <TextView
             android:id="@+id/textView_time_morning"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="150dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:gravity="center_vertical|right"
-            android:paddingRight="20dp"
+            android:padding="12dp"
             android:text="08:00"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="@color/background_material_light"
-        android:orientation="horizontal">
+        android:padding="4dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/imageView_lunch"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
             android:src="@android:drawable/presence_online"/>
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageView_lunch"
+            android:layout_toRightOf="@id/imageView_lunch"
+            android:padding="12dp"
             android:text="점심"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"
@@ -83,38 +134,40 @@
 
         <TextView
             android:id="@+id/textView_time_lunch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="150dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:gravity="center_vertical|right"
-            android:paddingRight="20dp"
+            android:padding="12dp"
             android:text="12:00"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"/>
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="@color/background_material_light"
-        android:orientation="horizontal">
+        android:padding="4dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/imageView_evening"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
             android:src="@android:drawable/star_big_on"/>
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageView_evening"
+            android:layout_toRightOf="@id/imageView_evening"
+            android:padding="12dp"
             android:text="저녁"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"
@@ -122,24 +175,66 @@
 
         <TextView
             android:id="@+id/textView_time_evening"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="150dp"
-            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="end"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
-            android:gravity="center_vertical|right"
-            android:paddingRight="20dp"
+            android:gravity="center"
+            android:padding="12dp"
             android:text="18:00"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"/>
-    </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/background_material_light"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView_sleep"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/star_big_on"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageView_sleep"
+            android:layout_toRightOf="@id/imageView_sleep"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="잠자기 전"
+            android:textColor="@color/bright_foreground_material_light"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textView_time_sleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="12dp"
+            android:text="22:30"
+            android:textColor="@color/bright_foreground_material_light"
+            android:textSize="15sp"/>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autoText="false"
         android:gravity="center_vertical"
         android:padding="16dp"
         android:text="진동 / 소리 선택"
@@ -147,57 +242,70 @@
         android:textSize="15sp"
         android:textStyle="bold"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="@color/background_material_light"
-        android:orientation="horizontal">
+        android:padding="4dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/imageView_sound"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
             android:src="@android:drawable/presence_audio_away"/>
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageView_sound"
+            android:layout_toRightOf="@id/imageView_sound"
+            android:gravity="center"
+            android:padding="12dp"
             android:text="소리"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"
             android:textStyle="bold"/>
 
+
         <Switch
             android:id="@+id/switch_sound"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="150dp"
-            android:layout_marginRight="20dp"
-            android:checked="true"
-            android:gravity="center_vertical|center_horizontal"/>
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="12dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginBottom="2dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:background="@color/background_material_light"
-        android:orientation="horizontal">
+        android:padding="4dp">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/imageView_vibrate"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
             android:src="@android:drawable/ic_menu_always_landscape_portrait"/>
 
         <TextView
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical|center_horizontal"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/imageView_vibrate"
+            android:layout_toRightOf="@id/imageView_vibrate"
+            android:gravity="center"
+            android:padding="12dp"
             android:text="진동"
             android:textColor="@color/bright_foreground_material_light"
             android:textSize="15sp"
@@ -205,12 +313,15 @@
 
         <Switch
             android:id="@+id/switch_vibrate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="150dp"
-            android:layout_marginRight="20dp"
-            android:checked="true"
-            android:gravity="center_vertical|center_horizontal"/>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="?android:attr/selectableItemBackground"
+            android:clickable="true"
+            android:padding="12dp"/>
+
+    </RelativeLayout>
 </LinearLayout>
 

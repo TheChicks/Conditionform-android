@@ -19,9 +19,11 @@ public class Constants {
     public static final String PREF_NAME = "conditionform_settings";
     public static final String PREF_VIBRATE = "pref_vibrate";
     public static final String PREF_SOUND = "perf_sound";
+    public static final String PREF_TIME_WAKEUP = "perf_time_wakeup";
     public static final String PREF_TIME_MORNING = "perf_time_morning";
     public static final String PREF_TIME_LUNCH = "perf_time_lunch";
     public static final String PREF_TIME_EVENING = "perf_time_evening";
+    public static final String PREF_TIME_SLEEP = "perf_time_sleep";
 
     // dosage type
     public static final int DOSAGE_TYPE_EVERYDAY = 5000;  //매일

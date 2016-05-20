@@ -1,8 +1,6 @@
 package com.thechicks.conditionform.ui.settings;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,7 +20,6 @@ import com.thechicks.conditionform.util.TimeUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 
 /**
@@ -38,14 +35,20 @@ public class SettingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    @Bind(R.id.textView_time_wakeUp)
+    TextView tvTimeWakeUp;     // 일어나서
+
     @Bind(R.id.textView_time_morning)
-    TextView tvMorningtime;     // 아침시간
+    TextView tvTimeMorning;     // 아침시간
 
     @Bind(R.id.textView_time_lunch)
-    TextView tvLunchtime;         // 점심시간
+    TextView tvTimeLunch;         // 점심시간
 
     @Bind(R.id.textView_time_evening)
-    TextView tvEveningtime;     // 저녁시간
+    TextView tvTimeEvening;     // 저녁시간
+
+    @Bind(R.id.textView_time_sleep)
+    TextView tvTimeSleep;     // 잠자기전
 
     @Bind(R.id.switch_sound)
     Switch swSound;
@@ -114,13 +117,17 @@ public class SettingsFragment extends Fragment {
 //        sHour = "";
 //        sMinute = "";
 
-        long mTime = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_MORNING);
-        long lTime = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_LUNCH);
-        long eTime = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_EVENING);
+        long timeWakeUp = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_WAKEUP);
+        long timeMorning = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_MORNING);
+        long timeLunch = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_LUNCH);
+        long timeEvening = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_EVENING);
+        long timeSleep = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_SLEEP);
 
-        tvMorningtime.setText(TimeUtils.unixTimeStampToStringTime(mTime));
-        tvLunchtime.setText(TimeUtils.unixTimeStampToStringTime(lTime));
-        tvEveningtime.setText(TimeUtils.unixTimeStampToStringTime(eTime));
+        tvTimeWakeUp.setText(TimeUtils.unixTimeStampToStringTime(timeWakeUp));
+        tvTimeMorning.setText(TimeUtils.unixTimeStampToStringTime(timeMorning));
+        tvTimeLunch.setText(TimeUtils.unixTimeStampToStringTime(timeLunch));
+        tvTimeEvening.setText(TimeUtils.unixTimeStampToStringTime(timeEvening));
+        tvTimeSleep.setText(TimeUtils.unixTimeStampToStringTime(timeSleep));
 
         swVibrate.setChecked(PreferencesUtils.getPreferencesBoolean(getActivity(), Constants.PREF_VIBRATE));
         swSound.setChecked(PreferencesUtils.getPreferencesBoolean(getActivity(), Constants.PREF_SOUND));
@@ -140,53 +147,112 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    @OnClick(R.id.textView_time_morning)
-    public void onClickMorningTime() {
+    @OnClick(R.id.textView_time_wakeUp)
+    public void onClickTimeWakeUp() {
 //        new TimePickerDialog(getContext(), mTimeSetListener, mHour, mMinute, true).show();
 
-        long morningTime = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_MORNING);
+        long timeWakeUp = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_WAKEUP);
 
-        if (morningTime == 0) {
-            morningTime = TimeUtils.getCurrentUnixTimeStamp();
+        if (timeWakeUp == 0) {
+            timeWakeUp = TimeUtils.getCurrentUnixTimeStamp();
         }
 
-        int hour = TimeUtils.timestampToHour(morningTime);
-        int minute = TimeUtils.timestampToMinute(morningTime);
+        int hour = TimeUtils.timestampToHour(timeWakeUp);
+        int minute = TimeUtils.timestampToMinute(timeWakeUp);
+
+        new TimePickerDialog(getContext(), wTimeSetListener, hour, minute, true).show();
+    }
+
+    @OnClick(R.id.textView_time_morning)
+    public void onClickTimeMorning() {
+//        new TimePickerDialog(getContext(), mTimeSetListener, mHour, mMinute, true).show();
+
+        long timeMorning = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_MORNING);
+
+        if (timeMorning == 0) {
+            timeMorning = TimeUtils.getCurrentUnixTimeStamp();
+        }
+
+        int hour = TimeUtils.timestampToHour(timeMorning);
+        int minute = TimeUtils.timestampToMinute(timeMorning);
 
         new TimePickerDialog(getContext(), mTimeSetListener, hour, minute, true).show();
     }
 
     @OnClick(R.id.textView_time_lunch)
-    public void onClickLunchTime() {
+    public void onClickTimeLunch() {
 
-//        new TimePickerDialog(getContext(), dTimeSetListener, mHour, mMinute, true).show();
+//        new TimePickerDialog(getContext(), lTimeSetListener, mHour, mMinute, true).show();
 
-        long lunchTime = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_LUNCH);
+        long timeLunch = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_LUNCH);
 
-        if (lunchTime == 0) {
-            lunchTime = TimeUtils.getCurrentUnixTimeStamp();
+        if (timeLunch == 0) {
+            timeLunch = TimeUtils.getCurrentUnixTimeStamp();
         }
 
-        int hour = TimeUtils.timestampToHour(lunchTime);
-        int minute = TimeUtils.timestampToMinute(lunchTime);
+        int hour = TimeUtils.timestampToHour(timeLunch);
+        int minute = TimeUtils.timestampToMinute(timeLunch);
 
-        new TimePickerDialog(getContext(), dTimeSetListener, hour, minute, true).show();
+        new TimePickerDialog(getContext(), lTimeSetListener, hour, minute, true).show();
     }
 
     @OnClick(R.id.textView_time_evening)
-    public void onClickEveningTime() {
+    public void onClickTimeEvening() {
 
-        long eveningTime = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_EVENING);
+        long timeEvening = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_EVENING);
 
-        if (eveningTime == 0) {
-            eveningTime = TimeUtils.getCurrentUnixTimeStamp();
+        if (timeEvening == 0) {
+            timeEvening = TimeUtils.getCurrentUnixTimeStamp();
         }
 
-        int hour = TimeUtils.timestampToHour(eveningTime);
-        int minute = TimeUtils.timestampToMinute(eveningTime);
+        int hour = TimeUtils.timestampToHour(timeEvening);
+        int minute = TimeUtils.timestampToMinute(timeEvening);
 
         new TimePickerDialog(getContext(), eTimeSetListener, hour, minute, true).show();
     }
+
+    @OnClick(R.id.textView_time_sleep)
+    public void onClickTimeSleep() {
+
+        long timeSleep = PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_SLEEP);
+
+        if (timeSleep == 0) {
+            timeSleep = TimeUtils.getCurrentUnixTimeStamp();
+        }
+
+        int hour = TimeUtils.timestampToHour(timeSleep);
+        int minute = TimeUtils.timestampToMinute(timeSleep);
+
+        new TimePickerDialog(getContext(), sTimeSetListener, hour, minute, true).show();
+    }
+
+    TimePickerDialog.OnTimeSetListener wTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            long selectedTime = TimeUtils.getHourMinuteUnixTimeStamp(hourOfDay, minute);
+
+//            mHour = hourOfDay;
+//            mMinute = minute;
+
+//            if(mHour >= 0 && mHour < 10) {
+//                sHour = "0" + Integer.toString(mHour);
+//            }
+//            else{
+//                sHour = Integer.toString(mHour);
+//            }
+//
+//            if(mMinute >= 0 && mMinute < 10) {
+//                sMinute = "0" + Integer.toString(mMinute);
+//            }
+//            else{
+//                sMinute = Integer.toString(mMinute);
+//            }
+//            tvDaytime.setText(sHour+":"+sMinute);
+
+            PreferencesUtils.setPreferences(getActivity(), Constants.PREF_TIME_WAKEUP, selectedTime);
+            tvTimeWakeUp.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
+        }
+    };
 
     TimePickerDialog.OnTimeSetListener mTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
@@ -212,11 +278,11 @@ public class SettingsFragment extends Fragment {
 //            tvDaytime.setText(sHour+":"+sMinute);
 
             PreferencesUtils.setPreferences(getActivity(), Constants.PREF_TIME_MORNING, selectedTime);
-            tvMorningtime.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
+            tvTimeMorning.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
         }
     };
 
-    TimePickerDialog.OnTimeSetListener dTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+    TimePickerDialog.OnTimeSetListener lTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 //            mHour = hourOfDay;
@@ -240,7 +306,7 @@ public class SettingsFragment extends Fragment {
             long selectedTime = TimeUtils.getHourMinuteUnixTimeStamp(hourOfDay, minute);
 
             PreferencesUtils.setPreferences(getActivity(), Constants.PREF_TIME_LUNCH, selectedTime);
-            tvLunchtime.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
+            tvTimeLunch.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
         }
     };
 
@@ -268,7 +334,35 @@ public class SettingsFragment extends Fragment {
             long selectedTime = TimeUtils.getHourMinuteUnixTimeStamp(hourOfDay, minute);
 
             PreferencesUtils.setPreferences(getActivity(), Constants.PREF_TIME_EVENING, selectedTime);
-            tvEveningtime.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
+            tvTimeEvening.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
+        }
+    };
+
+    TimePickerDialog.OnTimeSetListener sTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//            mHour = hourOfDay;
+//            mMinute = minute;
+//
+//            if(mHour >= 0 && mHour < 10) {
+//                sHour = "0" + Integer.toString(mHour);
+//            }
+//            else{
+//                sHour = Integer.toString(mHour);
+//            }
+//
+//            if(mMinute >= 0 && mMinute < 10) {
+//                sMinute = "0" + Integer.toString(mMinute);
+//            }
+//            else{
+//                sMinute = Integer.toString(mMinute);
+//            }
+//            tvEveningtime.setText(sHour+":"+sMinute);
+
+            long selectedTime = TimeUtils.getHourMinuteUnixTimeStamp(hourOfDay, minute);
+
+            PreferencesUtils.setPreferences(getActivity(), Constants.PREF_TIME_SLEEP, selectedTime);
+            tvTimeSleep.setText(TimeUtils.unixTimeStampToStringTime(selectedTime));
         }
     };
 }
