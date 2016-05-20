@@ -39,5 +39,9 @@
         <item id="count_seven">7회</item>
         <item id="count_eight">8회</item>
     </string-array>
+    <string name="title_activity_regist_auto">RegistAutoActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

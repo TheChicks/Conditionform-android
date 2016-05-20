@@ -1,11 +1,15 @@
 package com.thechicks.conditionform.ui.home;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -24,6 +28,7 @@ import android.widget.Toast;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.ui.RegistAutoActivity;
 import com.thechicks.conditionform.ui.regist.RegistManualActivity;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.TimeUtils;
@@ -38,7 +43,7 @@ import butterknife.OnClick;
 /**
  * 메인 화면
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAutoDialogListener {
 
     public static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -320,7 +325,10 @@ public class HomeFragment extends Fragment {
     //Todo: 자동 등록 화면으로 연결
     @OnClick(R.id.fab_menu_register_auto)
     public void onClickFabMenuRegisterAuto() {
-        Toast.makeText(getActivity(), "fabRegisterAuto", Toast.LENGTH_LONG).show();
+
+        RegistAutoDialog registAutoDialog = RegistAutoDialog.newInstance();
+        registAutoDialog.setTargetFragment(this, 0);
+        registAutoDialog.show(getChildFragmentManager(), "fragment_regist_auto");
     }
 
     //직접 등록 화면으로 연결
@@ -381,5 +389,54 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
+    }
+
+    //암시적 인텐트로 갤러리 호출
+    @Override
+    public void onClickGallery() {
+        Intent intentGallery = new Intent(Intent.ACTION_PICK);
+        intentGallery.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intentGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intentGallery, GALLERY);
+    }
+
+    //암시적 인텐트로 카메라 호출
+    @Override
+    public void onClickCamera() {
+        Intent intentCameraCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intentCameraCapture, CAMERA_CAPTURE);
+    }
+
+    public static final int CAMERA_CAPTURE = 1000;
+    public static final int GALLERY = 10001;
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case CAMERA_CAPTURE:
+                if (resultCode == Activity.RESULT_OK) {
+                    //Todo: 인텐트로 만든다.
+
+//                    Bitmap captureImg = (Bitmap) data.getExtras().get("data");
+
+                    Intent intent = new Intent(getActivity(), RegistAutoActivity.class);
+//                    intent.putExtra("data", );  //사진 Uri 넘김
+                    intent.setData(data.getData());
+                    startActivity(intent);
+                }
+                break;
+            case GALLERY:
+                if (resultCode == Activity.RESULT_OK) {
+                    //Todo: 인텐트로 만든다.
+
+                    Intent intent = new Intent(getActivity(), RegistAutoActivity.class);
+//                    intent.putExtra("data", data.getData());  //사진 Uri 넘김
+                    intent.setData(data.getData());
+                    startActivity(intent);
+                }
+                break;
+        }
     }
 }

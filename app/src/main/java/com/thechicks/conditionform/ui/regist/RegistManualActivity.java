@@ -358,7 +358,7 @@ public class RegistManualActivity extends AppCompatActivity {
         //모델객체에 저장
         final Disease disease = new Disease();
         disease.setColor(strLabelColor);
-        disease.setImg(R.mipmap.ic_launcher);
+        disease.setImg(R.mipmap.ic_launcher);  //Todo: 수정
         disease.setName(etDiseaseName.getText().toString());
         disease.setPillArrayList(mRegistManualPillAdapter.getPillArrayList());
         disease.setDateStart(startDateTimestamp);
@@ -368,14 +368,35 @@ public class RegistManualActivity extends AppCompatActivity {
             case 0:  //매일
                 disease.setDosageType(Constants.DOSAGE_TYPE_EVERYDAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
+
+                //Todo: 수정
+                disease.setEnabledWakeup(true);
+                disease.setEnabledMorning(true);
+                disease.setEnabledLunch(true);
+                disease.setEnabledEvening(true);
+                disease.setEnabledSleep(true);
                 break;
             case 1:  //2일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_TWODAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
+
+                //Todo: 수정
+                disease.setEnabledWakeup(true);
+                disease.setEnabledMorning(true);
+                disease.setEnabledLunch(true);
+                disease.setEnabledEvening(true);
+                disease.setEnabledSleep(true);
                 break;
             case 2:  //3일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_THREEDAY);
                 disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
+
+                //Todo: 수정
+                disease.setEnabledWakeup(true);
+                disease.setEnabledMorning(true);
+                disease.setEnabledLunch(true);
+                disease.setEnabledEvening(true);
+                disease.setEnabledSleep(true);
                 break;
             case 3:  //시간마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_EVERYHOUR);

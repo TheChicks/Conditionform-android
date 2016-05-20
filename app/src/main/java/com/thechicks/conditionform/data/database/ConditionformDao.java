@@ -89,7 +89,6 @@ public class ConditionformDao implements IConditionformDao {
         cv.put(Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID, diseaseRowId);
         cv.put(Constants.HistoryEntray.COLUMN_HISTORY_DATE, date);
 
-
         long rowId = mDbHelper.insert(Constants.HistoryEntray.TABLE_NAME, cv);
 
         if (rowId < 0) {
