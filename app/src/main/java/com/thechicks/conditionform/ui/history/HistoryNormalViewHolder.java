@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.data.model.History;
 import com.thechicks.conditionform.util.TimeUtils;
 
 import butterknife.Bind;

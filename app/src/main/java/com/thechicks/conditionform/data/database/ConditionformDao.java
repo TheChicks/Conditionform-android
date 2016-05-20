@@ -9,7 +9,7 @@ import android.util.Log;
 import com.thechicks.conditionform.data.model.Alarm;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.Pill;
-import com.thechicks.conditionform.ui.history.History;
+import com.thechicks.conditionform.data.model.History;
 import com.thechicks.conditionform.util.Constants;
 
 import java.util.ArrayList;
@@ -133,21 +133,18 @@ public class ConditionformDao implements IConditionformDao {
     // color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
     // TimeList
 
-
     //시간일때 저장
     // color, img, name, mPillArrayList, dateStart, dateEnd, dosageType
     // timeStartHour, timeStartMinute, timeInterval,
 
     /*
     메인 화면 쿼리
-    disease
-      color, img, name, dosageType,
-      enabledWakeup, enabledMorning, enabledLunch, enabledEvening, enabledSleep
-      timeInterval
+    Disease - color, img, name, dosageType,
+              enabledWakeup, enabledMorning, enabledLunch, enabledEvening, enabledSleep
+              timeInterval, dosageTotal
 
-    history
-      takeWakeup, takeMorning, takeLunch, takeEvening, takeSleep
-      dosageCurrnt, dosageTotal
+    History - takeWakeup, takeMorning, takeLunch, takeEvening, takeSleep
+              dosageCurrnt
      */
     @Override
     public List<Disease> findDiseaseByDate(long timeStamp) {
@@ -217,7 +214,7 @@ public class ConditionformDao implements IConditionformDao {
 
     /*
     복용 내역 관리 쿼리
-    dateStart, dateEnd, dosageType, timeInterval, name, image, color
+    Disease -  dateStart, dateEnd, dosageType, timeInterval, name, image, color
     */
     @Override
     public List<History> findAllDisease() {

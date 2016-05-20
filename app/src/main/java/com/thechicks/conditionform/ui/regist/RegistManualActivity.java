@@ -30,6 +30,7 @@ import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.Pill;
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.model.TimeItem;
+import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.TimeUtils;
 
@@ -239,7 +240,7 @@ public class RegistManualActivity extends AppCompatActivity {
 
         Log.e(TAG, " " + TimeUtils.getCurrentUnixTimeStamp());
 
-        strLabelColor = "#ffffff";
+        strLabelColor = "#555555";
         ((GradientDrawable) ivLabel.getBackground()).setColor(Color.parseColor(strLabelColor));  //컬러 설정
 
         dosageTypeIndex = 0;
@@ -355,7 +356,7 @@ public class RegistManualActivity extends AppCompatActivity {
     public void onClickConfirm() {
 
         //모델객체에 저장
-        Disease disease = new Disease();
+        final Disease disease = new Disease();
         disease.setColor(strLabelColor);
         disease.setImg(R.mipmap.ic_launcher);
         disease.setName(etDiseaseName.getText().toString());
@@ -386,39 +387,52 @@ public class RegistManualActivity extends AppCompatActivity {
         }
 
         //Todo: DB에 저장
-        ConditionformDao conditionformDao = new ConditionformDao(this);
-        long diseaseRowId = conditionformDao.addDisease(disease);
+        AsyncHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                ConditionformDao conditionformDao = new ConditionformDao(RegistManualActivity.this);
+                long diseaseRowId = conditionformDao.addDisease(disease);
 
-        //약이름 저장
-        ArrayList<Pill> pills = disease.getPillArrayList();
-        for(int i=0; i<pills.size(); i++){
-            long pillRowId = conditionformDao.addPill(diseaseRowId, pills.get(i));
+                //약이름 저장
+                ArrayList<Pill> pills = disease.getPillArrayList();
+                for(int i=0; i<pills.size(); i++){
+                    long pillRowId = conditionformDao.addPill(diseaseRowId, pills.get(i));
 
-            //관계 저장
-            conditionformDao.addPrescription(diseaseRowId, pillRowId);
-        }
+                    //관계 저장
+                    conditionformDao.addPrescription(diseaseRowId, pillRowId);
+                }
 
-        //날짜별로 히스토리 생성
-        long dateStart = disease.getDateStart();
-        long dateEnd = disease.getDateEnd();
-        long dateBetween;
+                //날짜별로 히스토리 생성
+                long dateStart = disease.getDateStart();
+                long dateEnd = disease.getDateEnd();
+                long dateBetween;
 
-        conditionformDao.addHistory(diseaseRowId, dateStart);
-        while (true){
-            dateBetween = TimeUtils.getTomorrowUnixTimeStamp(dateStart);
-            conditionformDao.addHistory(diseaseRowId, dateBetween);
-            if(dateBetween == dateEnd){
-                break;
+                conditionformDao.addHistory(diseaseRowId, dateStart);
+                while (true){
+                    dateBetween = TimeUtils.getTomorrowUnixTimeStamp(dateStart);
+                    conditionformDao.addHistory(diseaseRowId, dateBetween);
+                    if(dateBetween == dateEnd){
+                        break;
+                    }
+                    dateStart = dateBetween;
+                }
+
+                //Todo: 시간으로 알람 저장
+
+
+
+                //Todo: 알람 등록
+
+
+
             }
-            dateStart = dateBetween;
-        }
+        });
 
-        //Todo: 시간으로 알람 저장
-        //Todo: 알람 등록
 
 
         Log.d(TAG, " " + disease);
 
+        //Todo: Parent Activity에 결과값 전달
 //        finish();
     }
 

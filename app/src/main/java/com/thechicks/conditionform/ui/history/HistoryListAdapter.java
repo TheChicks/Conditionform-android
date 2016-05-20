@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.ViewGroup;
 
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.data.model.History;
 import com.thechicks.conditionform.util.TimeUtils;
 
 import java.util.ArrayList;

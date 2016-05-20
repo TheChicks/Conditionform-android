@@ -3,7 +3,7 @@ package com.thechicks.conditionform.data.database;
 import com.thechicks.conditionform.data.model.Alarm;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.Pill;
-import com.thechicks.conditionform.ui.history.History;
+import com.thechicks.conditionform.data.model.History;
 
 import java.util.List;
 

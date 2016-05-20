@@ -1,4 +1,4 @@
-package com.thechicks.conditionform.ui.history;
+package com.thechicks.conditionform.data.model;
 
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.TimeUtils;

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.database.ConditionformDao;
+import com.thechicks.conditionform.data.model.History;
 import com.thechicks.conditionform.util.AsyncHandler;
 
 import java.util.List;

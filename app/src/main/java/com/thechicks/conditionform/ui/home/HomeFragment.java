@@ -24,7 +24,6 @@ import android.widget.Toast;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.R;
-import com.thechicks.conditionform.ui.history.History;
 import com.thechicks.conditionform.ui.regist.RegistManualActivity;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.TimeUtils;
