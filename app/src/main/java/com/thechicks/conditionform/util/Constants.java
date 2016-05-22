@@ -10,10 +10,10 @@ import com.thechicks.conditionform.BuildConfig;
 public class Constants {
 
     // geneymotion localhost
-//    public static final String ENDPOINT = BuildConfig.LOCAL_HOST_IP;
+    public static final String ENDPOINT = BuildConfig.LOCAL_HOST_IP;
 
     // api server
-    public static final String ENDPOINT = BuildConfig.API_SERVER_IP;
+//    public static final String ENDPOINT = BuildConfig.API_SERVER_IP;
 
     //SharedPreference
     public static final String PREF_NAME = "conditionform_settings";

@@ -100,13 +100,13 @@ public class RegistAutoCaptureResultFragment extends Fragment {
         //Todo: 파일로 만들어 서버에 전송
 
         // file by uri
-        File file = new File(captureUri.getPath());  //Todo: 되는지 확인
+        File file = new File(getPathFromUri(captureUri));
 
-        // create RequestBidy instance from file
+        // create RequestBody instance from file
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
         // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body = MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("prescription", file.getName(), requestFile);
 
         Call<JsonArray> call = sBackendHelper.getOcrResult(body);
         call.enqueue(new Callback<JsonArray>() {
@@ -123,6 +123,7 @@ public class RegistAutoCaptureResultFragment extends Fragment {
         });
     }
 
+    //Uri에서 실제 파일이 저장된 path를 추출
     public String getPathFromUri(Uri uri) {
 
         Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
@@ -134,7 +135,6 @@ public class RegistAutoCaptureResultFragment extends Fragment {
             path = cursor.getString(cursor.getColumnIndex("_data"));
             cursor.close();
         }
-
         return path;
     }
 
