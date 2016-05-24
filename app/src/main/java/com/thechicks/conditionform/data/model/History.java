@@ -8,6 +8,7 @@ import com.thechicks.conditionform.util.TimeUtils;
  */
 public class History {
 
+    int diseaseId;
     String color;  //#ffffff
     String name;
     int img;
@@ -23,6 +24,14 @@ public class History {
     String strDosageType;
 
     public History() {
+    }
+
+    public int getDiseaseId() {
+        return diseaseId;
+    }
+
+    public void setDiseaseId(int diseaseId) {
+        this.diseaseId = diseaseId;
     }
 
     public String getColor() {

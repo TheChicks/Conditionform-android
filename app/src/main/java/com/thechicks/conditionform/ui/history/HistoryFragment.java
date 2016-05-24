@@ -1,10 +1,12 @@
 package com.thechicks.conditionform.ui.history;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.History;
+import com.thechicks.conditionform.ui.HistoryDetailActivity;
 import com.thechicks.conditionform.util.AsyncHandler;
 
 import java.util.List;
@@ -80,11 +83,10 @@ public class HistoryFragment extends Fragment {
         mHistoryListAdapter.setOnListItemClickListener(new HistoryListAdapter.OnListItemClickListener() {
             @Override
             public void onListItemClick(History history) {
-                //Todo: 복용내역 상세정보로 이동
-//                Intent intent = new Intent(getActivity(), 이동할 액티비티);
-//                startActivity(intent);
-
-                Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
+                //복용내역 상세정보로 이동
+                Intent intent = new Intent(getActivity(), HistoryDetailActivity.class);
+                intent.putExtra("diseaseId", history.getDiseaseId());
+                startActivity(intent);
             }
         });
         rvHistory.setAdapter(mHistoryListAdapter);

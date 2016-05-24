@@ -129,7 +129,7 @@ public class RegistManualActivity extends AppCompatActivity {
         if (actionBar != null) {
 //            actionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
 //            actionBar.setDisplayShowHomeEnabled(true);
-//            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         mRegistManualPillAdapter = new RegistManualPillAdapter(this);

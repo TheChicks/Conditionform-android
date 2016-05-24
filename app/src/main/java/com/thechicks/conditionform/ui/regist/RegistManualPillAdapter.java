@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class RegistManualPillAdapter extends RecyclerView.Adapter<RegistManualPillViewHolder> {
 
     private final Context mContext;
-    private final ArrayList<Pill> mPillArrayList;
+    private ArrayList<Pill> mPillArrayList;
 
     private OnListItemClickListener mOnListItemClickListener;
 
@@ -62,5 +62,10 @@ public class RegistManualPillAdapter extends RecyclerView.Adapter<RegistManualPi
 
     public ArrayList<Pill> getPillArrayList() {
         return mPillArrayList;
+    }
+
+    public void setPillArrayList(ArrayList<Pill> pillArrayList){
+        mPillArrayList = pillArrayList;
+        notifyDataSetChanged();
     }
 }
