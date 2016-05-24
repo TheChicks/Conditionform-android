@@ -7,28 +7,28 @@
     <color name="colorFAB">#2196F3</color>
 
     <!--label color-->
-    <color name="color_1">#eb6d73</color>
-    <color name="color_2">#ec8cd2</color>
-    <color name="color_3">#c4bbed</color>
-    <color name="color_4">#8880f0</color>
-    <color name="color_5">#4c75ed</color>
-    <color name="color_6">#6cb0f2</color>
-    <color name="color_7">#67dbe3</color>
-    <color name="color_8">#7bef8e</color>
-    <color name="color_9">#b8e71c</color>
-    <color name="color_10">#f7eb2f</color>
+    <color name="color_label_1">#eb6d73</color>
+    <color name="color_label_2">#ec8cd2</color>
+    <color name="color_label_3">#c4bbed</color>
+    <color name="color_label_4">#8880f0</color>
+    <color name="color_label_5">#4c75ed</color>
+    <color name="color_label_6">#6cb0f2</color>
+    <color name="color_label_7">#67dbe3</color>
+    <color name="color_label_8">#7bef8e</color>
+    <color name="color_label_9">#b8e71c</color>
+    <color name="color_label_10">#f7eb2f</color>
 
     <array name="label_colors">
-        <item>@color/color_1</item>
-        <item>@color/color_2</item>
-        <item>@color/color_3</item>
-        <item>@color/color_4</item>
-        <item>@color/color_5</item>
-        <item>@color/color_6</item>
-        <item>@color/color_7</item>
-        <item>@color/color_8</item>
-        <item>@color/color_9</item>
-        <item>@color/color_10</item>
+        <item>@color/color_label_1</item>
+        <item>@color/color_label_2</item>
+        <item>@color/color_label_3</item>
+        <item>@color/color_label_4</item>
+        <item>@color/color_label_5</item>
+        <item>@color/color_label_6</item>
+        <item>@color/color_label_7</item>
+        <item>@color/color_label_8</item>
+        <item>@color/color_label_9</item>
+        <item>@color/color_label_10</item>
     </array>
 
 </resources>

@@ -259,12 +259,13 @@ public class RegistManualActivity extends AppCompatActivity {
                 mRegistManualTimeAdapter.notifyItemChanged(position);
             }
         });
-        rvTime.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        rvTime.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         rvTime.setAdapter(mRegistManualTimeAdapter);
 
         Log.e(TAG, " " + TimeUtils.getCurrentUnixTimeStamp());
 
-        strLabelColor = "#555555";
+        strLabelColor = "#eb6d73";
+
         ((GradientDrawable) ivLabel.getBackground()).setColor(Color.parseColor(strLabelColor));  //컬러 설정
 
         dosageTypeIndex = 0;
@@ -272,11 +273,11 @@ public class RegistManualActivity extends AppCompatActivity {
         dosageCountTotal = 0;
         timeStart = TimeUtils.getCurrentUnixTimeStamp();
 
-        enabledWakeUp = false;
-        enabledMorning = false;
-        enabledLunch = false;
-        enabledEvening = false;
-        enabledSleep = false;
+        enabledWakeUp = true;
+        enabledMorning = true;
+        enabledLunch = true;
+        enabledEvening = true;
+        enabledSleep = true;
     }
 
     public void setupDate() {
@@ -290,7 +291,7 @@ public class RegistManualActivity extends AppCompatActivity {
 
         new SpectrumDialog.Builder(RegistManualActivity.this)
                 .setColors(R.array.label_colors)
-                .setSelectedColorRes(R.color.color_1)
+                .setSelectedColorRes(R.color.color_label_1)
                 .setDismissOnColorSelected(false)
                 .setOutlineWidth(2)
                 .setOnColorSelectedListener(new SpectrumDialog.OnColorSelectedListener() {

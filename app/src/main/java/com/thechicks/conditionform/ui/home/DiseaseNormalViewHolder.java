@@ -36,6 +36,9 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.textView_label)
     TextView tvLabel;
 
+    @Bind(R.id.checkBox_wakeup)
+    CheckBox cbWakeUp;
+
     @Bind(R.id.checkBox_morning)
     CheckBox cbMorning;
 
@@ -91,6 +94,20 @@ public class DiseaseNormalViewHolder extends RecyclerView.ViewHolder {
         //Todo: CheckBox 리스너 제거,
         //이미지 표시 여부 결정
         //약 먹은거 체크
+        if (disease.isEnabledWakeup()) {  //표시
+            cbWakeUp.setVisibility(View.VISIBLE);
+
+            cbWakeUp.setChecked(disease.isTakeWakeup());
+            cbWakeUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    disease.setTakeWakeup(isChecked);
+                }
+            });
+        } else {  //표시X
+            cbWakeUp.setVisibility(View.GONE);
+        }
+
         if (disease.isEnabledMorning()) {  //표시
             cbMorning.setVisibility(View.VISIBLE);
 

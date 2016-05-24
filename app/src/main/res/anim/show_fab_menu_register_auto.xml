@@ -3,19 +3,19 @@
     android:fillAfter="true">
 
     <!-- Rotate -->
-    <rotate
-        android:duration="500"
-        android:fromDegrees="30"
-        android:interpolator="@android:anim/linear_interpolator"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:repeatCount="2"
-        android:repeatMode="reverse"
-        android:toDegrees="0"></rotate>
+    <!--<rotate-->
+        <!--android:duration="500"-->
+        <!--android:fromDegrees="30"-->
+        <!--android:interpolator="@android:anim/linear_interpolator"-->
+        <!--android:pivotX="50%"-->
+        <!--android:pivotY="50%"-->
+        <!--android:repeatCount="2"-->
+        <!--android:repeatMode="reverse"-->
+        <!--android:toDegrees="0"></rotate>-->
 
     <!--Move-->
     <translate
-        android:duration="800"
+        android:duration="250"
         android:fromXDelta="0%"
         android:fromYDelta="120%"
         android:interpolator="@android:anim/linear_interpolator"
@@ -24,7 +24,7 @@
 
     <!--Fade In-->
     <alpha
-        android:duration="1000"
+        android:duration="500"
         android:fromAlpha="0.0"
         android:interpolator="@android:anim/decelerate_interpolator"
         android:toAlpha="1.0"></alpha>

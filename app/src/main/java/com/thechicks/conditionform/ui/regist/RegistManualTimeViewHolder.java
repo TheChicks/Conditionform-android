@@ -55,16 +55,19 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
         tvTime.setText(TimeUtils.unixTimeStampToStringTime(timeItem.getTime()));
 
         switch (timeItem.getType()) {
-            case 0:
+            case 0:  //일어나서
+                ivType.setImageResource(R.mipmap.ic_launcher);
+                break;
+            case 1:  //아침
                 ivType.setImageResource(R.drawable.sunrising);
                 break;
-            case 1:
+            case 2:  //점심
                 ivType.setImageResource(R.drawable.sun);
                 break;
-            case 2:
+            case 3:  //저녁
                 ivType.setImageResource(R.drawable.moon);
                 break;
-            case 3:
+            case 4:  //잠자기전
                 ivType.setImageResource(R.mipmap.ic_launcher);
                 break;
         }

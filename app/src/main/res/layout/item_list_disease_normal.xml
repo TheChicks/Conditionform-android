@@ -52,6 +52,13 @@
             android:padding="8dp">
 
             <CheckBox
+                android:id="@+id/checkBox_wakeup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:button="@drawable/selector_wakeup"/>
+
+            <CheckBox
                 android:id="@+id/checkBox_morning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
