@@ -16,12 +16,28 @@ public class TimeItem {
     int type;
     long time;
 
+    boolean enabled = false;
+
     public TimeItem() {
     }
 
     public TimeItem(long time) {
         this.type = determineType(time);
         this.time = time;
+    }
+
+    public TimeItem(long time, boolean enabled) {
+        this.type = determineType(time);
+        this.time = time;
+        this.enabled = enabled;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public int getType() {

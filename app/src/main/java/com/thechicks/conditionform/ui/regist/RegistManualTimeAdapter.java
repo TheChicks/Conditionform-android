@@ -17,24 +17,27 @@ import java.util.ArrayList;
 public class RegistManualTimeAdapter extends RecyclerView.Adapter<RegistManualTimeViewHolder> {
 
     private final Context mContext;
-    private final ArrayList<TimeItem> mTimeItemArrayList;
+    private ArrayList<TimeItem> mTimeItemArrayList;
 
     private OnListItemClickListener mOnListItemClickListener;
+
+    boolean cbTimeClickable;
 
     public void setOnListItemClickListener(OnListItemClickListener listener) {
         mOnListItemClickListener = listener;
     }
 
     public interface OnListItemClickListener {
-        void onListItemCheck(int position, boolean isChecked);
+        void onListItemCheck(int position);
 
         void onListItemChange(int position);
     }
 
 
-    public RegistManualTimeAdapter(Context context) {
+    public RegistManualTimeAdapter(Context context, boolean checkBoxTimeEnabled) {
         this.mContext = context;
         mTimeItemArrayList = new ArrayList<>();
+        this.cbTimeClickable = checkBoxTimeEnabled;
         initData();
     }
 
@@ -59,7 +62,7 @@ public class RegistManualTimeAdapter extends RecyclerView.Adapter<RegistManualTi
 
     @Override
     public RegistManualTimeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return RegistManualTimeViewHolder.newInstance(parent, mOnListItemClickListener);
+        return RegistManualTimeViewHolder.newInstance(parent, mOnListItemClickListener, cbTimeClickable);
     }
 
     @Override
@@ -87,5 +90,10 @@ public class RegistManualTimeAdapter extends RecyclerView.Adapter<RegistManualTi
 
     public ArrayList<TimeItem> getTimeItemArrayList() {
         return mTimeItemArrayList;
+    }
+
+    public void setTimeItemArrayList(ArrayList<TimeItem> timeItemArrayList) {
+        mTimeItemArrayList = timeItemArrayList;
+        notifyDataSetChanged();
     }
 }

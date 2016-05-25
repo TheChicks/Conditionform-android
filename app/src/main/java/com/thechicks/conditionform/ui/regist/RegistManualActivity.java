@@ -112,12 +112,6 @@ public class RegistManualActivity extends AppCompatActivity {
     //label color
     String strLabelColor;
 
-    boolean enabledWakeUp;
-    boolean enabledMorning;
-    boolean enabledLunch;
-    boolean enabledEvening;
-    boolean enabledSleep;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -231,27 +225,11 @@ public class RegistManualActivity extends AppCompatActivity {
             }
         });
 
-        mRegistManualTimeAdapter = new RegistManualTimeAdapter(this);
+        mRegistManualTimeAdapter = new RegistManualTimeAdapter(this, true);
         mRegistManualTimeAdapter.setOnListItemClickListener(new RegistManualTimeAdapter.OnListItemClickListener() {
             @Override
-            public void onListItemCheck(int position, boolean isChecked) {
-                switch (position) {
-                    case 0:
-                        enabledWakeUp = isChecked;
-                        break;
-                    case 1:
-                        enabledMorning = isChecked;
-                        break;
-                    case 2:
-                        enabledLunch = isChecked;
-                        break;
-                    case 3:
-                        enabledEvening = isChecked;
-                        break;
-                    case 4:
-                        enabledSleep = isChecked;
-                        break;
-                }
+            public void onListItemCheck(int position) {
+                mRegistManualTimeAdapter.notifyItemChanged(position);
             }
 
             @Override
@@ -272,12 +250,6 @@ public class RegistManualActivity extends AppCompatActivity {
         timeInterval = 0;
         dosageCountTotal = 0;
         timeStart = TimeUtils.getCurrentUnixTimeStamp();
-
-        enabledWakeUp = true;
-        enabledMorning = true;
-        enabledLunch = true;
-        enabledEvening = true;
-        enabledSleep = true;
     }
 
     public void setupDate() {
@@ -426,33 +398,19 @@ public class RegistManualActivity extends AppCompatActivity {
         switch (dosageTypeIndex) {
             case 0:  //매일
                 disease.setDosageType(Constants.DOSAGE_TYPE_EVERYDAY);
-                disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
 
-                disease.setEnabledWakeup(enabledWakeUp);
-                disease.setEnabledMorning(enabledMorning);
-                disease.setEnabledLunch(enabledLunch);
-                disease.setEnabledEvening(enabledEvening);
-                disease.setEnabledSleep(enabledSleep);
+                setTimeItem(disease);
+
                 break;
             case 1:  //2일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_TWODAY);
-                disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
 
-                disease.setEnabledWakeup(enabledWakeUp);
-                disease.setEnabledMorning(enabledMorning);
-                disease.setEnabledLunch(enabledLunch);
-                disease.setEnabledEvening(enabledEvening);
-                disease.setEnabledSleep(enabledSleep);
+                setTimeItem(disease);
                 break;
             case 2:  //3일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_THREEDAY);
-                disease.setTimeItems(mRegistManualTimeAdapter.getTimeItemArrayList());
 
-                disease.setEnabledWakeup(enabledWakeUp);
-                disease.setEnabledMorning(enabledMorning);
-                disease.setEnabledLunch(enabledLunch);
-                disease.setEnabledEvening(enabledEvening);
-                disease.setEnabledSleep(enabledSleep);
+                setTimeItem(disease);
                 break;
             case 3:  //시간마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_EVERYHOUR);
@@ -512,5 +470,18 @@ public class RegistManualActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    public Disease setTimeItem(Disease disease) {
+        ArrayList<TimeItem> timeItemArrayList = mRegistManualTimeAdapter.getTimeItemArrayList();
+        disease.setTimeItems(timeItemArrayList);
+
+        disease.setEnabledWakeup(timeItemArrayList.get(0).isEnabled());
+        disease.setEnabledMorning(timeItemArrayList.get(1).isEnabled());
+        disease.setEnabledLunch(timeItemArrayList.get(2).isEnabled());
+        disease.setEnabledEvening(timeItemArrayList.get(3).isEnabled());
+        disease.setEnabledSleep(timeItemArrayList.get(4).isEnabled());
+
+        return disease;
     }
 }

@@ -36,12 +36,12 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
 
     RegistManualTimeAdapter.OnListItemClickListener mListener;
 
-    public static RegistManualTimeViewHolder newInstance(ViewGroup parent, RegistManualTimeAdapter.OnListItemClickListener itemClickListener) {
+    public static RegistManualTimeViewHolder newInstance(ViewGroup parent, RegistManualTimeAdapter.OnListItemClickListener itemClickListener, boolean cbTimeClickable) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_regist_time, parent, false);
-        return new RegistManualTimeViewHolder(itemView, itemClickListener);
+        return new RegistManualTimeViewHolder(itemView, itemClickListener, cbTimeClickable);
     }
 
-    public RegistManualTimeViewHolder(View itemView, RegistManualTimeAdapter.OnListItemClickListener itemClickListener) {
+    public RegistManualTimeViewHolder(View itemView, RegistManualTimeAdapter.OnListItemClickListener itemClickListener, boolean cbTimeClickable) {
         super(itemView);
 
         mView = itemView;
@@ -49,6 +49,8 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
         mListener = itemClickListener;
 
         ButterKnife.bind(this, mView);
+
+        cbEnabled.setClickable(cbTimeClickable);
     }
 
     public void bind(final TimeItem timeItem) {
@@ -97,12 +99,16 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        //http://stackoverflow.com/questions/27070220/recycleview-notifydatasetchanged-illegalstateexception/37305564#37305564
+        cbEnabled.setOnCheckedChangeListener(null);
+        cbEnabled.setChecked(timeItem.isEnabled());
         cbEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (mListener != null) {
+                    timeItem.setEnabled(isChecked);
                     //체크박스 변경을 Adapter에 알린다.
-                    mListener.onListItemCheck(getAdapterPosition(), isChecked);
+                    mListener.onListItemCheck(getAdapterPosition());
                 }
             }
         });
