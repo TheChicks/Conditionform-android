@@ -1,12 +1,15 @@
 package com.thechicks.conditionform.ui;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,8 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.remote.BackendHelper;
 
@@ -39,7 +45,7 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     @Bind(R.id.imageView_capture)
     ImageView ivCapture;
 
-    Uri captureUri;
+    Uri mCaptureUri;
 
     protected static BackendHelper sBackendHelper;
 
@@ -74,10 +80,10 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
         Intent receiveIntent = getActivity().getIntent();
 
-        captureUri = receiveIntent.getData();  // intent에서 Uri 추출
+        mCaptureUri = receiveIntent.getData();  // intent에서 Uri 추출
 
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), captureUri);
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
             ivCapture.setImageBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
@@ -90,21 +96,24 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     public void onClickCaptureEdit() {
         //Todo: 편집 앱 실행
 
-        Intent cropIntent = new Intent("com.android.camera.action.CROP");
-        cropIntent.setDataAndType(captureUri, "image/*");
+//        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+//        cropIntent.setDataAndType(mCaptureUri, "image/*");
+//
+//        //set crop properties
+//        cropIntent.putExtra("crop", "true");
+//        //crop한 이미지를 저장할 때 200x200 크기로 저장
+////        intent.putExtra("outputX", 200);  //crop한 이미지의 x축 크기
+////        intent.putExtra("outputY", 200);  //crop한 이미지의 y축 크기
+////        intent.putExtra("aspectX", 2);  //crop 박스의 x축 비율
+////        intent.putExtra("aspectY", 1);  //crop 박스의 y축 비율
+//        cropIntent.putExtra("scale", true);
+//
+//        //retrieve data in return. 사용하면 번들 용량 제한으로 크기가 큰 이미지는 안넘어온다.
+////        cropIntent.putExtra("return-data", true);
+//        startActivityForResult(cropIntent, REQUEST_CODE_CROP);
 
-        //set crop properties
-        cropIntent.putExtra("crop", "true");
-        //crop한 이미지를 저장할 때 200x200 크기로 저장
-//        intent.putExtra("outputX", 200);  //crop한 이미지의 x축 크기
-//        intent.putExtra("outputY", 200);  //crop한 이미지의 y축 크기
-//        intent.putExtra("aspectX", 2);  //crop 박스의 x축 비율
-//        intent.putExtra("aspectY", 1);  //crop 박스의 y축 비율
-        cropIntent.putExtra("scale", true);
-
-        //retrieve data in return. 사용하면 번들 용량 제한으로 크기가 큰 이미지는 안넘어온다.
-//        cropIntent.putExtra("return-data", true);
-        startActivityForResult(cropIntent, REQUEST_CODE_CROP);
+        //Start Crop image activity
+        startCropImageActivity(mCaptureUri);
     }
 
     @OnClick(R.id.button_capture_repeat)
@@ -118,7 +127,7 @@ public class RegistAutoCaptureResultFragment extends Fragment {
         //Todo: 파일로 만들어 서버에 전송
 
         // file by uri
-        File file = new File(getPathFromUri(captureUri));
+        File file = new File(getPathFromUri(mCaptureUri));
 
         // create RequestBody instance from file
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -160,22 +169,73 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.e(TAG, " resultCode 1");
         if (resultCode != Activity.RESULT_OK)
             return;
+        Log.e(TAG, " resultCode 2");
 
         switch (requestCode){
             case REQUEST_CODE_CROP:
 
-                captureUri = data.getData();  //Uri 추출
-                Log.e(TAG, " crop " + captureUri);
+                mCaptureUri = data.getData();  //Uri 추출
+                Log.e(TAG, " crop " + mCaptureUri);
 
                 try {
-                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), captureUri);
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
                     ivCapture.setImageBitmap(bitmap);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
+
+            //Todo: 삭제
+            case CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE:  //handle result of pick image chooser
+                Log.e(TAG, " PICK_IMAGE_CHOOSER_REQUEST_CODE");
+
+                Uri imageUri = CropImage.getPickImageResultUri(getActivity(), data);
+
+                // For API >= 23 we need to check specifically that we have permissions to read external storage.
+                boolean requirePermissions = false;
+                if (CropImage.isReadExternalStoragePermissionsRequired(getActivity(), imageUri)){
+                    // request permissions and handle the result in onRequestPermissionsResult()
+                    requirePermissions = true;
+                    mCaptureUri = imageUri;
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                }else {
+                    // no permissions required or already grunted, can start crop image activity
+                    startCropImageActivity(imageUri);
+                }
+                break;
+
+            case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:  // handle result of CropImageActivity
+
+                Log.e(TAG, " CROP_IMAGE_ACTIVITY_REQUEST_CODE");
+                CropImage.ActivityResult result = CropImage.getActivityResult(data);
+                mCaptureUri = result.getUri();
+                Log.e(TAG, " " + mCaptureUri);
+                ivCapture.setImageURI(mCaptureUri);
+                break;
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(mCaptureUri != null && grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            // required permission granted, start crop image activity
+            startCropImageActivity(mCaptureUri);
+        }else {
+            Toast.makeText(getActivity(), "Cancelling, required permissions are not granted", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /**
+     * Start crop image activity for the given image.
+     */
+    private void startCropImageActivity(Uri imageUri){
+        Log.e(TAG, " startCropImageActivity");
+        CropImage.activity(imageUri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(getActivity());
     }
 }

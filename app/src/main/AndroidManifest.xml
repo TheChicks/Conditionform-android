@@ -91,6 +91,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.thechicks.conditionform.ui.MainActivity"/>
         </activity>
+
+        <!--Crop Activity-->
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"/>
     </application>
 
 </manifest>
