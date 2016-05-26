@@ -455,7 +455,24 @@ public class RegistManualActivity extends AppCompatActivity {
                 //Todo: 시간으로 알람 저장
 
 
+
                 //Todo: 알람 등록
+                //몇일부터 얼마간 울릴지
+                //몇시에 울릴지
+
+                //시간5개에 5/25 ~ 5/27까지면
+                // 5 * (27일-25일 = 2) -> 10개 등록해야함.
+                //그런데 현재 시간이 지난건 등록 안한다.
+
+                //알람 등록을 어떻게 할것인가
+
+                //알람 등록에 필요한 정보들
+
+
+
+
+
+
 
 
                 //Parent Activity에 결과값 전달
