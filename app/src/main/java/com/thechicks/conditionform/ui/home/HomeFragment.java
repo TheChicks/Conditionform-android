@@ -1,5 +1,6 @@
 package com.thechicks.conditionform.ui.home;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -407,8 +408,8 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
         startActivityForResult(intentCameraCapture, REQUEST_CODE_CAMERA_CAPTURE);
     }
 
-    public static final int REQUEST_CODE_CAMERA_CAPTURE = 1000;
-    public static final int REQUEST_CODE_GALLERY = 10001;
+    public static final int REQUEST_CODE_CAMERA_CAPTURE = 2000;
+    public static final int REQUEST_CODE_GALLERY = 2001;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

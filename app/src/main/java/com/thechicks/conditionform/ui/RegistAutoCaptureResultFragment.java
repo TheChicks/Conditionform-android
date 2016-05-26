@@ -1,5 +1,6 @@
 package com.thechicks.conditionform.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -83,10 +84,27 @@ public class RegistAutoCaptureResultFragment extends Fragment {
         }
     }
 
+    public static final int REQUEST_CODE_CROP = 2002;
+
     @OnClick(R.id.button_capture_edit)
     public void onClickCaptureEdit() {
         //Todo: 편집 앱 실행
 
+        Intent cropIntent = new Intent("com.android.camera.action.CROP");
+        cropIntent.setDataAndType(captureUri, "image/*");
+
+        //set crop properties
+        cropIntent.putExtra("crop", "true");
+        //crop한 이미지를 저장할 때 200x200 크기로 저장
+//        intent.putExtra("outputX", 200);  //crop한 이미지의 x축 크기
+//        intent.putExtra("outputY", 200);  //crop한 이미지의 y축 크기
+//        intent.putExtra("aspectX", 2);  //crop 박스의 x축 비율
+//        intent.putExtra("aspectY", 1);  //crop 박스의 y축 비율
+        cropIntent.putExtra("scale", true);
+
+        //retrieve data in return. 사용하면 번들 용량 제한으로 크기가 큰 이미지는 안넘어온다.
+//        cropIntent.putExtra("return-data", true);
+        startActivityForResult(cropIntent, REQUEST_CODE_CROP);
     }
 
     @OnClick(R.id.button_capture_repeat)
@@ -138,5 +156,26 @@ public class RegistAutoCaptureResultFragment extends Fragment {
         return path;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode != Activity.RESULT_OK)
+            return;
+
+        switch (requestCode){
+            case REQUEST_CODE_CROP:
+
+                captureUri = data.getData();  //Uri 추출
+                Log.e(TAG, " crop " + captureUri);
+
+                try {
+                    Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), captureUri);
+                    ivCapture.setImageBitmap(bitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+        }
+    }
 }
