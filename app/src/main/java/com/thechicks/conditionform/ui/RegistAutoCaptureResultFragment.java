@@ -48,6 +48,8 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
     Uri mCaptureUri;
 
+    Bitmap mCaptureBitmap;
+
     protected static BackendHelper sBackendHelper;
 
     public RegistAutoCaptureResultFragment() {
@@ -81,13 +83,27 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
         Intent receiveIntent = getActivity().getIntent();
 
+        Log.d(TAG, " 1");
+
         mCaptureUri = receiveIntent.getData();  // intent에서 Uri 추출
 
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
-            ivCapture.setImageBitmap(bitmap);
+            Log.d(TAG, " 2");
+            mCaptureBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);  //oom 발생
+            Log.d(TAG, " 3");
+            ivCapture.setImageBitmap(mCaptureBitmap);
+            Log.d(TAG, " 4");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mCaptureBitmap != null) {
+            mCaptureBitmap.recycle();
+            mCaptureBitmap = null;
         }
     }
 
@@ -124,27 +140,31 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     }
 
     @OnClick(R.id.button_capture_confirm)
-    public void onClickCaptureConfirm(){
+    public void onClickCaptureConfirm() {
         //Todo: 파일로 만들어 서버에 전송
 
         FileOutputStream fos = null;
 
         try {
+            Log.d(TAG, " onClickCaptureConfirm 2");
             //Crop한 이미지의 캐시위치의 Uri가 오는데 이걸 비트맵으로 변환
+//            mCaptureBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
 //            ivCapture.setImageBitmap(bitmap);
 
             //임시 디렉토리에 파일로 변환
             File cacheFileDir = new File(getActivity().getCacheDir(), "temp");
-            if (!cacheFileDir.exists()){
+            if (!cacheFileDir.exists()) {
                 cacheFileDir.mkdir();  //존재하지 않으면 생성
             }
 
             File imageFileName = new File(cacheFileDir, "pillCheck-" + System.currentTimeMillis() + ".jpg");
 
             fos = new FileOutputStream(imageFileName);
+//            mCaptureBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
+            bitmap.recycle();
 
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFileName);
 
@@ -157,7 +177,10 @@ public class RegistAutoCaptureResultFragment extends Fragment {
                     Log.d(TAG, " Upload success");
 
                     //Todo: json 파싱해서 OcrResultFragmnet로 넘김
+
+
                 }
+
                 @Override
                 public void onFailure(Call<JsonArray> call, Throwable t) {
                     Log.e(TAG, " Throwable is " + t);
@@ -166,8 +189,8 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(fos != null){
+        } finally {
+            if (fos != null) {
                 try {
                     fos.close();
                 } catch (IOException e) {
@@ -175,8 +198,6 @@ public class RegistAutoCaptureResultFragment extends Fragment {
                 }
             }
         }
-
-
 
         // file by uri
 //        File file = new File(getPathFromUri(mCaptureUri));
@@ -224,7 +245,9 @@ public class RegistAutoCaptureResultFragment extends Fragment {
         if (resultCode != Activity.RESULT_OK)
             return;
 
-        switch (requestCode){
+        switch (requestCode) {
+
+            //Todo: 삭제
             case REQUEST_CODE_CROP:
 
                 mCaptureUri = data.getData();  //Uri 추출
@@ -246,12 +269,12 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
                 // For API >= 23 we need to check specifically that we have permissions to read external storage.
                 boolean requirePermissions = false;
-                if (CropImage.isReadExternalStoragePermissionsRequired(getActivity(), imageUri)){
+                if (CropImage.isReadExternalStoragePermissionsRequired(getActivity(), imageUri)) {
                     // request permissions and handle the result in onRequestPermissionsResult()
                     requirePermissions = true;
                     mCaptureUri = imageUri;
                     requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
-                }else {
+                } else {
                     // no permissions required or already grunted, can start crop image activity
                     startCropImageActivity(imageUri);
                 }
@@ -263,7 +286,15 @@ public class RegistAutoCaptureResultFragment extends Fragment {
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 mCaptureUri = result.getUri();
                 Log.d(TAG, " " + mCaptureUri);
-                ivCapture.setImageURI(mCaptureUri);
+
+                try {
+                    mCaptureBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
+                    ivCapture.setImageBitmap(mCaptureBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+//                ivCapture.setImageURI(mCaptureUri);
                 break;
         }
     }
@@ -271,10 +302,10 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(mCaptureUri != null && grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+        if (mCaptureUri != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             // required permission granted, start crop image activity
             startCropImageActivity(mCaptureUri);
-        }else {
+        } else {
             Toast.makeText(getActivity(), "Cancelling, required permissions are not granted", Toast.LENGTH_SHORT).show();
         }
     }
@@ -282,7 +313,7 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     /**
      * Start crop image activity for the given image.
      */
-    private void startCropImageActivity(Uri imageUri){
+    private void startCropImageActivity(Uri imageUri) {
         Log.d(TAG, " startCropImageActivity");
         CropImage.activity(imageUri)
                 .setGuidelines(CropImageView.Guidelines.ON_TOUCH)  //터치시에만 가이드 라인
