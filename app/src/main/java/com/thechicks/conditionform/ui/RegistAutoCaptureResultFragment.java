@@ -26,6 +26,7 @@ import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.remote.BackendHelper;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import butterknife.Bind;
@@ -123,31 +124,82 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     }
 
     @OnClick(R.id.button_capture_confirm)
-    public void onClickCaptureConfirm() {
+    public void onClickCaptureConfirm(){
         //Todo: 파일로 만들어 서버에 전송
 
+        FileOutputStream fos = null;
+
+        try {
+            //Crop한 이미지의 캐시위치의 Uri가 오는데 이걸 비트맵으로 변환
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
+//            ivCapture.setImageBitmap(bitmap);
+
+            //임시 디렉토리에 파일로 변환
+            File cacheFileDir = new File(getActivity().getCacheDir(), "temp");
+            if (!cacheFileDir.exists()){
+                cacheFileDir.mkdir();  //존재하지 않으면 생성
+            }
+
+            File imageFileName = new File(cacheFileDir, "pillCheck-" + System.currentTimeMillis() + ".jpg");
+
+            fos = new FileOutputStream(imageFileName);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+
+            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFileName);
+
+            MultipartBody.Part body = MultipartBody.Part.createFormData("prescription", imageFileName.getName(), requestFile);
+
+            Call<JsonArray> call = sBackendHelper.getOcrResult(body);
+            call.enqueue(new Callback<JsonArray>() {
+                @Override
+                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                    Log.d(TAG, " Upload success");
+
+                    //Todo: json 파싱해서 OcrResultFragmnet로 넘김
+                }
+                @Override
+                public void onFailure(Call<JsonArray> call, Throwable t) {
+                    Log.e(TAG, " Throwable is " + t);
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if(fos != null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+
+
         // file by uri
-        File file = new File(getPathFromUri(mCaptureUri));
+//        File file = new File(getPathFromUri(mCaptureUri));
 
         // create RequestBody instance from file
-        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+//        RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
         // MultipartBody.Part is used to send also the actual file name
-        MultipartBody.Part body = MultipartBody.Part.createFormData("prescription", file.getName(), requestFile);
+//        MultipartBody.Part body = MultipartBody.Part.createFormData("prescription", file.getName(), requestFile);
 
-        Call<JsonArray> call = sBackendHelper.getOcrResult(body);
-        call.enqueue(new Callback<JsonArray>() {
-            @Override
-            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                Log.d(TAG, " Upload success");
-
-                //Todo: json 파싱해서 OcrResultFragmnet로 넘김
-            }
-            @Override
-            public void onFailure(Call<JsonArray> call, Throwable t) {
-                Log.e(TAG, " Throwable is " + t);
-            }
-        });
+//        Call<JsonArray> call = sBackendHelper.getOcrResult(body);
+//        call.enqueue(new Callback<JsonArray>() {
+//            @Override
+//            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+//                Log.d(TAG, " Upload success");
+//
+//                //Todo: json 파싱해서 OcrResultFragmnet로 넘김
+//            }
+//            @Override
+//            public void onFailure(Call<JsonArray> call, Throwable t) {
+//                Log.e(TAG, " Throwable is " + t);
+//            }
+//        });
     }
 
     //Uri에서 실제 파일이 저장된 path를 추출
