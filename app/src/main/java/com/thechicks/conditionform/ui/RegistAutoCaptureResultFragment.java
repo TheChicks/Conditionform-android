@@ -169,16 +169,14 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Log.e(TAG, " resultCode 1");
         if (resultCode != Activity.RESULT_OK)
             return;
-        Log.e(TAG, " resultCode 2");
 
         switch (requestCode){
             case REQUEST_CODE_CROP:
 
                 mCaptureUri = data.getData();  //Uri 추출
-                Log.e(TAG, " crop " + mCaptureUri);
+                Log.d(TAG, " crop " + mCaptureUri);
 
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), mCaptureUri);
@@ -190,7 +188,7 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
             //Todo: 삭제
             case CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE:  //handle result of pick image chooser
-                Log.e(TAG, " PICK_IMAGE_CHOOSER_REQUEST_CODE");
+                Log.d(TAG, " PICK_IMAGE_CHOOSER_REQUEST_CODE");
 
                 Uri imageUri = CropImage.getPickImageResultUri(getActivity(), data);
 
@@ -209,10 +207,10 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
             case CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE:  // handle result of CropImageActivity
 
-                Log.e(TAG, " CROP_IMAGE_ACTIVITY_REQUEST_CODE");
+                Log.d(TAG, " CROP_IMAGE_ACTIVITY_REQUEST_CODE");
                 CropImage.ActivityResult result = CropImage.getActivityResult(data);
                 mCaptureUri = result.getUri();
-                Log.e(TAG, " " + mCaptureUri);
+                Log.d(TAG, " " + mCaptureUri);
                 ivCapture.setImageURI(mCaptureUri);
                 break;
         }
@@ -233,9 +231,14 @@ public class RegistAutoCaptureResultFragment extends Fragment {
      * Start crop image activity for the given image.
      */
     private void startCropImageActivity(Uri imageUri){
-        Log.e(TAG, " startCropImageActivity");
+        Log.d(TAG, " startCropImageActivity");
         CropImage.activity(imageUri)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .start(getActivity());
+                .setGuidelines(CropImageView.Guidelines.ON_TOUCH)  //터치시에만 가이드 라인
+                .setCropShape(CropImageView.CropShape.RECTANGLE)  //Crop 영역 사각형
+                .setFixAspectRatio(false)  //Crop 영역 비율 FREE
+                .setAutoZoomEnabled(true)  //Crop 영역 조절시 Zoom 활성화
+                .setMaxZoom(8)   //Max Zoom Level 설정. default=4
+                .setShowCropOverlay(true)  //Crop 영역 OverLay. default=true
+                .start(getActivity(), RegistAutoCaptureResultFragment.this);
     }
 }
