@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -149,5 +150,23 @@ public class PillDetailsActivity extends AppCompatActivity {
         tvDosage.setText(pill.getDosage());
         tvPrecaution.setText(pill.getPrecaution());
         tvMedicationGuide.setText(pill.getMedicationGuide());
+    }
+
+    //Back Button event handle
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

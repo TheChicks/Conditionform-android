@@ -87,6 +87,7 @@ public class HistoryFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), HistoryDetailActivity.class);
                 intent.putExtra("diseaseId", history.getDiseaseId());
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
             }
         });
         rvHistory.setAdapter(mHistoryListAdapter);

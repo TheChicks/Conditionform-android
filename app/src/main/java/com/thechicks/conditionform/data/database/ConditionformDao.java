@@ -316,12 +316,11 @@ public class ConditionformDao implements IConditionformDao {
             disease.setDosageTotalDays(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS)));
 
             ArrayList<Pill> pillArrayList = new ArrayList<>();
-
-            while (cursor.moveToNext()) {
+            for (int i = 0; i < cursor.getCount(); i++) {
                 Pill pill = new Pill();
                 pill.setKoName(cursor.getString(cursor.getColumnIndex(Constants.PillEntray.COLUMN_PILL_NAME_KOREA)));
-
                 pillArrayList.add(pill);
+                cursor.moveToNext();
                 Log.e(TAG, " " + pill);
             }
 

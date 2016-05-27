@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -239,6 +240,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
     @OnClick(R.id.button_confirm)
     public void onClickConfirm() {
         finish();
+        overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     }
 
     @OnClick(R.id.button_update)
@@ -249,5 +251,23 @@ public class HistoryDetailActivity extends AppCompatActivity {
     @OnClick(R.id.button_delete)
     public void onClickDelete() {
         //Todo: 삭제
+    }
+
+    //Back Button event handle
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

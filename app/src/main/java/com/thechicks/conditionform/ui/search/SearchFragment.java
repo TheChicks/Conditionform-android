@@ -105,6 +105,7 @@ public class SearchFragment extends Fragment {
                 intent.putExtra("pill", pill);
 
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.move_right_in_activity, R.anim.move_left_out_activity);
             }
         });
     }
