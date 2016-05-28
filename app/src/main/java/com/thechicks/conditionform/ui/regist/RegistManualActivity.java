@@ -3,6 +3,7 @@ package com.thechicks.conditionform.ui.regist;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 import com.thebluealliance.spectrum.SpectrumDialog;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
+import com.thechicks.conditionform.data.model.OcrResult;
 import com.thechicks.conditionform.data.model.Pill;
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.model.TimeItem;
@@ -250,6 +252,15 @@ public class RegistManualActivity extends AppCompatActivity {
         timeInterval = 0;
         dosageCountTotal = 0;
         timeStart = TimeUtils.getCurrentUnixTimeStamp();
+
+        //Todo: intent가 null이 오는지 확인한다.
+        Intent receiveIntent = getIntent();
+        //Todo: OcrResult에서 가장 큰 값들 골라낸다.
+        ArrayList<OcrResult> ocrResultArrayList = (ArrayList<OcrResult>) receiveIntent.getSerializableExtra("ocrResult");
+
+        //Todo: OcrResult에서 Pill을 꺼내어 데이터 셋해준다.
+
+
     }
 
     public void setupDate() {

@@ -15,7 +15,7 @@ import java.util.List;
 public class RegistAutoOcrResultListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final Context mContext;
-    private List<OcrResult> mOcrResultList;
+    private ArrayList<OcrResult> mOcrResultList;
 
     public RegistAutoOcrResultListAdapter(Context context) {
         mContext = context;
@@ -29,7 +29,6 @@ public class RegistAutoOcrResultListAdapter extends RecyclerView.Adapter<Recycle
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         OcrResult ocrResult = mOcrResultList.get(position);
         ((RegistAutoOcrResultViewHolder) holder).bind(ocrResult);
     }
@@ -52,5 +51,9 @@ public class RegistAutoOcrResultListAdapter extends RecyclerView.Adapter<Recycle
     public void setData(ArrayList<OcrResult> data) {
         mOcrResultList = data;
         notifyDataSetChanged();
+    }
+
+    public ArrayList<OcrResult> getOcrResultList() {
+        return mOcrResultList;
     }
 }

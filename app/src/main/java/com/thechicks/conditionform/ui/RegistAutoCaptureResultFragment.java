@@ -19,11 +19,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.gson.JsonArray;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.remote.BackendHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -32,12 +33,6 @@ import java.io.IOException;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RegistAutoCaptureResultFragment extends Fragment {
 
@@ -49,8 +44,6 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     Uri mCaptureUri;
 
     Bitmap mCaptureBitmap;
-
-    protected static BackendHelper sBackendHelper;
 
     public RegistAutoCaptureResultFragment() {
         // Required empty public constructor
@@ -65,9 +58,7 @@ public class RegistAutoCaptureResultFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (sBackendHelper == null) {
-            sBackendHelper = BackendHelper.getInstance();
-        }
+
     }
 
     @Override
@@ -141,7 +132,7 @@ public class RegistAutoCaptureResultFragment extends Fragment {
 
     @OnClick(R.id.button_capture_confirm)
     public void onClickCaptureConfirm() {
-        //Todo: 파일로 만들어 서버에 전송
+        // 이미지를 파일로 만들어 이벤트 발행
 
         FileOutputStream fos = null;
 
@@ -166,26 +157,8 @@ public class RegistAutoCaptureResultFragment extends Fragment {
             fos.flush();
             bitmap.recycle();
 
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFileName);
-
-            MultipartBody.Part body = MultipartBody.Part.createFormData("prescription", imageFileName.getName(), requestFile);
-
-            Call<JsonArray> call = sBackendHelper.getOcrResult(body);
-            call.enqueue(new Callback<JsonArray>() {
-                @Override
-                public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                    Log.d(TAG, " Upload success");
-
-                    //Todo: json 파싱해서 OcrResultFragmnet로 넘김
-
-
-                }
-
-                @Override
-                public void onFailure(Call<JsonArray> call, Throwable t) {
-                    Log.e(TAG, " Throwable is " + t);
-                }
-            });
+            //OcrStart Event 발행
+            EventBus.getDefault().post(new EventOcrStart(imageFileName));
 
         } catch (IOException e) {
             e.printStackTrace();

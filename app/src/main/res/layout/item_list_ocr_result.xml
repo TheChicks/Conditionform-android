@@ -6,6 +6,14 @@
     android:layout_margin="8dp"
     android:background="#555555"
     android:orientation="horizontal">
+\
+    <EditText
+        android:id="@+id/editText_pill_insuranceCode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:text="1231545"
+        android:textSize="15sp"/>
 
     <EditText
         android:id="@+id/editText_pill_name"

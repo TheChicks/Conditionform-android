@@ -5,43 +5,43 @@ package com.thechicks.conditionform.data.model;
  */
 public class OcrResult {
 
-    String pillName;
+    Pill pill;
 
-    String dosageTotal;
+    int dosageTotal;
 
-    String dosageOneTime;
+    int dosageOneTime;
 
-    String dosageTotalDays;
+    int dosageTotalDays;
 
-    public String getPillName() {
-        return pillName;
+    public Pill getPill() {
+        return pill;
     }
 
-    public void setPillName(String pillName) {
-        this.pillName = pillName;
+    public void setPill(Pill pill) {
+        this.pill = pill;
     }
 
-    public String getDosageTotal() {
+    public int getDosageTotal() {
         return dosageTotal;
     }
 
-    public void setDosageTotal(String dosageTotal) {
+    public void setDosageTotal(int dosageTotal) {
         this.dosageTotal = dosageTotal;
     }
 
-    public String getDosageOneTime() {
+    public int getDosageOneTime() {
         return dosageOneTime;
     }
 
-    public void setDosageOneTime(String dosageOneTime) {
+    public void setDosageOneTime(int dosageOneTime) {
         this.dosageOneTime = dosageOneTime;
     }
 
-    public String getDosageTotalDays() {
+    public int getDosageTotalDays() {
         return dosageTotalDays;
     }
 
-    public void setDosageTotalDays(String dosageTotalDays) {
+    public void setDosageTotalDays(int dosageTotalDays) {
         this.dosageTotalDays = dosageTotalDays;
     }
 }

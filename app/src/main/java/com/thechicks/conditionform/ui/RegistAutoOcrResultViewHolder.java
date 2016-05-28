@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.model.OcrResult;
+import com.thechicks.conditionform.data.model.Pill;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,6 +17,9 @@ import butterknife.ButterKnife;
  * Created by opklnm102 on 2016-05-20.
  */
 public class RegistAutoOcrResultViewHolder extends RecyclerView.ViewHolder {
+
+    @Bind(R.id.editText_pill_insuranceCode)
+    EditText etPillInsuranceCode;
 
     @Bind(R.id.editText_pill_name)
     EditText etPillName;
@@ -42,14 +46,17 @@ public class RegistAutoOcrResultViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(OcrResult ocrResult){
 
-        etPillName.setText(ocrResult.getPillName());
+        Pill pill = ocrResult.getPill();
 
-        etDosageTotal.setText(ocrResult.getPillName());
-
-        etDosageOneTime.setText(ocrResult.getPillName());
-
-        etDosageTotalDays.setText(ocrResult.getPillName());
+        etPillName.setText(pill.getKoName());
+        etPillInsuranceCode.setText(pill.getInsuranceCode());
+        etDosageTotal.setText(ocrResult.getDosageTotal());
+        etDosageOneTime.setText(ocrResult.getDosageOneTime());
+        etDosageTotalDays.setText(ocrResult.getDosageTotalDays());
 
         //Todo: 데이터 수정시 다시 바인드
+        //Todo: 리스너 달기
+
+
     }
 }

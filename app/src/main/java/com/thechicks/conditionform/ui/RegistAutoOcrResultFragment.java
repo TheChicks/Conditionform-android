@@ -1,5 +1,6 @@
 package com.thechicks.conditionform.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.data.model.OcrResult;
+import com.thechicks.conditionform.ui.regist.RegistManualActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,10 +45,28 @@ public class RegistAutoOcrResultFragment extends Fragment {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_regist_auto_ocr_result, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        ButterKnife.unbind(this);
+        super.onDestroyView();
     }
 
     @Override
@@ -54,18 +80,23 @@ public class RegistAutoOcrResultFragment extends Fragment {
         rvOcrResult.setAdapter(mRegistAutoOcrResultListAdapter);
     }
 
+    @Subscribe
+    public void ocrResult(EventOcrResult eventOcrResult) {
+        mRegistAutoOcrResultListAdapter.setData(eventOcrResult.getOcrResults());
+    }
+
     //Todo: 메인으로 이동
     @OnClick(R.id.button_cancel)
     public void onClickCancel() {
         getActivity().finish();
     }
 
-    //Todo: 알람등록 후 메인으로 이동
+    //Todo: 알람등록 화면으로 이동
     @OnClick(R.id.button_confirm)
     public void onClickConfirm() {
-        //Todo: DB 저장
-        //Todo: 알람 등록
-        //Todo: 메인으로 이동
-
+        ArrayList<OcrResult> ocrResultArrayList = mRegistAutoOcrResultListAdapter.getOcrResultList();
+        Intent intent = new Intent(getActivity(), RegistManualActivity.class);
+        intent.putExtra("ocrResult", ocrResultArrayList);
+        startActivity(intent);
     }
 }
