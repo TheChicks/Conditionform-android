@@ -28,4 +28,6 @@ public interface IConditionformDao {
 
     public Disease findDiseaseById(int id);
 
+    public Disease findDiseaseWithHistoryByIdAndDate(int id, long date);
+
 }

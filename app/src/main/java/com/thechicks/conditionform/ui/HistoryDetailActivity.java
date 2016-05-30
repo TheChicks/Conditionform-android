@@ -133,7 +133,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
                         Log.e(TAG, " onResponse()");
 
-                        if (jaRoot != null) {
+                        if (jaRoot != null && jaRoot.size() != 0) {
 
                             Log.e(TAG, " " + jaRoot);
                             Pill pill = new Gson().fromJson(jaRoot.get(0), Pill.class);
@@ -142,7 +142,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
                             intent.putExtra("pill", pill);
                             startActivity(intent);
                         } else {
-                            Log.e(TAG, "jaRoot null");
+                            Log.e(TAG, "jaRoot null or size = 0");
                         }
                     }
 
@@ -262,7 +262,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);

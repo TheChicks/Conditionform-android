@@ -1,12 +1,14 @@
 package com.thechicks.conditionform.data.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by Dong on 2016-04-09.
  */
-public class Disease {
+public class Disease implements Serializable {
 
+    int id;
     String color;  //#ffffff
     int img;
     String name;
@@ -44,6 +46,14 @@ public class Disease {
 
     int dosageOneTime;
     int dosageTotalDays;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getColor() {
         return color;

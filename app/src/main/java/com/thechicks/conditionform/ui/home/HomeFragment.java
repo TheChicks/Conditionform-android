@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -142,11 +143,23 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
         rvDisease.setAdapter(mDiseaseListAdapter);
         mDiseaseListAdapter.setOnListItemClickListener(new DiseaseListAdapter.OnListItemClickListener() {
             @Override
-            public void onListItemClick(Disease disease) {
-                //Todo: 복용내역 상세정보로 이동
-//                Intent intent = new Intent(getActivity(), 이동할 액티비티);
-//                startActivity(intent);
-                Toast.makeText(getActivity(), "List Item Click", Toast.LENGTH_SHORT).show();
+            public void onListItemClick(final Disease disease) {
+                // 복용내역 상세정보 표기
+
+                //데이터 로드
+                AsyncHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Disease item = conditionformDao.findDiseaseWithHistoryByIdAndDate(disease.getId(), currentDayTimestamp);
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                DiseaseDosageCheckBottomSheetDialogFragment diseaseDosageCheckBottomSheetDialogFragment = DiseaseDosageCheckBottomSheetDialogFragment.newInstance(item);
+                                diseaseDosageCheckBottomSheetDialogFragment.show(getChildFragmentManager(), diseaseDosageCheckBottomSheetDialogFragment.getTag());
+                            }
+                        });
+                    }
+                });
             }
         });
 

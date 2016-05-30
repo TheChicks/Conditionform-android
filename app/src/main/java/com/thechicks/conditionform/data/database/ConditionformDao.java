@@ -184,6 +184,7 @@ public class ConditionformDao implements IConditionformDao {
 
         while (cursor.moveToNext()) {
             Disease disease = new Disease();
+            disease.setId(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray._ID)));
             disease.setName(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_NAME)));
             disease.setImg(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE)));
             disease.setColor(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR)));
@@ -258,7 +259,13 @@ public class ConditionformDao implements IConditionformDao {
 
     /*
      복용내역 상세정보 쿼리
-     Disease -
+     Disease - id, name, image, color, dosageType,
+               enabledWakeup, enabledMorning, enabledLunch, enabledEvening, enabledSleep
+               timeInterval, dosageTotal
+               dateStart, dateEnd
+               timeStartHour, timeStartMinute
+               dosageOneTime, dosageTotalDays
+      Pill - koName
      */
     @Override
     public Disease findDiseaseById(int rowId) {
@@ -314,6 +321,103 @@ public class ConditionformDao implements IConditionformDao {
             disease.setTimeStartMinute(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE)));
             disease.setDosageOneTime(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME)));
             disease.setDosageTotalDays(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS)));
+
+            ArrayList<Pill> pillArrayList = new ArrayList<>();
+            for (int i = 0; i < cursor.getCount(); i++) {
+                Pill pill = new Pill();
+                pill.setKoName(cursor.getString(cursor.getColumnIndex(Constants.PillEntray.COLUMN_PILL_NAME_KOREA)));
+                pillArrayList.add(pill);
+                cursor.moveToNext();
+                Log.e(TAG, " " + pill);
+            }
+
+            disease.setPillArrayList(pillArrayList);
+
+            Log.e(TAG, " " + disease);
+        }
+
+        cursor.close();
+
+        return disease;
+    }
+
+    /*
+     복용 확인 쿼리
+     Disease - id, name, image, color, dosageType,
+               enabledWakeup, enabledMorning, enabledLunch, enabledEvening, enabledSleep
+               timeInterval, dosageTotal
+               dateStart, dateEnd
+               timeStartHour, timeStartMinute
+               dosageOneTime, dosageTotalDays
+      History - takeWakeup, takeMorning, takeLunch, takeEvening, takeSleep
+                takeCurrent
+      Pill - koName
+     */
+    @Override
+    public Disease findDiseaseWithHistoryByIdAndDate(int rowId, long date) {
+
+        //Todo: Column 추가,
+        final String[] DISEASE_COLUMN = {Constants.DiseaseEntray.TABLE_NAME + "." + Constants.DiseaseEntray._ID, Constants.DiseaseEntray.COLUMN_DISEASE_NAME,
+                Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE, Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR,
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE, Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP,
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING, Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH,
+                Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING, Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP,
+                Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL, Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL,
+                Constants.DiseaseEntray.COLUMN_DISEASE_DATE_START, Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END,
+                Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_HOUR, Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE,
+                Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME, Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS,
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP, Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING,
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH, Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING,
+                Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP, Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT,
+                Constants.PillEntray.COLUMN_PILL_NAME_KOREA
+        };
+
+        SQLiteQueryBuilder sqLiteQueryBuilder = new SQLiteQueryBuilder();
+
+        sqLiteQueryBuilder.setTables(Constants.DiseaseEntray.TABLE_NAME +
+                " INNER JOIN " + Constants.PillEntray.TABLE_NAME + " ON " +
+                Constants.DiseaseEntray.TABLE_NAME + "." + Constants.DiseaseEntray._ID + " = " + Constants.PillEntray.COLUMN_PILL_FK_DISEASE_ID +
+                " INNER JOIN " + Constants.HistoryEntray.TABLE_NAME + " ON " +
+                Constants.DiseaseEntray.TABLE_NAME + "." + Constants.DiseaseEntray._ID + " = " + Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID);
+
+        Cursor cursor = sqLiteQueryBuilder.query(mDbHelper.getReadableDatabase(),
+                DISEASE_COLUMN,
+                Constants.DiseaseEntray.TABLE_NAME + "." + Constants.DiseaseEntray._ID + "= ?" +
+                        " AND " + Constants.PillEntray.COLUMN_PILL_FK_DISEASE_ID + " = ?" +
+                        " AND " + Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID + " = ?" +
+                        " AND " + Constants.HistoryEntray.COLUMN_HISTORY_DATE + " = ?",
+                new String[]{Integer.toString(rowId), Integer.toString(rowId), Integer.toString(rowId), Long.toString(date)},
+                null,
+                null,
+                null);
+
+        Disease disease = new Disease();
+
+        if (cursor.getCount() != 0) {
+
+            cursor.moveToFirst();
+            disease.setName(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_NAME)));
+            disease.setImg(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE)));
+            disease.setColor(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR)));
+            disease.setDosageType(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE)));
+            disease.setEnabledWakeup(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP)) == 1 ? true : false);
+            disease.setEnabledMorning(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING)) == 1 ? true : false);
+            disease.setEnabledLunch(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH)) == 1 ? true : false);
+            disease.setEnabledEvening(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING)) == 1 ? true : false);
+            disease.setEnabledSleep(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP)) == 1 ? true : false);
+            disease.setTimeInterval(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL)));
+            disease.setDosageTotal(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL)));
+            disease.setDateStart(cursor.getLong(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DATE_START)));
+            disease.setDateEnd(cursor.getLong(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END)));
+            disease.setTimeStartHour(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_HOUR)));
+            disease.setTimeStartMinute(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE)));
+            disease.setDosageOneTime(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME)));
+            disease.setDosageTotalDays(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL_DAYS)));
+            disease.setTakeWakeup(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP)) == 1 ? true : false);
+            disease.setTakeMorning(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING)) == 1 ? true : false);
+            disease.setTakeLunch(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH)) == 1 ? true : false);
+            disease.setTakeEvening(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING)) == 1 ? true : false);
+            disease.setTakeSleep(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP)) == 1 ? true : false);
 
             ArrayList<Pill> pillArrayList = new ArrayList<>();
             for (int i = 0; i < cursor.getCount(); i++) {
