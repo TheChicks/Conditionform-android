@@ -107,19 +107,11 @@ public class RegistAutoActivity extends AppCompatActivity {
                         ocrResultArrayList.add(ocrResult);
                     }
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //결과를 이벤트 날림
-                            EventBus.getDefault().post(new EventOcrResult(ocrResultArrayList));
-                        }
-                    });
-
                     //fragment 전환
                     Fragment fragment = fm.findFragmentById(R.id.container_fragment);
                     if (fragment instanceof RegistAutoCaptureResultFragment) {
 
-                        fragment = RegistAutoOcrResultFragment.newInstance();
+                        fragment = RegistAutoOcrResultFragment.newInstance(ocrResultArrayList);
                         fm.beginTransaction()
                                 .replace(R.id.container_fragment, fragment)
                                 .commit();

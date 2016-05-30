@@ -1,9 +1,11 @@
 package com.thechicks.conditionform.data.model;
 
+import java.io.Serializable;
+
 /**
  * Created by opklnm102 on 2016-05-20.
  */
-public class OcrResult {
+public class OcrResult implements Serializable {
 
     Pill pill;
 

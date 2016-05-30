@@ -25,6 +25,12 @@ import butterknife.OnClick;
 
 public class RegistAutoOcrResultFragment extends Fragment {
 
+    public static final String TAG = RegistAutoOcrResultFragment.class.getSimpleName();
+
+    private static final String ARG_OCR_RESULT = "param_ocr_result";
+
+    private ArrayList<OcrResult> mOcrResultArrayList;
+
     @Bind(R.id.recyclerView_ocr_result)
     RecyclerView rvOcrResult;
 
@@ -34,26 +40,20 @@ public class RegistAutoOcrResultFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static RegistAutoOcrResultFragment newInstance() {
+    public static RegistAutoOcrResultFragment newInstance(ArrayList<OcrResult> ocrResultArrayList) {
         RegistAutoOcrResultFragment fragment = new RegistAutoOcrResultFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ARG_OCR_RESULT, ocrResultArrayList);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
+        if (getArguments() != null) {
+            mOcrResultArrayList = (ArrayList<OcrResult>) getArguments().getSerializable(ARG_OCR_RESULT);
+        }
     }
 
     @Override
@@ -78,11 +78,8 @@ public class RegistAutoOcrResultFragment extends Fragment {
 
         mRegistAutoOcrResultListAdapter = new RegistAutoOcrResultListAdapter(getActivity());
         rvOcrResult.setAdapter(mRegistAutoOcrResultListAdapter);
-    }
 
-    @Subscribe
-    public void ocrResult(EventOcrResult eventOcrResult) {
-        mRegistAutoOcrResultListAdapter.setData(eventOcrResult.getOcrResults());
+        mRegistAutoOcrResultListAdapter.setData(mOcrResultArrayList);
     }
 
     //Todo: 메인으로 이동
