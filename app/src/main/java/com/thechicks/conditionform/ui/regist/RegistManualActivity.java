@@ -253,14 +253,17 @@ public class RegistManualActivity extends AppCompatActivity {
         dosageCountTotal = 0;
         timeStart = TimeUtils.getCurrentUnixTimeStamp();
 
-        //Todo: intent가 null이 오는지 확인한다.
         Intent receiveIntent = getIntent();
-        //Todo: OcrResult에서 가장 큰 값들 골라낸다.
         ArrayList<OcrResult> ocrResultArrayList = (ArrayList<OcrResult>) receiveIntent.getSerializableExtra("ocrResult");
+        if (ocrResultArrayList != null) {
+            //Todo: OcrResult에서 가장 큰 값들 골라낸다.
 
-        //Todo: OcrResult에서 Pill을 꺼내어 데이터 셋해준다.
+            // OcrResult에서 Pill을 꺼내어 데이터 셋해준다.
+            for (int i = 0; i < ocrResultArrayList.size(); i++) {
+                mRegistManualPillAdapter.addItem(ocrResultArrayList.get(i).getPill(), i);
+            }
 
-
+        }
     }
 
     public void setupDate() {

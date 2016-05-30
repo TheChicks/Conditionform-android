@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,20 +81,22 @@ public class RegistAutoOcrResultFragment extends Fragment {
         rvOcrResult.setAdapter(mRegistAutoOcrResultListAdapter);
 
         mRegistAutoOcrResultListAdapter.setData(mOcrResultArrayList);
+        Log.e(TAG, " " + mOcrResultArrayList.size());
     }
 
-    //Todo: 메인으로 이동
+    // 메인으로 이동
     @OnClick(R.id.button_cancel)
     public void onClickCancel() {
         getActivity().finish();
     }
 
-    //Todo: 알람등록 화면으로 이동
+    // 알람등록 화면으로 이동
     @OnClick(R.id.button_confirm)
     public void onClickConfirm() {
         ArrayList<OcrResult> ocrResultArrayList = mRegistAutoOcrResultListAdapter.getOcrResultList();
         Intent intent = new Intent(getActivity(), RegistManualActivity.class);
         intent.putExtra("ocrResult", ocrResultArrayList);
         startActivity(intent);
+        getActivity().finish();
     }
 }

@@ -79,7 +79,7 @@ public class RegistAutoActivity extends AppCompatActivity {
 
     //이미지를 서버에 전송
     @Subscribe
-    public void ocrStart(EventOcrStart eventOcrStart) {
+    public void onEvent(EventOcrStart eventOcrStart) {
 
         File imageFileName = eventOcrStart.getImageFileName();
 

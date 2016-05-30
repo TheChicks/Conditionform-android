@@ -44,15 +44,15 @@ public class RegistAutoOcrResultViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void bind(OcrResult ocrResult){
+    public void bind(OcrResult ocrResult) {
 
         Pill pill = ocrResult.getPill();
 
         etPillName.setText(pill.getKoName());
         etPillInsuranceCode.setText(pill.getInsuranceCode());
-        etDosageTotal.setText(ocrResult.getDosageTotal());
-        etDosageOneTime.setText(ocrResult.getDosageOneTime());
-        etDosageTotalDays.setText(ocrResult.getDosageTotalDays());
+        etDosageTotal.setText(String.valueOf(ocrResult.getDosageTotal()));
+        etDosageOneTime.setText(String.valueOf(ocrResult.getDosageOneTime()));
+        etDosageTotalDays.setText(String.valueOf(ocrResult.getDosageTotalDays()));
 
         //Todo: 데이터 수정시 다시 바인드
         //Todo: 리스너 달기

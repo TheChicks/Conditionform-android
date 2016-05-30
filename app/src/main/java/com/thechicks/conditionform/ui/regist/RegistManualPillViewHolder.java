@@ -63,6 +63,7 @@ public class RegistManualPillViewHolder extends RecyclerView.ViewHolder {
 
                 final AppCompatEditText editText = new AppCompatEditText(mView.getContext());
                 editText.setLayoutParams(params);
+                editText.setText(pill.getKoName());
 
                 new AlertDialog.Builder(mView.getContext())
                         .setTitle("약 이름 수정")

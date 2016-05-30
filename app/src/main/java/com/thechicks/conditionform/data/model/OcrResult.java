@@ -1,5 +1,7 @@
 package com.thechicks.conditionform.data.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -9,10 +11,13 @@ public class OcrResult implements Serializable {
 
     Pill pill;
 
+    @SerializedName("quantity")
     int dosageTotal;
 
+    @SerializedName("onedayDosage")
     int dosageOneTime;
 
+    @SerializedName("totalDayDosage")
     int dosageTotalDays;
 
     public Pill getPill() {
