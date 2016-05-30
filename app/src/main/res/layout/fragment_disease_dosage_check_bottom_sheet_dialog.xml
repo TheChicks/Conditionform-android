@@ -50,8 +50,10 @@
             android:id="@+id/textView_date_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/textView_date_center"
-            android:padding="8dp"
+            android:layout_toStartOf="@+id/textView_date_center"
+            android:padding="4dp"
             android:text="시작일"
             android:textSize="16sp"/>
 
@@ -59,20 +61,250 @@
             android:id="@+id/textView_date_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/textView_date_center"
             android:layout_toRightOf="@id/textView_date_center"
-            android:padding="8dp"
+            android:padding="4dp"
             android:text="종료일"
             android:textSize="16sp"/>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView_dosage_check"
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeLayout_dosage_check_wakeup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginTop="4dp"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView_time_type_wakeup"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/textView_time_wakeup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_time_type_wakeup"
+            android:layout_toRightOf="@id/imageView_time_type_wakeup"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="08:00 AM"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_dosage_wakeup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:button="@drawable/selector_sleep"
+            android:checked="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeLayout_dosage_check_morning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView_time_type_morning"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/sunrising"/>
+
+        <TextView
+            android:id="@+id/textView_time_morning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_time_type_morning"
+            android:layout_toRightOf="@id/imageView_time_type_morning"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="08:00 AM"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_dosage_morning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:button="@drawable/selector_sleep"
+            android:checked="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeLayout_dosage_check_lunch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView_time_type_lunch"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/sun"/>
+
+        <TextView
+            android:id="@+id/textView_time_lunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_time_type_lunch"
+            android:layout_toRightOf="@id/imageView_time_type_lunch"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="08:00 AM"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_dosage_lunch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:button="@drawable/selector_sleep"
+            android:checked="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeLayout_dosage_check_evening"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView_time_type_evening"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@drawable/moon"/>
+
+        <TextView
+            android:id="@+id/textView_time_evening"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_time_type_evening"
+            android:layout_toRightOf="@id/imageView_time_type_evening"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="08:00 AM"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_dosage_evening"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:button="@drawable/selector_sleep"
+            android:checked="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeLayout_dosage_check_sleep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="4dp"/>
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/imageView_time_type_sleep"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:id="@+id/textView_time_sleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/imageView_time_type_sleep"
+            android:layout_toRightOf="@id/imageView_time_type_sleep"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="08:00 AM"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_dosage_sleep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:button="@drawable/selector_sleep"
+            android:checked="true"
+            android:foreground="?android:attr/selectableItemBackground"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

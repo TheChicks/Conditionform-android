@@ -9,6 +9,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,8 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.thechicks.conditionform.R;
@@ -28,6 +31,8 @@ import com.thechicks.conditionform.data.model.TimeItem;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.PreferencesUtils;
 import com.thechicks.conditionform.util.TimeUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -59,9 +64,6 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     @Bind(R.id.textView_date_end)
     TextView tvDateEnd;
 
-    @Bind(R.id.recyclerView_dosage_check)
-    RecyclerView rvDosageCheck;
-
     @Bind(R.id.recyclerView_pill)
     RecyclerView rvPill;
 
@@ -71,7 +73,66 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     @Bind(R.id.view_line)
     View viewLine;
 
-    DiseaseDosageCheckAdapter mDiseaseDosageCheckAdapter;
+    @Bind(R.id.relativeLayout_dosage_check_wakeup)
+    RelativeLayout rlDosageCheckWakeup;
+
+    @Bind(R.id.relativeLayout_dosage_check_morning)
+    RelativeLayout rlDosageCheckMorning;
+
+    @Bind(R.id.relativeLayout_dosage_check_lunch)
+    RelativeLayout rlDosageCheckLunch;
+
+    @Bind(R.id.relativeLayout_dosage_check_evening)
+    RelativeLayout rlDosageCheckEvening;
+
+    @Bind(R.id.relativeLayout_dosage_check_sleep)
+    RelativeLayout rlDosageCheckSleep;
+
+    @Bind(R.id.imageView_time_type_wakeup)
+    ImageView ivTimeTypeWakeup;
+
+    @Bind(R.id.imageView_time_type_morning)
+    ImageView ivTimeTypeMorning;
+
+    @Bind(R.id.imageView_time_type_lunch)
+    ImageView ivTimeTypeLunch;
+
+    @Bind(R.id.imageView_time_type_evening)
+    ImageView ivTimeTypeEvening;
+
+    @Bind(R.id.imageView_time_type_sleep)
+    ImageView ivTimeTypeSleep;
+
+    @Bind(R.id.textView_time_wakeup)
+    TextView tvTimeWakeup;
+
+    @Bind(R.id.textView_time_morning)
+    TextView tvTimeMorning;
+
+    @Bind(R.id.textView_time_lunch)
+    TextView tvTimeLunch;
+
+    @Bind(R.id.textView_time_evening)
+    TextView tvTimeEvening;
+
+    @Bind(R.id.textView_time_sleep)
+    TextView tvTimeSleep;
+
+    @Bind(R.id.checkBox_dosage_wakeup)
+    CheckBox cbDosageWakeup;
+
+    @Bind(R.id.checkBox_dosage_morning)
+    CheckBox cbDosageMorning;
+
+    @Bind(R.id.checkBox_dosage_lunch)
+    CheckBox cbDosageLunch;
+
+    @Bind(R.id.checkBox_dosage_evening)
+    CheckBox cbDosageEvening;
+
+    @Bind(R.id.checkBox_dosage_sleep)
+    CheckBox cbDosageSleep;
+
     DiseaseDosageChcekPillListAdapter mDiseaseDosageChcekPillListAdapter;
 
     public DiseaseDosageCheckBottomSheetDialogFragment() {
@@ -137,40 +198,31 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
         rvPill.setAdapter(mDiseaseDosageChcekPillListAdapter);
 
         //복용여부
-        mDiseaseDosageCheckAdapter = new DiseaseDosageCheckAdapter(getActivity());
-        mDiseaseDosageCheckAdapter.setOnListItemClickListener(new DiseaseDosageCheckAdapter.OnListItemClickListener() {
-            @Override
-            public void onListItemCheck(int position) {
-                mDiseaseDosageCheckAdapter.notifyItemChanged(position);
-            }
-        });
-
-        ArrayList<TimeItem> timeItemArrayList = new ArrayList<>();
         if (mDisease.isEnabledWakeup()) {
-            TimeItem timeWakeUp = new TimeItem(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_WAKEUP));
-            timeItemArrayList.add(timeWakeUp);
+            rlDosageCheckWakeup.setVisibility(View.VISIBLE);
+            tvTimeWakeup.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_WAKEUP)));
         }
         if (mDisease.isEnabledMorning()) {
-            TimeItem timeMorning = new TimeItem(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_MORNING));
-            timeItemArrayList.add(timeMorning);
+            rlDosageCheckMorning.setVisibility(View.VISIBLE);
+            tvTimeMorning.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_MORNING)));
         }
         if (mDisease.isEnabledLunch()) {
-            TimeItem timeLunch = new TimeItem(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_LUNCH));
-            timeItemArrayList.add(timeLunch);
+            rlDosageCheckLunch.setVisibility(View.VISIBLE);
+            tvTimeLunch.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_LUNCH)));
         }
         if (mDisease.isEnabledEvening()) {
-            TimeItem timeEvening = new TimeItem(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_EVENING));
-            timeItemArrayList.add(timeEvening);
+            rlDosageCheckEvening.setVisibility(View.VISIBLE);
+            tvTimeEvening.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_EVENING)));
         }
         if (mDisease.isEnabledSleep()) {
-            TimeItem timeSleep = new TimeItem(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_SLEEP));
-            timeItemArrayList.add(timeSleep);
+            rlDosageCheckSleep.setVisibility(View.VISIBLE);
+            tvTimeSleep.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_SLEEP)));
         }
-        mDiseaseDosageCheckAdapter.setTimeItemArrayList(timeItemArrayList);
-
-        rvDosageCheck.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rvDosageCheck.setHasFixedSize(true);
-        rvDosageCheck.setAdapter(mDiseaseDosageCheckAdapter);
+        cbDosageWakeup.setChecked(mDisease.isTakeWakeup());
+        cbDosageMorning.setChecked(mDisease.isTakeMorning());
+        cbDosageLunch.setChecked(mDisease.isTakeLunch());
+        cbDosageEvening.setChecked(mDisease.isTakeEvening());
+        cbDosageSleep.setChecked(mDisease.isTakeSleep());
     }
 
     //BottomSheet의 행동에 따른 콜백 리스너
@@ -203,10 +255,17 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
         }
     }
 
-    //Todo: 복용 정보 DB에 저장하고 hide.
-    //DB에 저장하는 이벤트 발행
+    // 복용 정보 DB에 저장하는 이벤트 발행 and dialog hide
     @OnClick(R.id.button_confirm)
     public void onClickConfirm() {
+        EventBus.getDefault().post(new EventDosageCheckUpdate(
+                mDisease.getId(),
+                cbDosageWakeup.isChecked(),
+                cbDosageMorning.isChecked(),
+                cbDosageLunch.isChecked(),
+                cbDosageEvening.isChecked(),
+                cbDosageSleep.isChecked()
+        ));
         dismiss();
     }
 

@@ -1,13 +1,11 @@
 package com.thechicks.conditionform.ui.home;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,13 +23,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
-import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.ui.RegistAutoActivity;
 import com.thechicks.conditionform.ui.regist.RegistManualActivity;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.TimeUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Calendar;
 import java.util.List;
@@ -121,8 +122,19 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
 //            mParam1 = getArguments().getString(ARG_PARAM1);
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         Log.d("onCreate ", TAG);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 
     @Override
@@ -453,5 +465,25 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
                 }
                 break;
         }
+    }
+
+    @Subscribe
+    public void onEvent(final EventDosageCheckUpdate eventDosageCheckUpdate){
+        //Todo: DB update. 현재날짜와 id를 가지고
+
+        AsyncHandler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                int diseaseId = eventDosageCheckUpdate.getDiseaseId();
+                boolean takeWakeup = eventDosageCheckUpdate.isTakeWakeup();
+                boolean takeMorning = eventDosageCheckUpdate.isTakeMorning();
+                boolean takeLunch = eventDosageCheckUpdate.isTakeLunch();
+                boolean takeEvening = eventDosageCheckUpdate.isTakeEvening();
+                boolean takeSleep = eventDosageCheckUpdate.isTakeSleep();
+
+
+            }
+        });
     }
 }
