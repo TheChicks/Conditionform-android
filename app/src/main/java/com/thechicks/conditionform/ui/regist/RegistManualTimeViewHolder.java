@@ -61,13 +61,13 @@ public class RegistManualTimeViewHolder extends RecyclerView.ViewHolder {
                 ivType.setImageResource(R.mipmap.ic_launcher);
                 break;
             case 1:  //아침
-                ivType.setImageResource(R.drawable.sunrising);
+                ivType.setImageResource(R.drawable.ic_morning);
                 break;
             case 2:  //점심
-                ivType.setImageResource(R.drawable.sun);
+                ivType.setImageResource(R.drawable.ic_lunch);
                 break;
             case 3:  //저녁
-                ivType.setImageResource(R.drawable.moon);
+                ivType.setImageResource(R.drawable.ic_sleep);
                 break;
             case 4:  //잠자기전
                 ivType.setImageResource(R.mipmap.ic_launcher);

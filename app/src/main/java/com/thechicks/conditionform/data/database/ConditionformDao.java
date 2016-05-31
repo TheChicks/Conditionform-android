@@ -44,17 +44,17 @@ public class ConditionformDao implements IConditionformDao {
         cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END, disease.getDateEnd());
         cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE, disease.getDosageType());
 
-//        if(disease.getDosageType() == Disease.DOSAGE_TYPE_EVERYHOUR){
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_HOUR, disease.getTimeStartHour());
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE, disease.getTimeStartMinute());
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL, disease.getTimeInterval());
-//        }else {
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP, disease.isEnabledWakeup() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING, disease.isEnabledMorning() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH, disease.isEnabledLunch() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING, disease.isEnabledEvening() ? 1 : 0);
-        cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP, disease.isEnabledSleep() ? 1 : 0);
-//        }
+        if (disease.getDosageType() == Constants.DOSAGE_TYPE_EVERYHOUR) {
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_HOUR, disease.getTimeStartHour());
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_START_MINUTE, disease.getTimeStartMinute());
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL, disease.getTimeInterval());
+        } else {
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_WAKEUP, disease.isEnabledWakeup() ? 1 : 0);
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_MORNING, disease.isEnabledMorning() ? 1 : 0);
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_LUNCH, disease.isEnabledLunch() ? 1 : 0);
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_EVENING, disease.isEnabledEvening() ? 1 : 0);
+            cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_ENABLED_SLEEP, disease.isEnabledSleep() ? 1 : 0);
+        }
 
         cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_ONE_TIME, disease.getDosageOneTime());
         cv.put(Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TOTAL, disease.getDosageTotal());
@@ -104,7 +104,6 @@ public class ConditionformDao implements IConditionformDao {
 
         cv.put(Constants.AlarmEntray.COLUMN_ALARM_FK_DISEASE_ID, diseaseRowId);
         //Todo: 시간 추가
-
 
         long rowId = mDbHelper.insert(Constants.PillEntray.TABLE_NAME, cv);
 
@@ -394,7 +393,6 @@ public class ConditionformDao implements IConditionformDao {
         Disease disease = new Disease();
 
         if (cursor.getCount() != 0) {
-
             cursor.moveToFirst();
             disease.setId(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray._ID)));
             disease.setName(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_NAME)));

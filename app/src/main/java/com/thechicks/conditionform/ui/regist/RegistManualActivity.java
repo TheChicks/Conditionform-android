@@ -412,18 +412,14 @@ public class RegistManualActivity extends AppCompatActivity {
         switch (dosageTypeIndex) {
             case 0:  //매일
                 disease.setDosageType(Constants.DOSAGE_TYPE_EVERYDAY);
-
                 setTimeItem(disease);
-
                 break;
             case 1:  //2일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_TWODAY);
-
                 setTimeItem(disease);
                 break;
             case 2:  //3일마다
                 disease.setDosageType(Constants.DOSAGE_TYPE_THREEDAY);
-
                 setTimeItem(disease);
                 break;
             case 3:  //시간마다

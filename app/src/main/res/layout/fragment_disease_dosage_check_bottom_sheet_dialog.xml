@@ -29,282 +29,370 @@
             android:textSize="22sp"/>
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp">
-
-        <TextView
-            android:id="@+id/textView_date_center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:padding="8dp"
-            android:text=" ~ "
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/textView_date_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/textView_date_center"
-            android:layout_toStartOf="@+id/textView_date_center"
-            android:padding="4dp"
-            android:text="시작일"
-            android:textSize="16sp"/>
-
-        <TextView
-            android:id="@+id/textView_date_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/textView_date_center"
-            android:layout_toRightOf="@id/textView_date_center"
-            android:padding="4dp"
-            android:text="종료일"
-            android:textSize="16sp"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/relativeLayout_dosage_check_wakeup"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="4dp"
+        android:orientation="vertical"
         android:padding="4dp">
 
-        <ImageView
-            android:id="@+id/imageView_time_type_wakeup"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@mipmap/ic_launcher"/>
-
         <TextView
-            android:id="@+id/textView_time_wakeup"
+            android:id="@+id/textView_dosage_date_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView_time_type_wakeup"
-            android:layout_toRightOf="@id/imageView_time_type_wakeup"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="08:00 AM"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:layout_marginLeft="8dp"
+            android:text="복용 기간"
+            android:textColor="@color/color_label_1"/>
 
-        <CheckBox
-            android:id="@+id/checkBox_dosage_wakeup"
-            android:layout_width="wrap_content"
+        <View
+            android:id="@+id/view_dosage_date_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="4dp"
+            android:background="@color/color_label_1"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:button="@drawable/selector_sleep"
-            android:checked="true"
-            android:foreground="?android:attr/selectableItemBackground"/>
-    </RelativeLayout>
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp">
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/relativeLayout_dosage_check_morning"
+            <TextView
+                android:id="@+id/textView_date_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="8dp"
+                android:text=" ~ "
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/textView_date_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/textView_date_center"
+                android:layout_toStartOf="@+id/textView_date_center"
+                android:padding="4dp"
+                android:text="시작일"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/textView_date_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/textView_date_center"
+                android:layout_toRightOf="@id/textView_date_center"
+                android:padding="4dp"
+                android:text="종료일"
+                android:textSize="16sp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <!--시간 마다-->
+    <LinearLayout
+        android:id="@+id/linearLayout_dosage_type_interval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
         android:padding="4dp">
 
-        <ImageView
-            android:id="@+id/imageView_time_type_morning"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/sunrising"/>
+        <TextView
+            android:id="@+id/textView_dosage_type_interval_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="알람 시간"
+            android:textColor="@color/color_label_1"/>
+
+        <View
+            android:id="@+id/view_dosage_type_interval_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="4dp"
+            android:background="@color/color_label_1"/>
 
         <TextView
-            android:id="@+id/textView_time_morning"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView_time_interval"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView_time_type_morning"
-            android:layout_toRightOf="@id/imageView_time_type_morning"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="08:00 AM"
+            android:layout_margin="8dp"
+            android:text="3시간"
             android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textSize="16sp"/>
 
-        <CheckBox
-            android:id="@+id/checkBox_dosage_morning"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView_time_start"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:button="@drawable/selector_sleep"
-            android:checked="true"
-            android:foreground="?android:attr/selectableItemBackground"/>
-    </RelativeLayout>
+            android:layout_margin="8dp"
+            android:text="시작시간"
+            android:textColor="#000000"
+            android:textSize="16sp"/>
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/relativeLayout_dosage_check_lunch"
+        <TextView
+            android:id="@+id/textView_time_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:text="6회"
+            android:textColor="#000000"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_dosage_type_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:padding="4dp">
-
-        <ImageView
-            android:id="@+id/imageView_time_type_lunch"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/sun"/>
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView_time_lunch"
+            android:id="@+id/textView_dosage_type_normal_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView_time_type_lunch"
-            android:layout_toRightOf="@id/imageView_time_type_lunch"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="08:00 AM"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:layout_marginLeft="8dp"
+            android:text="알람 시간"
+            android:textColor="@color/color_label_1"/>
 
-        <CheckBox
-            android:id="@+id/checkBox_dosage_lunch"
-            android:layout_width="wrap_content"
+        <View
+            android:id="@+id/view_dosage_type_normal_line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="4dp"
+            android:background="@color/color_label_1"/>
+
+        <!--식사 시간-->
+        <RelativeLayout
+            android:id="@+id/relativeLayout_dosage_check_wakeup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:button="@drawable/selector_sleep"
-            android:checked="true"
-            android:foreground="?android:attr/selectableItemBackground"/>
-    </RelativeLayout>
+            android:layout_marginTop="4dp"
+            android:padding="4dp">
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/relativeLayout_dosage_check_evening"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:padding="4dp">
+            <ImageView
+                android:id="@+id/imageView_time_type_wakeup"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@mipmap/ic_launcher"/>
 
-        <ImageView
-            android:id="@+id/imageView_time_type_evening"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/moon"/>
+            <TextView
+                android:id="@+id/textView_time_wakeup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView_time_type_wakeup"
+                android:layout_toRightOf="@id/imageView_time_type_wakeup"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="08:00 AM"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/textView_time_evening"
-            android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/checkBox_dosage_wakeup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:button="@drawable/selector_sleep"
+                android:checked="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_dosage_check_morning"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView_time_type_evening"
-            android:layout_toRightOf="@id/imageView_time_type_evening"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="08:00 AM"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:padding="4dp">
 
-        <CheckBox
-            android:id="@+id/checkBox_dosage_evening"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageView_time_type_morning"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_morning"/>
+
+            <TextView
+                android:id="@+id/textView_time_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView_time_type_morning"
+                android:layout_toRightOf="@id/imageView_time_type_morning"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="08:00 AM"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <CheckBox
+                android:id="@+id/checkBox_dosage_morning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:button="@drawable/selector_sleep"
+                android:checked="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_dosage_check_lunch"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:button="@drawable/selector_sleep"
-            android:checked="true"
-            android:foreground="?android:attr/selectableItemBackground"/>
-    </RelativeLayout>
+            android:padding="4dp">
 
-    <RelativeLayout
-        android:visibility="gone"
-        android:id="@+id/relativeLayout_dosage_check_sleep"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginRight="24dp"
-        android:padding="4dp">
+            <ImageView
+                android:id="@+id/imageView_time_type_lunch"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_lunch"/>
 
-        <ImageView
-            android:id="@+id/imageView_time_type_sleep"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@mipmap/ic_launcher"/>
+            <TextView
+                android:id="@+id/textView_time_lunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView_time_type_lunch"
+                android:layout_toRightOf="@id/imageView_time_type_lunch"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="08:00 AM"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/textView_time_sleep"
-            android:layout_width="wrap_content"
+            <CheckBox
+                android:id="@+id/checkBox_dosage_lunch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:button="@drawable/selector_sleep"
+                android:checked="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_dosage_check_evening"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/imageView_time_type_sleep"
-            android:layout_toRightOf="@id/imageView_time_type_sleep"
-            android:gravity="center"
-            android:padding="8dp"
-            android:text="08:00 AM"
-            android:textColor="#000000"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:padding="4dp">
 
-        <CheckBox
-            android:id="@+id/checkBox_dosage_sleep"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageView_time_type_evening"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_evening"/>
+
+            <TextView
+                android:id="@+id/textView_time_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView_time_type_evening"
+                android:layout_toRightOf="@id/imageView_time_type_evening"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="08:00 AM"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <CheckBox
+                android:id="@+id/checkBox_dosage_evening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:button="@drawable/selector_sleep"
+                android:checked="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout_dosage_check_sleep"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:button="@drawable/selector_sleep"
-            android:checked="true"
-            android:foreground="?android:attr/selectableItemBackground"/>
-    </RelativeLayout>
+            android:layout_marginBottom="4dp"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/imageView_time_type_sleep"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/textView_time_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/imageView_time_type_sleep"
+                android:layout_toRightOf="@id/imageView_time_type_sleep"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="08:00 AM"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <CheckBox
+                android:id="@+id/checkBox_dosage_sleep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:button="@drawable/selector_sleep"
+                android:checked="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
+        </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -324,7 +412,7 @@
             android:textColor="@color/color_label_1"/>
 
         <View
-            android:id="@+id/view_line"
+            android:id="@+id/view_pill_list_line"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="4dp"
@@ -335,7 +423,6 @@
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:layout_margin="8dp"/>
-
     </LinearLayout>
 
     <LinearLayout
@@ -349,7 +436,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/regist_manual_confirm_button"
+            android:background="@drawable/button_shape_normal"
             android:text="취소"/>
 
         <Button
@@ -358,8 +445,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/regist_manual_confirm_button"
+            android:background="@drawable/button_shape_normal"
             android:text="확인"/>
     </LinearLayout>
-
 </LinearLayout>

@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:background="@drawable/regist_manual_button"
+            android:background="@drawable/button_regist_manual"
             android:clickable="true"
             android:text="약 추가"/>
 
@@ -155,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/regist_manual_confirm_button"
+                android:background="@drawable/button_regist_manual"
                 android:text="취소"/>
 
             <Button
@@ -164,7 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/regist_manual_confirm_button"
+                android:background="@drawable/button_regist_manual"
                 android:text="확인"/>
         </LinearLayout>
     </LinearLayout>
