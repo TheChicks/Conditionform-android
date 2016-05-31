@@ -157,7 +157,6 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
             @Override
             public void onListItemClick(final Disease disease) {
                 // 복용내역 상세정보 표기
-
                 //데이터 로드
                 AsyncHandler.post(new Runnable() {
                     @Override
@@ -211,6 +210,7 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
         currentDisplayDay = TimeUtils.timestampToDay(currentDayTimestamp);
 
         Log.e(TAG, currentDisplayYear + "년 " + currentDisplayMonth + "월 " + currentDisplayDay + "일");
+        Log.e(TAG, " " + currentDayTimestamp);
 
         tvDateToday.setText(TimeUtils.unixTimeStampToStringDateMonthDay(currentDayTimestamp));
     }
@@ -474,15 +474,32 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
         AsyncHandler.post(new Runnable() {
             @Override
             public void run() {
+                //Todo: type 구분
 
-                int diseaseId = eventDosageCheckUpdate.getDiseaseId();
-                boolean takeWakeup = eventDosageCheckUpdate.isTakeWakeup();
-                boolean takeMorning = eventDosageCheckUpdate.isTakeMorning();
-                boolean takeLunch = eventDosageCheckUpdate.isTakeLunch();
-                boolean takeEvening = eventDosageCheckUpdate.isTakeEvening();
-                boolean takeSleep = eventDosageCheckUpdate.isTakeSleep();
+                Disease disease = new Disease();
+                disease.setId(eventDosageCheckUpdate.getDiseaseId());
+                disease.setTakeWakeup(eventDosageCheckUpdate.isTakeWakeup());
+                disease.setTakeMorning( eventDosageCheckUpdate.isTakeMorning());
+                disease.setTakeLunch(eventDosageCheckUpdate.isTakeLunch());
+                disease.setTakeEvening(eventDosageCheckUpdate.isTakeEvening());
+                disease.setTakeSleep(eventDosageCheckUpdate.isTakeSleep());
 
+                Log.e(TAG, " " + eventDosageCheckUpdate.getDiseaseId() + " " + eventDosageCheckUpdate.isTakeWakeup()
+                + " " + eventDosageCheckUpdate.isTakeMorning() + " " + eventDosageCheckUpdate.isTakeLunch()
+                + " " + eventDosageCheckUpdate.isTakeEvening() + " " + eventDosageCheckUpdate.isTakeSleep());
 
+                if(conditionformDao.updateTakeHistory(currentDayTimestamp, disease)){
+                    Toast.makeText(getActivity(), "수정됨", Toast.LENGTH_SHORT).show();
+
+                    final List<Disease> diseaseList = conditionformDao.findDiseaseByDate(currentDayTimestamp);
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDiseaseListAdapter.setItemList(diseaseList);
+                        }
+                    });
+                }
             }
         });
     }

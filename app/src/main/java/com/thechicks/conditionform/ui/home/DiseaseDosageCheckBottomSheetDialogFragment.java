@@ -157,7 +157,6 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     // 2번째 호출
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.e(TAG, " onCreateView");
         View view = inflater.inflate(R.layout.fragment_disease_dosage_check_bottom_sheet_dialog, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -173,7 +172,6 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.e(TAG, " onViewCreated");
 
         //레이블 색 적용
         llLabel.setBackgroundColor(Color.parseColor(mDisease.getColor()));
@@ -223,6 +221,8 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
         cbDosageLunch.setChecked(mDisease.isTakeLunch());
         cbDosageEvening.setChecked(mDisease.isTakeEvening());
         cbDosageSleep.setChecked(mDisease.isTakeSleep());
+
+        Log.e(TAG, " " + mDisease.isTakeWakeup() + " " + mDisease.isTakeMorning() + " " + mDisease.isTakeLunch() + " " + mDisease.isTakeEvening() + " " + mDisease.isTakeSleep());
     }
 
     //BottomSheet의 행동에 따른 콜백 리스너

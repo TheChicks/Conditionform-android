@@ -396,6 +396,7 @@ public class ConditionformDao implements IConditionformDao {
         if (cursor.getCount() != 0) {
 
             cursor.moveToFirst();
+            disease.setId(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray._ID)));
             disease.setName(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_NAME)));
             disease.setImg(cursor.getInt(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE)));
             disease.setColor(cursor.getString(cursor.getColumnIndex(Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR)));
@@ -438,5 +439,40 @@ public class ConditionformDao implements IConditionformDao {
         return disease;
     }
 
+    @Override
+    public boolean updateTakeHistory(long timeStamp, Disease disease) {
+
+        ContentValues cv = new ContentValues();
+
+        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP, disease.isTakeWakeup() ? 1 : 0);
+        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING, disease.isTakeMorning() ? 1 : 0);
+        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH, disease.isTakeLunch() ? 1 : 0);
+        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING, disease.isTakeEvening() ? 1 : 0);
+        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP, disease.isTakeSleep() ? 1 : 0);
+
+        if (disease.getDosageType() == Constants.DOSAGE_TYPE_EVERYHOUR) {
+            cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT, disease.getDosageCurrnt());
+        } else {
+
+        }
+
+        String[] whereArgs = {String.valueOf(timeStamp), String.valueOf(disease.getId())};
+
+        long rowId = mDbHelper.update(
+                Constants.HistoryEntray.TABLE_NAME,
+                cv,
+                Constants.HistoryEntray.COLUMN_HISTORY_DATE + " = ? " +
+                        " AND " +
+                        Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID + " = ? ",
+                whereArgs
+        );
+
+        Log.e(TAG, " " + rowId);
+
+        if (rowId == 1) {  //갱신된 레코드 수
+            return true;
+        }
+        return false;
+    }
 
 }

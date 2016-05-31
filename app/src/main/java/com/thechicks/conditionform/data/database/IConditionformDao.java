@@ -30,4 +30,6 @@ public interface IConditionformDao {
 
     public Disease findDiseaseWithHistoryByIdAndDate(int id, long date);
 
+    public boolean updateTakeHistory(long timeStamp, Disease disease);
+
 }
