@@ -57,7 +57,7 @@ public class SearchEditWidget extends LinearLayout {
                     ivClear.setVisibility(INVISIBLE);
                 }else {
                     ivClear.setVisibility(VISIBLE);
-                    EventBus.getDefault().post(new PillSearchEvent(etSearch.getText().toString()));
+                    EventBus.getDefault().post(new EventPillSearch(etSearch.getText().toString()));
                 }
             }
 
@@ -72,7 +72,7 @@ public class SearchEditWidget extends LinearLayout {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH){
 
                     //검색 api 호출
-                    EventBus.getDefault().post(new PillSearchEvent(etSearch.getText().toString()));
+                    EventBus.getDefault().post(new EventPillSearch(etSearch.getText().toString()));
 
                     etSearch.setText(null);
                     return true;

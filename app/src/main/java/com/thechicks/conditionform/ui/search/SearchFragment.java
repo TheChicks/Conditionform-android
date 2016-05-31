@@ -1,5 +1,6 @@
 package com.thechicks.conditionform.ui.search;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -71,7 +72,7 @@ public class SearchFragment extends Fragment {
 //            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        if (sBackendHelper == null){
+        if (sBackendHelper == null) {
             sBackendHelper = BackendHelper.getInstance();
         }
 
@@ -123,7 +124,7 @@ public class SearchFragment extends Fragment {
     }
 
     @Subscribe
-    public void getPillInformationName(PillSearchEvent event){
+    public void onEvent(EventPillSearch event) {
 
         Call<JsonArray> call = sBackendHelper.getPillInformation(event.word);
         call.enqueue(new Callback<JsonArray>() {
@@ -134,21 +135,21 @@ public class SearchFragment extends Fragment {
 
                 Log.e(TAG, " onResponse()");
 
-                if(jaRoot != null){
+                if (jaRoot != null) {
 
                     Log.e(TAG, " " + jaRoot);
 
                     ArrayList<Pill> pillArrayList = new ArrayList<Pill>();
 
-                    for (int i=0; i<jaRoot.size(); i++){
+                    for (int i = 0; i < jaRoot.size(); i++) {
                         Pill pill = new Gson().fromJson(jaRoot.get(i), Pill.class);
                         pillArrayList.add(pill);
                     }
 
                     mPillSearchListAdapter.setData(pillArrayList);
-
-                }else {
+                } else {
                     Log.e(TAG, "jaRoot null");
+                    //Todo: 검색결과 없음을 표시
                 }
             }
 

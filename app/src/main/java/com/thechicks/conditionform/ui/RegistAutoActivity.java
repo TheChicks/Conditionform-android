@@ -1,5 +1,6 @@
 package com.thechicks.conditionform.ui;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -81,6 +82,11 @@ public class RegistAutoActivity extends AppCompatActivity {
     @Subscribe
     public void onEvent(EventOcrStart eventOcrStart) {
 
+        final ProgressDialog progressDialog = new ProgressDialog(RegistAutoActivity.this, ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("로딩 중...");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
         File imageFileName = eventOcrStart.getImageFileName();
 
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), imageFileName);
@@ -116,9 +122,11 @@ public class RegistAutoActivity extends AppCompatActivity {
                                 .replace(R.id.container_fragment, fragment)
                                 .commit();
                     }
-
+                    progressDialog.dismiss();
                 } else {
+                    //Todo: 결과값 없음 처리
                     Log.e(TAG, "jaRoot null");
+                    progressDialog.dismiss();
                 }
             }
 
