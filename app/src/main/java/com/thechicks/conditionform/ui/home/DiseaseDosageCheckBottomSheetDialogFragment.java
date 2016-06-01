@@ -3,42 +3,33 @@ package com.thechicks.conditionform.ui.home;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.model.Disease;
-import com.thechicks.conditionform.data.model.Pill;
-import com.thechicks.conditionform.data.model.TimeItem;
+import com.thechicks.conditionform.ui.DosageCheckButton;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.PreferencesUtils;
 import com.thechicks.conditionform.util.TimeUtils;
 import com.thechicks.conditionform.util.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -74,23 +65,38 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     @Bind(R.id.textView_date_end)
     TextView tvDateEnd;
 
+    @Bind(R.id.linearLayout_dosage_type_interval)
+    LinearLayout llDosageTypeInterval;  // type에 따라 visible
+
+    @Bind(R.id.textView_dosage_interval_title)
+    TextView tvDosageIntervalTitle;
+
+    @Bind(R.id.view_dosage_interval_line)
+    View vDosageIntervalLine;
+
+    @Bind(R.id.textView_time_interval)
+    TextView tvTimeInterval;
+
+    @Bind(R.id.textView_dosage_start_title)
+    TextView tvDosageStartTitle;
+
+    @Bind(R.id.view_dosage_start_line)
+    View vDosageStartLine;
+
+    @Bind(R.id.textView_time_start)
+    TextView tvTimeStart;
+
     @Bind(R.id.textView_dosage_type_interval_title)
     TextView tvDosageTypeIntervalTitle;
 
     @Bind(R.id.view_dosage_type_interval_line)
     View vDosageTypeIntervalLine;
 
-    @Bind(R.id.linearLayout_dosage_type_interval)
-    LinearLayout llDosageTypeInterval;  // type에 따라 visible
+    @Bind(R.id.textView_time_count_current)
+    TextView tvTimeCountCurrent;
 
-    @Bind(R.id.textView_time_interval)
-    TextView tvTimeInterval;
-
-    @Bind(R.id.textView_time_start)
-    TextView tvTimeStart;
-
-    @Bind(R.id.textView_time_count)
-    TextView tvTimeCount;
+    @Bind(R.id.textView_time_count_total)
+    TextView tvTimeCountTotal;
 
     @Bind(R.id.textView_dosage_type_normal_title)
     TextView tvDosageTypeNormalTitle;
@@ -131,37 +137,26 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     @Bind(R.id.textView_time_sleep)
     TextView tvTimeSleep;
 
-    @Bind(R.id.checkBox_dosage_wakeup)
-    CheckBox cbDosageWakeup;
+    @Bind(R.id.dosageCheckButton_wakeup)
+    DosageCheckButton dcbtnWakeup;
 
-    @Bind(R.id.checkBox_dosage_morning)
-    CheckBox cbDosageMorning;
+    @Bind(R.id.dosageCheckButton_morning)
+    DosageCheckButton dcbtnMorning;
 
-    @Bind(R.id.checkBox_dosage_lunch)
-    CheckBox cbDosageLunch;
+    @Bind(R.id.dosageCheckButton_lunch)
+    DosageCheckButton dcbtnLunch;
 
-    @Bind(R.id.checkBox_dosage_evening)
-    CheckBox cbDosageEvening;
+    @Bind(R.id.dosageCheckButton_evening)
+    DosageCheckButton dcbtnEvening;
 
-    @Bind(R.id.checkBox_dosage_sleep)
-    CheckBox cbDosageSleep;
-
-    @Bind(R.id.textView_pill_list_title)
-    TextView tvPillListTitle;
-
-    @Bind(R.id.view_pill_list_line)
-    View vPillListLine;
-
-    @Bind(R.id.recyclerView_pill)
-    RecyclerView rvPill;
+    @Bind(R.id.dosageCheckButton_sleep)
+    DosageCheckButton dcbtnSleep;
 
     @Bind(R.id.button_confirm)
     Button btnConfirm;
 
     @Bind(R.id.button_cancel)
     Button btnCancel;
-
-    DiseaseDosageChcekPillListAdapter mDiseaseDosageChcekPillListAdapter;
 
     String strLabelColor;
 
@@ -207,18 +202,20 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
 
         //레이블 색 적용
         llLabel.setBackgroundColor(Color.parseColor(strLabelColor));
-        tvPillListTitle.setTextColor(Color.parseColor(strLabelColor));
-        vPillListLine.setBackgroundColor(Color.parseColor(strLabelColor));
-        btnConfirm.setTextColor(Color.parseColor(strLabelColor));
-        ((GradientDrawable) btnConfirm.getBackground()).setStroke(ViewUtils.dpToPixel(getContext(), 1), Color.parseColor(strLabelColor));
-        btnCancel.setTextColor(Color.parseColor(strLabelColor));
-        ((GradientDrawable) btnCancel.getBackground()).setStroke(ViewUtils.dpToPixel(getContext(), 1), Color.parseColor(strLabelColor));
         tvDosageDateTitle.setTextColor(Color.parseColor(strLabelColor));
         vDosageDateLine.setBackgroundColor(Color.parseColor(strLabelColor));
         tvDosageTypeIntervalTitle.setTextColor(Color.parseColor(strLabelColor));
         vDosageTypeIntervalLine.setBackgroundColor(Color.parseColor(strLabelColor));
         tvDosageTypeNormalTitle.setTextColor(Color.parseColor(strLabelColor));
         vDosageTypeNormalLine.setBackgroundColor(Color.parseColor(strLabelColor));
+        tvDosageIntervalTitle.setTextColor(Color.parseColor(strLabelColor));
+        vDosageIntervalLine.setBackgroundColor(Color.parseColor(strLabelColor));
+        tvDosageStartTitle.setTextColor(Color.parseColor(strLabelColor));
+        vDosageStartLine.setBackgroundColor(Color.parseColor(strLabelColor));
+        btnConfirm.setTextColor(Color.parseColor(strLabelColor));
+        ((GradientDrawable) btnConfirm.getBackground()).setStroke(ViewUtils.dpToPixel(getContext(), 1), Color.parseColor(strLabelColor));
+        btnCancel.setTextColor(Color.parseColor(strLabelColor));
+        ((GradientDrawable) btnCancel.getBackground()).setStroke(ViewUtils.dpToPixel(getContext(), 1), Color.parseColor(strLabelColor));
 
         //레이블 이미지
         ivLabel.setImageResource(mDisease.getImg());
@@ -230,20 +227,15 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
         tvDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(mDisease.getDateStart()));
         tvDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(mDisease.getDateEnd()));
 
-        //약목록
-        mDiseaseDosageChcekPillListAdapter = new DiseaseDosageChcekPillListAdapter(getActivity());
-        mDiseaseDosageChcekPillListAdapter.setPillArrayList(mDisease.getPillArrayList());
-        rvPill.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        rvPill.setHasFixedSize(true);
-        rvPill.setAdapter(mDiseaseDosageChcekPillListAdapter);
-
+        //복용 현황
         if (mDisease.getDosageType() == Constants.DOSAGE_TYPE_EVERYHOUR) {   //시간 마다
             llDosageTypeInterval.setVisibility(View.VISIBLE);
             llDosageTypeNormal.setVisibility(View.GONE);
 
             tvTimeInterval.setText(String.format("%d시간", mDisease.getTimeInterval()));
             tvTimeStart.setText(mDisease.getTimeStartHour() + ":" + mDisease.getTimeStartMinute());
-            tvTimeCount.setText(String.format("%d회", mDisease.getDosageTotal()));
+            tvTimeCountCurrent.setText(String.format("%d", mDisease.getDosageCurrnt()));
+            tvTimeCountTotal.setText(String.format("%d", mDisease.getDosageTotal()));
         } else {  //식사시간 마다
             llDosageTypeInterval.setVisibility(View.GONE);
             llDosageTypeNormal.setVisibility(View.VISIBLE);
@@ -252,41 +244,91 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
             if (mDisease.isEnabledWakeup()) {
                 rlDosageCheckWakeup.setVisibility(View.VISIBLE);
                 tvTimeWakeup.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_WAKEUP)));
+                dcbtnWakeup.setColorChecked(strLabelColor);
+                dcbtnWakeup.setChecked(mDisease.isTakeWakeup());
             } else {
                 rlDosageCheckWakeup.setVisibility(View.GONE);
             }
             if (mDisease.isEnabledMorning()) {
                 rlDosageCheckMorning.setVisibility(View.VISIBLE);
                 tvTimeMorning.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_MORNING)));
+                dcbtnMorning.setColorChecked(strLabelColor);
+                dcbtnMorning.setChecked(mDisease.isTakeMorning());
             } else {
-                rlDosageCheckWakeup.setVisibility(View.GONE);
+                rlDosageCheckMorning.setVisibility(View.GONE);
             }
             if (mDisease.isEnabledLunch()) {
                 rlDosageCheckLunch.setVisibility(View.VISIBLE);
                 tvTimeLunch.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_LUNCH)));
+                dcbtnLunch.setColorChecked(strLabelColor);
+                dcbtnLunch.setChecked(mDisease.isTakeLunch());
             } else {
-                rlDosageCheckWakeup.setVisibility(View.GONE);
+                rlDosageCheckLunch.setVisibility(View.GONE);
             }
             if (mDisease.isEnabledEvening()) {
                 rlDosageCheckEvening.setVisibility(View.VISIBLE);
                 tvTimeEvening.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_EVENING)));
+                dcbtnEvening.setColorChecked(strLabelColor);
+                dcbtnEvening.setChecked(mDisease.isTakeEvening());
             } else {
-                rlDosageCheckWakeup.setVisibility(View.GONE);
+                rlDosageCheckEvening.setVisibility(View.GONE);
             }
             if (mDisease.isEnabledSleep()) {
                 rlDosageCheckSleep.setVisibility(View.VISIBLE);
                 tvTimeSleep.setText(TimeUtils.unixTimeStampToStringTime(PreferencesUtils.getPreferencesLong(getActivity(), Constants.PREF_TIME_SLEEP)));
+                dcbtnSleep.setColorChecked(strLabelColor);
+                dcbtnSleep.setChecked(mDisease.isTakeSleep());
             } else {
-                rlDosageCheckWakeup.setVisibility(View.GONE);
+                rlDosageCheckSleep.setVisibility(View.GONE);
             }
-            cbDosageWakeup.setChecked(mDisease.isTakeWakeup());
-            cbDosageMorning.setChecked(mDisease.isTakeMorning());
-            cbDosageLunch.setChecked(mDisease.isTakeLunch());
-            cbDosageEvening.setChecked(mDisease.isTakeEvening());
-            cbDosageSleep.setChecked(mDisease.isTakeSleep());
         }
 
         Log.e(TAG, " " + mDisease.isTakeWakeup() + " " + mDisease.isTakeMorning() + " " + mDisease.isTakeLunch() + " " + mDisease.isTakeEvening() + " " + mDisease.isTakeSleep());
+    }
+
+    //복용 체크 버튼 리스너
+    @OnClick({R.id.dosageCheckButton_wakeup, R.id.dosageCheckButton_morning, R.id.dosageCheckButton_lunch, R.id.dosageCheckButton_evening, R.id.dosageCheckButton_sleep})
+    public void onClickDosageCheck(View view) {
+
+        switch (view.getId()) {
+            case R.id.dosageCheckButton_wakeup:
+                dcbtnWakeup.setChecked(!dcbtnWakeup.isChecked());
+                break;
+            case R.id.dosageCheckButton_morning:
+                dcbtnMorning.setChecked(!dcbtnMorning.isChecked());
+                break;
+            case R.id.dosageCheckButton_lunch:
+                dcbtnLunch.setChecked(!dcbtnLunch.isChecked());
+                break;
+            case R.id.dosageCheckButton_evening:
+                dcbtnEvening.setChecked(!dcbtnEvening.isChecked());
+                break;
+            case R.id.dosageCheckButton_sleep:
+                dcbtnSleep.setChecked(!dcbtnSleep.isChecked());
+                break;
+        }
+    }
+
+    @OnClick({R.id.button_time_count_minus, R.id.button_time_count_plus})
+    public void onClickTimeCount(View view) {
+        switch (view.getId()) {
+            case R.id.button_time_count_minus:
+                if (mDisease.getDosageCurrnt() > 0) {
+                    mDisease.setDosageCurrnt(mDisease.getDosageCurrnt() - 1);
+                    tvTimeCountCurrent.setText(String.format("%d", mDisease.getDosageCurrnt()));
+                } else {
+                    Toast.makeText(getActivity(), "최소치 입니다.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.button_time_count_plus:
+                if (mDisease.getDosageCurrnt() < mDisease.getDosageTotal()) {
+                    mDisease.setDosageCurrnt(mDisease.getDosageCurrnt() + 1);
+                    tvTimeCountCurrent.setText(String.format("%d", mDisease.getDosageCurrnt()));
+                } else {
+                    Toast.makeText(getActivity(), "최대치 입니다.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
     }
 
     //BottomSheet의 행동에 따른 콜백 리스너
@@ -322,14 +364,22 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     // 복용 정보 DB에 저장하는 이벤트 발행 and dialog hide
     @OnClick(R.id.button_confirm)
     public void onClickConfirm() {
-        EventBus.getDefault().post(new EventDosageCheckUpdate(
-                mDisease.getId(),
-                cbDosageWakeup.isChecked(),
-                cbDosageMorning.isChecked(),
-                cbDosageLunch.isChecked(),
-                cbDosageEvening.isChecked(),
-                cbDosageSleep.isChecked()
-        ));
+
+        if (mDisease.getDosageType() == Constants.DOSAGE_TYPE_EVERYHOUR) {
+            EventBus.getDefault().post(new EventDosageCheckUpdate(
+                    mDisease.getId(),
+                    mDisease.getDosageType(),
+                    mDisease.getDosageCurrnt()));
+        } else {
+            EventBus.getDefault().post(new EventDosageCheckUpdate(
+                    mDisease.getId(),
+                    mDisease.getDosageType(),
+                    dcbtnWakeup.isChecked(),
+                    dcbtnMorning.isChecked(),
+                    dcbtnLunch.isChecked(),
+                    dcbtnEvening.isChecked(),
+                    dcbtnSleep.isChecked()));
+        }
         dismiss();
     }
 

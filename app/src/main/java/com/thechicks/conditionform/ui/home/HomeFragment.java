@@ -3,11 +3,14 @@ package com.thechicks.conditionform.ui.home;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -29,6 +32,7 @@ import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.ui.RegistAutoActivity;
 import com.thechicks.conditionform.ui.regist.RegistManualActivity;
 import com.thechicks.conditionform.util.AsyncHandler;
+import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.TimeUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -442,9 +446,9 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
 
         switch (requestCode) {
             case REQUEST_CODE_REGIST_MANUAL:
-                if(resultCode == Activity.RESULT_OK){
+                if (resultCode == Activity.RESULT_OK) {
                     Toast.makeText(getActivity(), "등록 성공!", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(getActivity(), "등록 실패! 다시 등록해주세요~", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -468,34 +472,47 @@ public class HomeFragment extends Fragment implements RegistAutoDialog.RegistAut
     }
 
     @Subscribe
-    public void onEvent(final EventDosageCheckUpdate eventDosageCheckUpdate){
-        //Todo: DB update. 현재날짜와 id를 가지고
+    public void onEvent(final EventDosageCheckUpdate eventDosageCheckUpdate) {
+        // DB update. 현재날짜와 id를 가지고
 
         AsyncHandler.post(new Runnable() {
             @Override
             public void run() {
-                //Todo: type 구분
-
                 Disease disease = new Disease();
                 disease.setId(eventDosageCheckUpdate.getDiseaseId());
-                disease.setTakeWakeup(eventDosageCheckUpdate.isTakeWakeup());
-                disease.setTakeMorning( eventDosageCheckUpdate.isTakeMorning());
-                disease.setTakeLunch(eventDosageCheckUpdate.isTakeLunch());
-                disease.setTakeEvening(eventDosageCheckUpdate.isTakeEvening());
-                disease.setTakeSleep(eventDosageCheckUpdate.isTakeSleep());
+                disease.setDosageType(eventDosageCheckUpdate.getDosageType());
+
+                if (disease.getDosageType() == Constants.DOSAGE_TYPE_EVERYHOUR) {
+                    disease.setDosageCurrnt(eventDosageCheckUpdate.getDosageCurrent());
+                } else {
+                    disease.setTakeWakeup(eventDosageCheckUpdate.isTakeWakeup());
+                    disease.setTakeMorning(eventDosageCheckUpdate.isTakeMorning());
+                    disease.setTakeLunch(eventDosageCheckUpdate.isTakeLunch());
+                    disease.setTakeEvening(eventDosageCheckUpdate.isTakeEvening());
+                    disease.setTakeSleep(eventDosageCheckUpdate.isTakeSleep());
+                }
 
                 Log.e(TAG, " " + eventDosageCheckUpdate.getDiseaseId() + " " + eventDosageCheckUpdate.isTakeWakeup()
-                + " " + eventDosageCheckUpdate.isTakeMorning() + " " + eventDosageCheckUpdate.isTakeLunch()
-                + " " + eventDosageCheckUpdate.isTakeEvening() + " " + eventDosageCheckUpdate.isTakeSleep());
+                        + " " + eventDosageCheckUpdate.isTakeMorning() + " " + eventDosageCheckUpdate.isTakeLunch()
+                        + " " + eventDosageCheckUpdate.isTakeEvening() + " " + eventDosageCheckUpdate.isTakeSleep());
 
-                if(conditionformDao.updateTakeHistory(currentDayTimestamp, disease)){
-                    Toast.makeText(getActivity(), "수정됨", Toast.LENGTH_SHORT).show();
+                // DB 갱신
+                if (conditionformDao.updateTakeHistory(currentDayTimestamp, disease)) {
 
+                    // View 갱신
                     final List<Disease> diseaseList = conditionformDao.findDiseaseByDate(currentDayTimestamp);
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            Snackbar snackbar = Snackbar.make(getView(), "수정됨", Snackbar.LENGTH_SHORT);
+
+                            ((TextView) snackbar
+                                    .getView()
+                                    .findViewById(android.support.design.R.id.snackbar_text))
+                                    .setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+                            snackbar.show();
+
                             mDiseaseListAdapter.setItemList(diseaseList);
                         }
                     });

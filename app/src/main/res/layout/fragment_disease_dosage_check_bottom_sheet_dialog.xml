@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:orientation="vertical"
         android:padding="4dp">
 
@@ -100,51 +100,137 @@
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginTop="4dp"
-        android:orientation="vertical"
-        android:padding="4dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView_dosage_type_interval_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="알람 시간"
-            android:textColor="@color/color_label_1"/>
-
-        <View
-            android:id="@+id/view_dosage_type_interval_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="4dp"
-            android:background="@color/color_label_1"/>
-
-        <TextView
-            android:id="@+id/textView_time_interval"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="3시간"
-            android:textColor="#000000"
-            android:textSize="16sp"/>
+            android:orientation="vertical"
+            android:padding="4dp">
 
-        <TextView
-            android:id="@+id/textView_time_start"
+            <TextView
+                android:id="@+id/textView_dosage_interval_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="복용 간격"
+                android:textColor="@color/color_label_1"/>
+
+            <View
+                android:id="@+id/view_dosage_interval_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="4dp"
+                android:background="@color/color_label_1"/>
+
+            <TextView
+                android:id="@+id/textView_time_interval"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="3시간"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="시작시간"
-            android:textColor="#000000"
-            android:textSize="16sp"/>
+            android:orientation="vertical"
+            android:padding="4dp">
 
-        <TextView
-            android:id="@+id/textView_time_count"
+            <TextView
+                android:id="@+id/textView_dosage_start_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="복용 시작 시간"
+                android:textColor="@color/color_label_1"/>
+
+            <View
+                android:id="@+id/view_dosage_start_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="4dp"
+                android:background="@color/color_label_1"/>
+
+            <TextView
+                android:id="@+id/textView_time_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="시작시간"
+                android:textColor="#000000"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="6회"
-            android:textColor="#000000"
-            android:textSize="16sp"/>
+            android:orientation="vertical"
+            android:padding="4dp">
 
+            <TextView
+                android:id="@+id/textView_dosage_type_interval_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:text="복용 여부"
+                android:textColor="@color/color_label_1"/>
+
+            <View
+                android:id="@+id/view_dosage_type_interval_line"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_margin="4dp"
+                android:background="@color/color_label_1"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/textView_time_count_current"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="0"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="/"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/textView_time_count_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="6"
+                    android:textColor="#000000"
+                    android:textSize="16sp"/>
+
+                <Button
+                    android:id="@+id/button_time_count_minus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/button_time_count_plus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -153,14 +239,15 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
         android:layout_marginRight="24dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="4dp">
 
         <TextView
             android:id="@+id/textView_dosage_type_normal_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="알람 시간"
+            android:text="복용 여부"
             android:textColor="@color/color_label_1"/>
 
         <View
@@ -202,8 +289,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <CheckBox
-                android:id="@+id/checkBox_dosage_wakeup"
+            <com.thechicks.conditionform.ui.DosageCheckButton
+                android:id="@+id/dosageCheckButton_wakeup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -211,9 +298,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:button="@drawable/selector_sleep"
+                android:background="@drawable/button_shape_normal"
                 android:checked="true"
                 android:foreground="?android:attr/selectableItemBackground"/>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -246,8 +334,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <CheckBox
-                android:id="@+id/checkBox_dosage_morning"
+            <com.thechicks.conditionform.ui.DosageCheckButton
+                android:id="@+id/dosageCheckButton_morning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -255,9 +343,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:button="@drawable/selector_sleep"
+                android:background="@drawable/button_shape_normal"
                 android:checked="true"
                 android:foreground="?android:attr/selectableItemBackground"/>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -290,8 +379,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <CheckBox
-                android:id="@+id/checkBox_dosage_lunch"
+            <com.thechicks.conditionform.ui.DosageCheckButton
+                android:id="@+id/dosageCheckButton_lunch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -299,9 +388,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:button="@drawable/selector_sleep"
+                android:background="@drawable/button_shape_normal"
                 android:checked="true"
                 android:foreground="?android:attr/selectableItemBackground"/>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -334,8 +424,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <CheckBox
-                android:id="@+id/checkBox_dosage_evening"
+            <com.thechicks.conditionform.ui.DosageCheckButton
+                android:id="@+id/dosageCheckButton_evening"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -343,9 +433,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:button="@drawable/selector_sleep"
+                android:background="@drawable/button_shape_normal"
                 android:checked="true"
                 android:foreground="?android:attr/selectableItemBackground"/>
+
         </RelativeLayout>
 
         <RelativeLayout
@@ -379,8 +470,8 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <CheckBox
-                android:id="@+id/checkBox_dosage_sleep"
+            <com.thechicks.conditionform.ui.DosageCheckButton
+                android:id="@+id/dosageCheckButton_sleep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -388,41 +479,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
-                android:button="@drawable/selector_sleep"
+                android:background="@drawable/button_shape_normal"
                 android:checked="true"
                 android:foreground="?android:attr/selectableItemBackground"/>
+
         </RelativeLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="4dp">
-
-        <TextView
-            android:id="@+id/textView_pill_list_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:text="약목록"
-            android:textColor="@color/color_label_1"/>
-
-        <View
-            android:id="@+id/view_pill_list_line"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_margin="4dp"
-            android:background="@color/color_label_1"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView_pill"
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_margin="8dp"/>
     </LinearLayout>
 
     <LinearLayout

@@ -417,6 +417,7 @@ public class ConditionformDao implements IConditionformDao {
             disease.setTakeLunch(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH)) == 1 ? true : false);
             disease.setTakeEvening(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING)) == 1 ? true : false);
             disease.setTakeSleep(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP)) == 1 ? true : false);
+            disease.setDosageCurrnt(cursor.getInt(cursor.getColumnIndex(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT)));
 
             ArrayList<Pill> pillArrayList = new ArrayList<>();
             for (int i = 0; i < cursor.getCount(); i++) {
@@ -442,16 +443,14 @@ public class ConditionformDao implements IConditionformDao {
 
         ContentValues cv = new ContentValues();
 
-        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP, disease.isTakeWakeup() ? 1 : 0);
-        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING, disease.isTakeMorning() ? 1 : 0);
-        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH, disease.isTakeLunch() ? 1 : 0);
-        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING, disease.isTakeEvening() ? 1 : 0);
-        cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP, disease.isTakeSleep() ? 1 : 0);
-
         if (disease.getDosageType() == Constants.DOSAGE_TYPE_EVERYHOUR) {
             cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_CURRENT, disease.getDosageCurrnt());
         } else {
-
+            cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_WAKEUP, disease.isTakeWakeup() ? 1 : 0);
+            cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_MORNING, disease.isTakeMorning() ? 1 : 0);
+            cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_LUNCH, disease.isTakeLunch() ? 1 : 0);
+            cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_EVENING, disease.isTakeEvening() ? 1 : 0);
+            cv.put(Constants.HistoryEntray.COLUMN_HISTORY_TAKE_SLEEP, disease.isTakeSleep() ? 1 : 0);
         }
 
         String[] whereArgs = {String.valueOf(timeStamp), String.valueOf(disease.getId())};

@@ -6,19 +6,44 @@ package com.thechicks.conditionform.ui.home;
 public class EventDosageCheckUpdate {
 
     int diseaseId;
+    int dosageType;
+    int dosageCurrent;
     boolean takeWakeup;
     boolean takeMorning;
     boolean takeLunch;
     boolean takeEvening;
     boolean takeSleep;
 
-    public EventDosageCheckUpdate(int diseaseId, boolean takeWakeup, boolean takeMorning, boolean takeLunch, boolean takeEvening, boolean takeSleep) {
+    public EventDosageCheckUpdate(int diseaseId, int dosageType, boolean takeWakeup, boolean takeMorning, boolean takeLunch, boolean takeEvening, boolean takeSleep) {
         this.diseaseId = diseaseId;
+        this.dosageType = dosageType;
         this.takeWakeup = takeWakeup;
         this.takeMorning = takeMorning;
         this.takeLunch = takeLunch;
         this.takeEvening = takeEvening;
         this.takeSleep = takeSleep;
+    }
+
+    public EventDosageCheckUpdate(int diseaseId, int dosageType, int dosageCurrent) {
+        this.diseaseId = diseaseId;
+        this.dosageType = dosageType;
+        this.dosageCurrent = dosageCurrent;
+    }
+
+    public int getDosageType() {
+        return dosageType;
+    }
+
+    public void setDosageType(int dosageType) {
+        this.dosageType = dosageType;
+    }
+
+    public int getDosageCurrent() {
+        return dosageCurrent;
+    }
+
+    public void setDosageCurrent(int dosageCurrent) {
+        this.dosageCurrent = dosageCurrent;
     }
 
     public int getDiseaseId() {
