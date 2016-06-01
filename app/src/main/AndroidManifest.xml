@@ -28,7 +28,7 @@
         </activity>
         <activity
             android:name=".ui.MainActivity"
-            android:label="@string/app_name"
+            android:label="@string/nav_title_home"
             android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
@@ -48,7 +48,7 @@
         </activity>
         <activity
             android:name=".ui.regist.RegistManualActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_regist"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
@@ -82,7 +82,7 @@
 
         <activity
             android:name=".ui.RegistAutoActivity"
-            android:label="@string/title_activity_regist_auto"
+            android:label="@string/title_activity_regist"
             android:parentActivityName=".ui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

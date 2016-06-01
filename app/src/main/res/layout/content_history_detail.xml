@@ -89,7 +89,7 @@
             android:text="복용타입"/>
 
         <LinearLayout
-            android:id="@+id/linearLayout_dosage_type_normal"
+            android:id="@+id/cardView_dosage_type_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -102,7 +102,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout_dosage_type_interval"
+            android:id="@+id/cardView_dosage_type_interval"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"

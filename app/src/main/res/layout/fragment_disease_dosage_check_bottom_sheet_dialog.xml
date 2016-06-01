@@ -11,19 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_label_1"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:padding="8dp">
 
         <ImageView
             android:id="@+id/imageView_label"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_pill"/>
 
         <TextView
             android:id="@+id/textView_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="6dp"
+            android:layout_marginLeft="8dp"
             android:text="병명"
             android:textColor="@color/white"
             android:textSize="22sp"/>
@@ -94,7 +95,7 @@
 
     <!--시간 마다-->
     <LinearLayout
-        android:id="@+id/linearLayout_dosage_type_interval"
+        android:id="@+id/cardView_dosage_type_interval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
@@ -234,7 +235,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout_dosage_type_normal"
+        android:id="@+id/cardView_dosage_type_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
@@ -267,19 +268,21 @@
 
             <ImageView
                 android:id="@+id/imageView_time_type_wakeup"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/ic_wakeup_black"/>
 
             <TextView
                 android:id="@+id/textView_time_wakeup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_toEndOf="@+id/imageView_time_type_wakeup"
                 android:layout_toRightOf="@id/imageView_time_type_wakeup"
                 android:gravity="center"
@@ -299,8 +302,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/button_shape_normal"
-                android:checked="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:minHeight="40dp"
+                android:minWidth="86dp"/>
 
         </RelativeLayout>
 
@@ -308,23 +312,26 @@
             android:id="@+id/relativeLayout_dosage_check_morning"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:padding="4dp">
 
             <ImageView
                 android:id="@+id/imageView_time_type_morning"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:src="@drawable/ic_morning"/>
+                android:src="@drawable/ic_morning_black"/>
 
             <TextView
                 android:id="@+id/textView_time_morning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_toEndOf="@+id/imageView_time_type_morning"
                 android:layout_toRightOf="@id/imageView_time_type_morning"
                 android:gravity="center"
@@ -344,8 +351,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/button_shape_normal"
-                android:checked="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:minHeight="40dp"
+                android:minWidth="86dp"/>
 
         </RelativeLayout>
 
@@ -353,23 +361,26 @@
             android:id="@+id/relativeLayout_dosage_check_lunch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:padding="4dp">
 
             <ImageView
                 android:id="@+id/imageView_time_type_lunch"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:src="@drawable/ic_lunch"/>
+                android:src="@drawable/ic_lunch_black"/>
 
             <TextView
                 android:id="@+id/textView_time_lunch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_toEndOf="@+id/imageView_time_type_lunch"
                 android:layout_toRightOf="@id/imageView_time_type_lunch"
                 android:gravity="center"
@@ -389,8 +400,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/button_shape_normal"
-                android:checked="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:minHeight="40dp"
+                android:minWidth="86dp"/>
 
         </RelativeLayout>
 
@@ -398,23 +410,26 @@
             android:id="@+id/relativeLayout_dosage_check_evening"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:padding="4dp">
 
             <ImageView
                 android:id="@+id/imageView_time_type_evening"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:src="@drawable/ic_evening"/>
+                android:src="@drawable/ic_evening_black"/>
 
             <TextView
                 android:id="@+id/textView_time_evening"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_toEndOf="@+id/imageView_time_type_evening"
                 android:layout_toRightOf="@id/imageView_time_type_evening"
                 android:gravity="center"
@@ -434,8 +449,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/button_shape_normal"
-                android:checked="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:minHeight="40dp"
+                android:minWidth="86dp"/>
 
         </RelativeLayout>
 
@@ -444,23 +460,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:padding="4dp">
 
             <ImageView
                 android:id="@+id/imageView_time_type_sleep"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:foreground="?android:attr/selectableItemBackground"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/ic_sleep_black"/>
 
             <TextView
                 android:id="@+id/textView_time_sleep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginStart="4dp"
                 android:layout_toEndOf="@+id/imageView_time_type_sleep"
                 android:layout_toRightOf="@id/imageView_time_type_sleep"
                 android:gravity="center"
@@ -480,8 +499,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/button_shape_normal"
-                android:checked="true"
-                android:foreground="?android:attr/selectableItemBackground"/>
+                android:foreground="?android:attr/selectableItemBackground"
+                android:minHeight="40dp"
+                android:minWidth="86dp"/>
 
         </RelativeLayout>
     </LinearLayout>

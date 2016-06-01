@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -78,11 +79,11 @@ public class RegistManualActivity extends AppCompatActivity {
     @Bind(R.id.spinner_dosage_type)
     Spinner spinnerDosageType;
 
-    @Bind(R.id.linearLayout_dosage_type_interval)
-    LinearLayout llTypeInterval;
+    @Bind(R.id.cardView_dosage_type_interval)
+    CardView cvTypeInterval;
 
-    @Bind(R.id.linearLayout_dosage_type_normal)
-    LinearLayout llTypeNormal;
+    @Bind(R.id.cardView_dosage_type_normal)
+    CardView cvTypeNormal;
 
     @Bind(R.id.spinner_time_interval)
     Spinner spinnerTimeInterval;
@@ -166,11 +167,11 @@ public class RegistManualActivity extends AppCompatActivity {
                 dosageTypeIndex = position;
 
                 if (dosageTypeIndex == spinnerDosageTypeAdapter.getCount() - 1) {
-                    llTypeNormal.setVisibility(View.GONE);
-                    llTypeInterval.setVisibility(View.VISIBLE);
+                    cvTypeNormal.setVisibility(View.GONE);
+                    cvTypeInterval.setVisibility(View.VISIBLE);
                 } else {
-                    llTypeNormal.setVisibility(View.VISIBLE);
-                    llTypeInterval.setVisibility(View.GONE);
+                    cvTypeNormal.setVisibility(View.VISIBLE);
+                    cvTypeInterval.setVisibility(View.GONE);
                 }
             }
 
@@ -403,7 +404,7 @@ public class RegistManualActivity extends AppCompatActivity {
         //모델객체에 저장
         final Disease disease = new Disease();
         disease.setColor(strLabelColor);
-        disease.setImg(R.mipmap.ic_launcher);  //Todo: 수정
+        disease.setImg(R.drawable.ic_pill);  //Todo: 선택한 이미지 resId로 수정
         disease.setName(etDiseaseName.getText().toString());
         disease.setPillArrayList(mRegistManualPillAdapter.getPillArrayList());
         disease.setDateStart(startDateTimestamp);

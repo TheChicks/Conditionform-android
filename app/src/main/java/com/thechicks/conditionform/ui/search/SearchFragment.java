@@ -1,6 +1,5 @@
 package com.thechicks.conditionform.ui.search;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -37,7 +36,7 @@ public class SearchFragment extends Fragment {
 
     public static final String TAG = SearchFragment.class.getSimpleName();
 
-    @Bind(R.id.recyclerview_search_item)
+    @Bind(R.id.recyclerView_search)
     RecyclerView recyclerView;
 
     PillSearchListAdapter mPillSearchListAdapter;

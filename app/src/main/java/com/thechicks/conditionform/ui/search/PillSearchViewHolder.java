@@ -57,7 +57,8 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
         Glide.with(mView.getContext())
                 .load(pill.getImageUrl())
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(android.R.drawable.ic_menu_report_image)
+                .error(android.R.drawable.stat_notify_error)
                 .crossFade()
                 .into(ivPill);
 

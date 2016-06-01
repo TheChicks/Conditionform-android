@@ -8,8 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,7 +63,7 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     @Bind(R.id.textView_date_end)
     TextView tvDateEnd;
 
-    @Bind(R.id.linearLayout_dosage_type_interval)
+    @Bind(R.id.cardView_dosage_type_interval)
     LinearLayout llDosageTypeInterval;  // type에 따라 visible
 
     @Bind(R.id.textView_dosage_interval_title)
@@ -104,7 +102,7 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
     @Bind(R.id.view_dosage_type_normal_line)
     View vDosageTypeNormalLine;
 
-    @Bind(R.id.linearLayout_dosage_type_normal)
+    @Bind(R.id.cardView_dosage_type_normal)
     LinearLayout llDosageTypeNormal;  // type에 따라 visible
 
     @Bind(R.id.relativeLayout_dosage_check_wakeup)

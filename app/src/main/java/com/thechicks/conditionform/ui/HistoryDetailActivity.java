@@ -4,10 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -26,12 +21,10 @@ import com.google.gson.JsonArray;
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
-import com.thechicks.conditionform.data.model.History;
 import com.thechicks.conditionform.data.model.Pill;
 import com.thechicks.conditionform.data.model.TimeItem;
 import com.thechicks.conditionform.data.remote.BackendHelper;
 import com.thechicks.conditionform.ui.detail.PillDetailsActivity;
-import com.thechicks.conditionform.ui.regist.RegistManualPillAdapter;
 import com.thechicks.conditionform.ui.regist.RegistManualTimeAdapter;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.Constants;
@@ -39,8 +32,6 @@ import com.thechicks.conditionform.util.PreferencesUtils;
 import com.thechicks.conditionform.util.TimeUtils;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -77,10 +68,10 @@ public class HistoryDetailActivity extends AppCompatActivity {
     @Bind(R.id.textView_dosage_type)
     TextView tvDosageType;
 
-    @Bind(R.id.linearLayout_dosage_type_interval)
+    @Bind(R.id.cardView_dosage_type_interval)
     LinearLayout llTypeInterval;
 
-    @Bind(R.id.linearLayout_dosage_type_normal)
+    @Bind(R.id.cardView_dosage_type_normal)
     LinearLayout llTypeNormal;
 
     @Bind(R.id.textView_time_interval)

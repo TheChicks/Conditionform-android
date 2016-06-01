@@ -13,23 +13,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include layout="@layout/appbar_normal"/>
+
+        <include layout="@layout/appbar_search"/>
+
+        <include layout="@layout/appbar_home"/>
+
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:visibility="visible">
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/colorPrimary"
                 android:minHeight="?attr/actionBarSize"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
-
-                <com.thechicks.conditionform.ui.search.SearchEditWidget
-                    android:id="@+id/search_edit_widget"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
 
             </android.support.v7.widget.Toolbar>
 

@@ -2,6 +2,8 @@ package com.thechicks.conditionform.ui.detail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -19,14 +21,14 @@ public class PillDetailsActivity extends AppCompatActivity {
 
     public static final String TAG = PillDetailsActivity.class.getSimpleName();
 
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;  //약이름한글(영문)
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
     @Bind(R.id.imageView_pill)
     ImageView ivPill;  //이미지
-
-    @Bind(R.id.textView_pill_name)
-    TextView tvPillName;  //약이름한글(영문)
 
     @Bind(R.id.textView_ingredient)
     TextView tvIngredient;  //성분명
@@ -112,8 +114,10 @@ public class PillDetailsActivity extends AppCompatActivity {
 
         mToolbar.setTitle(pill.getKoName());
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
         setInformation(pill);
     }
 
@@ -123,10 +127,11 @@ public class PillDetailsActivity extends AppCompatActivity {
                 .load(pill.getImageUrl())
                 .crossFade()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(android.R.drawable.ic_menu_crop)
+                .error(android.R.drawable.stat_notify_error)
                 .into(ivPill);
 
-        tvPillName.setText(String.format("%s(%s)", pill.getKoName(), pill.getEnName()));
+        mCollapsingToolbarLayout.setTitle(String.format("%s(%s)", pill.getKoName(), pill.getEnName()));
         tvIngredient.setText(pill.getIngredient());
         tvAssortment.setText(pill.getAssortment());
         tvUnitarinessOrComplexness.setText(pill.getUnitarinessOrComplexness());
@@ -161,7 +166,7 @@ public class PillDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
