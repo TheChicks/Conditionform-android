@@ -96,4 +96,37 @@ public class RegistManualTimeAdapter extends RecyclerView.Adapter<RegistManualTi
         mTimeItemArrayList = timeItemArrayList;
         notifyDataSetChanged();
     }
+
+    // 1일 투여횟수에 따라 체크박스를 활성화
+    public void setCheckedMaxDosageOneDay(int maxDosageOneDay) {
+
+        switch (maxDosageOneDay) {
+            case 1:  //아침
+                mTimeItemArrayList.get(1).setEnabled(true);
+                break;
+            case 2:  //아침, 저녁
+                mTimeItemArrayList.get(1).setEnabled(true);
+                mTimeItemArrayList.get(3).setEnabled(true);
+                break;
+            case 3:  //아침, 점심, 저녁
+                mTimeItemArrayList.get(1).setEnabled(true);
+                mTimeItemArrayList.get(2).setEnabled(true);
+                mTimeItemArrayList.get(3).setEnabled(true);
+                break;
+            case 4:  //아침, 점심, 저녁, 취침
+                mTimeItemArrayList.get(1).setEnabled(true);
+                mTimeItemArrayList.get(2).setEnabled(true);
+                mTimeItemArrayList.get(3).setEnabled(true);
+                mTimeItemArrayList.get(4).setEnabled(true);
+                break;
+            case 5:  //기상, 아침, 점심, 저녁, 취침
+                mTimeItemArrayList.get(0).setEnabled(true);
+                mTimeItemArrayList.get(1).setEnabled(true);
+                mTimeItemArrayList.get(2).setEnabled(true);
+                mTimeItemArrayList.get(3).setEnabled(true);
+                mTimeItemArrayList.get(4).setEnabled(true);
+                break;
+        }
+        notifyDataSetChanged();
+    }
 }

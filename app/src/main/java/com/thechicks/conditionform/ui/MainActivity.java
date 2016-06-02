@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,7 +16,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.WindowCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,7 +24,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,7 +31,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -160,7 +156,8 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
             ab.setTitle("");
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+        //Todo: 현재 시간에 따라 상태바 색상 변경
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -190,8 +187,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         animationLoad();
 
         conditionformDao = new ConditionformDao(MainActivity.this);
-
-        }
+    }
 
     @Override
     protected void onStart() {
@@ -263,7 +259,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 if (fragment instanceof HomeFragment) {
                     return;
                 }
-                Log.e(TAG, " 1");
                 newFragment = HomeFragment.newInstance(currentDayTimestamp);
                 mAppbarNormal.setVisibility(View.GONE);
                 mAppbarSearch.setVisibility(View.GONE);
@@ -278,7 +273,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 if (fragment instanceof HistoryFragment) {
                     return;
                 }
-                Log.e(TAG, " 2");
                 newFragment = HistoryFragment.newInstance();
                 mAppbarNormal.setVisibility(View.VISIBLE);
                 mAppbarSearch.setVisibility(View.GONE);
@@ -288,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarNormal);
                 fabMenuOpen.hide();
-                if(fabStatus){
+                if (fabStatus) {
                     hideFab();
                     shrinkFlTransBg();
                     fabStatus = false;
@@ -298,7 +292,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 if (fragment instanceof StatisticsFragment) {
                     return;
                 }
-                Log.e(TAG, " 3");
                 newFragment = StatisticsFragment.newInstance();
                 mAppbarNormal.setVisibility(View.VISIBLE);
                 mAppbarSearch.setVisibility(View.GONE);
@@ -308,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarNormal);
                 fabMenuOpen.hide();
-                if(fabStatus){
+                if (fabStatus) {
                     hideFab();
                     shrinkFlTransBg();
                     fabStatus = false;
@@ -318,7 +311,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 if (fragment instanceof SearchFragment) {
                     return;
                 }
-                Log.e(TAG, " 4");
                 newFragment = SearchFragment.newInstance();
                 mAppbarNormal.setVisibility(View.GONE);
                 mAppbarSearch.setVisibility(View.VISIBLE);
@@ -328,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarSearch);
                 fabMenuOpen.hide();
-                if(fabStatus){
+                if (fabStatus) {
                     hideFab();
                     shrinkFlTransBg();
                     fabStatus = false;
@@ -338,7 +330,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 if (fragment instanceof SettingsFragment) {
                     return;
                 }
-                Log.e(TAG, " 5");
                 newFragment = SettingsFragment.newInstance();
                 mAppbarNormal.setVisibility(View.VISIBLE);
                 mAppbarSearch.setVisibility(View.GONE);
@@ -348,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarNormal);
                 fabMenuOpen.hide();
-                if(fabStatus){
+                if (fabStatus) {
                     hideFab();
                     shrinkFlTransBg();
                     fabStatus = false;
@@ -544,7 +535,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
     //이전 날짜로 이동
     @OnClick(R.id.imageView_date_previous)
     public void onClickDatePrevious() {
-        Toast.makeText(MainActivity.this, "previous day", Toast.LENGTH_SHORT).show();
 
         currentDayTimestamp = TimeUtils.getYesterdayUnixTimeStamp(currentDayTimestamp);
         currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);
@@ -571,7 +561,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
     //다음 날짜로 이동
     @OnClick(R.id.imageView_date_next)
     public void onClickDateNext() {
-        Toast.makeText(MainActivity.this, "next day", Toast.LENGTH_SHORT).show();
 
         currentDayTimestamp = TimeUtils.getTomorrowUnixTimeStamp(currentDayTimestamp);
         currentDisplayYear = TimeUtils.timestampToYear(currentDayTimestamp);

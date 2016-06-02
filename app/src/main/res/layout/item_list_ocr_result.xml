@@ -24,7 +24,7 @@
         android:textSize="15sp"/>
 
     <EditText
-        android:id="@+id/editText_dosage_total"
+        android:id="@+id/editText_dosage_one_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -39,7 +39,7 @@
         android:textSize="13sp"/>
 
     <EditText
-        android:id="@+id/editText_dosage_one_time"
+        android:id="@+id/editText_dosage_one_day"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

@@ -28,14 +28,13 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.thebluealliance.spectrum.SpectrumDialog;
+import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.OcrResult;
 import com.thechicks.conditionform.data.model.Pill;
-import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.model.TimeItem;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.Constants;
@@ -49,7 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Administrator on 2016-04-25.
+ * Created by opklnm102 on 2016-04-25.
  */
 public class RegistManualActivity extends AppCompatActivity {
 
@@ -161,7 +160,7 @@ public class RegistManualActivity extends AppCompatActivity {
                     initSpinner = true;
                     return;
                 }
-                Toast.makeText(RegistManualActivity.this, spinnerDosageTypeAdapter.getItem(position) + "fd", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RegistManualActivity.this, spinnerDosageTypeAdapter.getItem(position) + "fd", Toast.LENGTH_SHORT).show();
 
                 //Spinner index로 타입 저장
                 dosageTypeIndex = position;
@@ -195,7 +194,6 @@ public class RegistManualActivity extends AppCompatActivity {
                     initSpinner = true;
                     return;
                 }
-
                 timeInterval = position + 1;
             }
 
@@ -219,7 +217,6 @@ public class RegistManualActivity extends AppCompatActivity {
                     initSpinner = true;
                     return;
                 }
-
                 dosageCountTotal = position + 1;
             }
 
@@ -257,14 +254,42 @@ public class RegistManualActivity extends AppCompatActivity {
         Intent receiveIntent = getIntent();
         ArrayList<OcrResult> ocrResultArrayList = (ArrayList<OcrResult>) receiveIntent.getSerializableExtra("ocrResult");
         if (ocrResultArrayList != null) {
-            //Todo: OcrResult에서 가장 큰 값들 골라낸다.
-
-            // OcrResult에서 Pill을 꺼내어 데이터 셋해준다.
-            for (int i = 0; i < ocrResultArrayList.size(); i++) {
-                mRegistManualPillAdapter.addItem(ocrResultArrayList.get(i).getPill(), i);
-            }
-
+            autoRegistWithOcrResult(ocrResultArrayList);
         }
+    }
+
+    public void autoRegistWithOcrResult(ArrayList<OcrResult> ocrResultArrayList) {
+        // OcrResult에서 가장 큰 값들 골라낸다.
+
+        int maxDosageOneDay = 0;
+        int maxDosageTotalDays = 0;
+
+        // 최대값 추출
+        OcrResult ocrResult;
+        for (int i = 0; i < ocrResultArrayList.size(); i++) {
+
+            ocrResult = ocrResultArrayList.get(i);
+
+            if (ocrResult.getDosageOneDay() > maxDosageOneDay) {
+                maxDosageOneDay = ocrResult.getDosageOneDay();
+            }
+            if (ocrResult.getDosageTotalDays() > maxDosageTotalDays) {
+                maxDosageTotalDays = ocrResult.getDosageTotalDays();
+            }
+        }
+
+        // OcrResult에서 Pill을 꺼내어 데이터 셋해준다.
+        for (int i = 0; i < ocrResultArrayList.size(); i++) {
+            mRegistManualPillAdapter.addItem(ocrResultArrayList.get(i).getPill(), i);
+        }
+
+        // 기간 자동 설정 - 오늘부터 maxDosageTotalDays까지 기간 자동 설정
+        tvDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(startDateTimestamp));
+        endDateTimestamp = TimeUtils.getAfterDayUnixTimeStamp(startDateTimestamp, maxDosageTotalDays - 1);
+        tvDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(endDateTimestamp));
+
+        // 체크 활성화
+        mRegistManualTimeAdapter.setCheckedMaxDosageOneDay(maxDosageOneDay);
     }
 
     public void setupDate() {
@@ -289,9 +314,9 @@ public class RegistManualActivity extends AppCompatActivity {
                             strLabelColor = "#" + Integer.toHexString(color).toUpperCase();
                             ((GradientDrawable) ivLabel.getBackground()).setColor(Color.parseColor(strLabelColor));  //컬러 설정
 
-                            Toast.makeText(RegistManualActivity.this, "Color selected: " + strLabelColor, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(RegistManualActivity.this, "Color selected: " + strLabelColor, Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(RegistManualActivity.this, "Dialog cancelled", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(RegistManualActivity.this, "Dialog cancelled", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).build().show(getSupportFragmentManager(), "label_color");

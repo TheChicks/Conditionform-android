@@ -12,13 +12,13 @@ public class OcrResult implements Serializable {
     Pill pill;
 
     @SerializedName("quantity")
-    int dosageTotal;
+    int dosageOneTime;  // 1회복용량
 
     @SerializedName("onedayDosage")
-    int dosageOneTime;
+    int dosageOneDay;  // 1일 투여횟수
 
     @SerializedName("totalDayDosage")
-    int dosageTotalDays;
+    int dosageTotalDays;  // 총 투약 일수
 
     public Pill getPill() {
         return pill;
@@ -28,20 +28,20 @@ public class OcrResult implements Serializable {
         this.pill = pill;
     }
 
-    public int getDosageTotal() {
-        return dosageTotal;
-    }
-
-    public void setDosageTotal(int dosageTotal) {
-        this.dosageTotal = dosageTotal;
-    }
-
     public int getDosageOneTime() {
         return dosageOneTime;
     }
 
     public void setDosageOneTime(int dosageOneTime) {
         this.dosageOneTime = dosageOneTime;
+    }
+
+    public int getDosageOneDay() {
+        return dosageOneDay;
+    }
+
+    public void setDosageOneDay(int dosageOneDay) {
+        this.dosageOneDay = dosageOneDay;
     }
 
     public int getDosageTotalDays() {

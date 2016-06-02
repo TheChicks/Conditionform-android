@@ -24,11 +24,11 @@ public class RegistAutoOcrResultViewHolder extends RecyclerView.ViewHolder {
     @Bind(R.id.editText_pill_name)
     EditText etPillName;
 
-    @Bind(R.id.editText_dosage_total)
-    EditText etDosageTotal;
-
     @Bind(R.id.editText_dosage_one_time)
     EditText etDosageOneTime;
+
+    @Bind(R.id.editText_dosage_one_day)
+    EditText etDosageOneDay;
 
     @Bind(R.id.editText_dosage_total_days)
     EditText etDosageTotalDays;
@@ -50,8 +50,8 @@ public class RegistAutoOcrResultViewHolder extends RecyclerView.ViewHolder {
 
         etPillName.setText(pill.getKoName());
         etPillInsuranceCode.setText(pill.getInsuranceCode());
-        etDosageTotal.setText(String.valueOf(ocrResult.getDosageTotal()));
         etDosageOneTime.setText(String.valueOf(ocrResult.getDosageOneTime()));
+        etDosageOneDay.setText(String.valueOf(ocrResult.getDosageOneDay()));
         etDosageTotalDays.setText(String.valueOf(ocrResult.getDosageTotalDays()));
 
         //Todo: 데이터 수정시 다시 바인드

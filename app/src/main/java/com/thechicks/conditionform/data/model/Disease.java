@@ -310,9 +310,9 @@ public class Disease implements Serializable {
                 ", timeStartMinute=" + timeStartMinute +
                 ", timeInterval=" + timeInterval +
                 ", dosageCurrnt=" + dosageCurrnt +
-                ", dosageTotal=" + dosageTotal +
+                ", dosageOneTime=" + dosageTotal +
                 ", mTimeItems=" + mTimeItems +
-                ", dosageOneTime=" + dosageOneTime +
+                ", dosageOneDay=" + dosageOneTime +
                 ", dosageTotalDays=" + dosageTotalDays +
                 '}';
     }
