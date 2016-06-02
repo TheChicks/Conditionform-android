@@ -307,23 +307,23 @@ public class DiseaseDosageCheckBottomSheetDialogFragment extends BottomSheetDial
         }
     }
 
-    @OnClick({R.id.button_time_count_minus, R.id.button_time_count_plus})
+    @OnClick({R.id.imageView_time_count_up, R.id.imageView_time_count_down})
     public void onClickTimeCount(View view) {
         switch (view.getId()) {
-            case R.id.button_time_count_minus:
-                if (mDisease.getDosageCurrnt() > 0) {
-                    mDisease.setDosageCurrnt(mDisease.getDosageCurrnt() - 1);
-                    tvTimeCountCurrent.setText(String.format("%d", mDisease.getDosageCurrnt()));
-                } else {
-                    Toast.makeText(getActivity(), "최소치 입니다.", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.button_time_count_plus:
+            case R.id.imageView_time_count_up:
                 if (mDisease.getDosageCurrnt() < mDisease.getDosageTotal()) {
                     mDisease.setDosageCurrnt(mDisease.getDosageCurrnt() + 1);
                     tvTimeCountCurrent.setText(String.format("%d", mDisease.getDosageCurrnt()));
                 } else {
                     Toast.makeText(getActivity(), "최대치 입니다.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.imageView_time_count_down:
+                if (mDisease.getDosageCurrnt() > 0) {
+                    mDisease.setDosageCurrnt(mDisease.getDosageCurrnt() - 1);
+                    tvTimeCountCurrent.setText(String.format("%d", mDisease.getDosageCurrnt()));
+                } else {
+                    Toast.makeText(getActivity(), "최소치 입니다.", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }

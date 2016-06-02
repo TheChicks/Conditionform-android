@@ -35,14 +35,14 @@ public class AlarmAlertReceiver extends BroadcastReceiver {
 
         boolean isRepeat = true;
 
-        if(isRepeat){
+        if (isRepeat) {
             //매일 반복
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent,  PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             int alarmType = AlarmManager.RTC_WAKEUP;
 
-            alarmManager.setRepeating(alarmType, triggerTime, intervalTime, pendingIntent );
-        }else {
+            alarmManager.setRepeating(alarmType, triggerTime + 2000, intervalTime, pendingIntent);
+        } else {
             //반복 안함
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -55,7 +55,7 @@ public class AlarmAlertReceiver extends BroadcastReceiver {
     }
 
     //알람 취소
-    public static void cancelScheduledInstance(Context context, AlarmInstance instance){
+    public static void cancelScheduledInstance(Context context, AlarmInstance instance) {
         Log.d(TAG, "cancelScheduledInstance()");
 
         Intent myIntent = new Intent(context, AlarmAlertReceiver.class);
@@ -67,11 +67,11 @@ public class AlarmAlertReceiver extends BroadcastReceiver {
         am.cancel(pendingIntent);
     }
 
-    private long setTriggerTime(AlarmInstance instance){
+    private long setTriggerTime(AlarmInstance instance) {
 
-        long intervalTime = 24 * 60 *60 * 1000;  //24시간
+        long intervalTime = 24 * 60 * 60 * 1000;  //24시간
 
-        long triggerTime = 0 ;
+        long triggerTime = 0;
 
 
         return triggerTime;

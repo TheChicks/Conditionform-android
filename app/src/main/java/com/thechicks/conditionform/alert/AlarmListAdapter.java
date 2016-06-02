@@ -24,7 +24,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     public void initData() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1; i++) {
             if (i % 2 == 0)
                 addItem(new AlarmItem("감기", "#FF2C49A3"), i);
             else

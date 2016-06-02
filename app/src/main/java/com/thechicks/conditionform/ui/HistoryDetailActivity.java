@@ -6,6 +6,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +14,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -69,10 +70,10 @@ public class HistoryDetailActivity extends AppCompatActivity {
     TextView tvDosageType;
 
     @Bind(R.id.cardView_dosage_type_interval)
-    LinearLayout llTypeInterval;
+    CardView cvTypeInterval;
 
     @Bind(R.id.cardView_dosage_type_normal)
-    LinearLayout llTypeNormal;
+    CardView cvTypeNormal;
 
     @Bind(R.id.textView_time_interval)
     TextView tvTimeInterval;
@@ -134,6 +135,7 @@ public class HistoryDetailActivity extends AppCompatActivity {
                             startActivity(intent);
                         } else {
                             Log.e(TAG, "jaRoot null or size = 0");
+                            Toast.makeText(HistoryDetailActivity.this, "약 검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -196,8 +198,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
                             case Constants.DOSAGE_TYPE_EVERYDAY:
                             case Constants.DOSAGE_TYPE_TWODAY:
                             case Constants.DOSAGE_TYPE_THREEDAY:
-                                llTypeNormal.setVisibility(View.VISIBLE);
-                                llTypeInterval.setVisibility(View.GONE);
+                                cvTypeNormal.setVisibility(View.VISIBLE);
+                                cvTypeInterval.setVisibility(View.GONE);
 
                                 //시간 enabled set
                                 TimeItem timeWakeUp = new TimeItem(PreferencesUtils.getPreferencesLong(HistoryDetailActivity.this, Constants.PREF_TIME_WAKEUP), disease.isEnabledWakeup());
@@ -216,8 +218,8 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
                                 break;
                             case Constants.DOSAGE_TYPE_EVERYHOUR:
-                                llTypeNormal.setVisibility(View.GONE);
-                                llTypeInterval.setVisibility(View.VISIBLE);
+                                cvTypeNormal.setVisibility(View.GONE);
+                                cvTypeInterval.setVisibility(View.VISIBLE);
                                 tvTimeInterval.setText(String.format("%d시간", disease.getTimeInterval()));
                                 tvTimeStart.setText(disease.getTimeStartHour() + ":" + disease.getTimeStartMinute());
                                 tvTimeCount.setText(String.format("%d회", disease.getDosageTotal()));
@@ -242,6 +244,21 @@ public class HistoryDetailActivity extends AppCompatActivity {
     @OnClick(R.id.button_delete)
     public void onClickDelete() {
         //Todo: 삭제
+
+        // Disease 삭제
+        if (conditionformDao.deleteDisease(diseaseId)) {
+            Toast.makeText(HistoryDetailActivity.this, "삭제 성공", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(HistoryDetailActivity.this, "삭제 실패", Toast.LENGTH_SHORT).show();
+        }
+        // History 삭제
+
+        // Pill 삭제
+
+        // Alarm 삭제
+
+        finish();
+        overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);
     }
 
     //Back Button event handle

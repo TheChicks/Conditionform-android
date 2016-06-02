@@ -128,7 +128,7 @@ public class PillDetailsActivity extends AppCompatActivity {
                 .crossFade()
                 .centerCrop()
                 .placeholder(android.R.drawable.ic_menu_crop)
-                .error(android.R.drawable.stat_notify_error)
+                .error(R.drawable.image_not_found_detail)
                 .into(ivPill);
 
         mCollapsingToolbarLayout.setTitle(String.format("%s(%s)", pill.getKoName(), pill.getEnName()));

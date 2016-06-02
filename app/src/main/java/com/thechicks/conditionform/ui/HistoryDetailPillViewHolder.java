@@ -46,7 +46,7 @@ public class HistoryDetailPillViewHolder extends RecyclerView.ViewHolder {
 
         tvKoName.setText(pill.getKoName());
 
-        ivDetail.setOnClickListener(new View.OnClickListener() {
+        mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mListener != null) {

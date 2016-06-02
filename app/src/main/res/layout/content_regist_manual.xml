@@ -33,7 +33,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="레이블"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -53,7 +55,6 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/color_regist_menu_background"
@@ -72,7 +73,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="병 이름"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -87,14 +90,14 @@
                     android:layout_margin="8dp"
                     android:hint="병명을 입력해주세요."
                     android:inputType="text"
-                    android:singleLine="true"/>
+                    android:singleLine="true"
+                    android:textSize="14sp"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <!--약 추가 버튼을 누를때마다 추가되는 약리스트를 위한 리니어 레이아웃-->
         <android.support.v7.widget.CardView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/color_regist_menu_background"
@@ -113,7 +116,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="복용 약"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -126,9 +131,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:background="@drawable/button_regist_manual"
+                    android:background="@drawable/selector_regist_manual"
                     android:clickable="true"
-                    android:text="약 추가"/>
+                    android:text="약 추가"
+                    android:textColor="@color/color_button_text"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerView_pill"
@@ -142,7 +148,6 @@
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             app:cardBackgroundColor="@color/color_regist_menu_background"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp"
@@ -159,7 +164,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="복용 기간"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -182,7 +189,7 @@
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="시작일"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -191,7 +198,7 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:padding="8dp"
                         android:text=" ~ "
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/textView_date_end"
@@ -202,13 +209,13 @@
                         android:gravity="center"
                         android:padding="8dp"
                         android:text="종료일"
-                        android:textSize="16sp"/>
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@color/color_regist_menu_background"
@@ -226,8 +233,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:text="복용 타입 설정"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:text="복용 타입"
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -245,7 +254,6 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-
             android:id="@+id/cardView_dosage_type_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -265,7 +273,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="복용 시간"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -286,6 +296,7 @@
             android:id="@+id/cardView_dosage_type_interval"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:cardCornerRadius="4dp"
             app:cardElevation="4dp"
             app:cardUseCompatPadding="true">
@@ -301,7 +312,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="복용 시작 시간"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -325,7 +338,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="복용 간격"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -345,7 +360,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="복용 횟수"
-                    android:textColor="@color/color_regist_menu_title"/>
+                    android:textColor="@color/color_regist_menu_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -383,8 +400,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_regist_manual"
-                    android:text="취소"/>
+                    android:background="@drawable/selector_regist_manual"
+                    android:text="취소"
+                    android:textColor="@color/color_button_text"/>
 
                 <Button
                     android:id="@+id/button_confirm"
@@ -392,8 +410,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/button_regist_manual"
-                    android:text="확인"/>
+                    android:background="@drawable/selector_regist_manual"
+                    android:text="확인"
+                    android:textColor="@color/color_button_text"/>
 
             </LinearLayout>
         </android.support.v7.widget.CardView>

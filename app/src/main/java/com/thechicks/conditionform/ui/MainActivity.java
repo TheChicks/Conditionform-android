@@ -1,5 +1,6 @@
 package com.thechicks.conditionform.ui;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -156,13 +157,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
             ab.setTitle("");
         }
 
-        //Todo: 현재 시간에 따라 상태바 색상 변경
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = getWindow();
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.color_gradient_lunch_end));
-        }
+        statusBarColorChange(true);  //상태바 색상 변경
 
         setupDrawerContent(mNavigationView);
 
@@ -227,6 +222,25 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         });
     }
 
+    //상태바 색상 변경
+    @TargetApi(21)
+    private void statusBarColorChange(boolean isHome) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (isHome) {
+                //Todo: 현재 시간에 따라 상태바 색상 변경
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.color_gradient_lunch_end));
+            } else {
+                Window window = getWindow();
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimaryDark));
+            }
+        }
+    }
+
     private void setupDrawerContent(NavigationView navigationView) {
 
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -268,6 +282,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarHome);
                 fabMenuOpen.show();
+                statusBarColorChange(true);
                 break;
             case R.id.nav_history_fragment:
                 if (fragment instanceof HistoryFragment) {
@@ -287,26 +302,28 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
+                statusBarColorChange(false);
                 break;
-            case R.id.nav_statistics_fragment:
-                if (fragment instanceof StatisticsFragment) {
-                    return;
-                }
-                newFragment = StatisticsFragment.newInstance();
-                mAppbarNormal.setVisibility(View.VISIBLE);
-                mAppbarSearch.setVisibility(View.GONE);
-                mAppbarHome.setVisibility(View.GONE);
-                this.setSupportActionBar(mToolbarNormal);
-                getSupportActionBar().setTitle(menuItem.getTitle());
-                mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
-                mActionBarDrawerToggle = setupDrawerToggle(mToolbarNormal);
-                fabMenuOpen.hide();
-                if (fabStatus) {
-                    hideFab();
-                    shrinkFlTransBg();
-                    fabStatus = false;
-                }
-                break;
+//            case R.id.nav_statistics_fragment:
+//                if (fragment instanceof StatisticsFragment) {
+//                    return;
+//                }
+//                newFragment = StatisticsFragment.newInstance();
+//                mAppbarNormal.setVisibility(View.VISIBLE);
+//                mAppbarSearch.setVisibility(View.GONE);
+//                mAppbarHome.setVisibility(View.GONE);
+//                this.setSupportActionBar(mToolbarNormal);
+//                getSupportActionBar().setTitle(menuItem.getTitle());
+//                mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
+//                mActionBarDrawerToggle = setupDrawerToggle(mToolbarNormal);
+//                fabMenuOpen.hide();
+//                if (fabStatus) {
+//                    hideFab();
+//                    shrinkFlTransBg();
+//                    fabStatus = false;
+//                }
+//                statusBarColorChange(false);
+//                break;
             case R.id.nav_search_fragment:
                 if (fragment instanceof SearchFragment) {
                     return;
@@ -325,6 +342,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
+                statusBarColorChange(false);
                 break;
             case R.id.nav_settings_fragment:
                 if (fragment instanceof SettingsFragment) {
@@ -344,6 +362,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
+                statusBarColorChange(false);
                 break;
         }
 
@@ -435,9 +454,19 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         switch (requestCode) {
             case REQUEST_CODE_REGIST_MANUAL:
                 if (resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(MainActivity.this, "등록 성공!", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(clRoot, "등록 성공!", Snackbar.LENGTH_SHORT);
+                    ((TextView) snackbar
+                            .getView()
+                            .findViewById(android.support.design.R.id.snackbar_text))
+                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                    snackbar.show();
                 } else {
-                    Toast.makeText(MainActivity.this, "등록 실패! 다시 등록해주세요~", Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(clRoot, "등록 실패! 다시 등록해주세요~", Snackbar.LENGTH_SHORT);
+                    ((TextView) snackbar
+                            .getView()
+                            .findViewById(android.support.design.R.id.snackbar_text))
+                            .setTextColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                    snackbar.show();
                 }
                 break;
             case REQUEST_CODE_CAMERA_CAPTURE:
@@ -674,6 +703,12 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         RegistAutoDialog registAutoDialog = RegistAutoDialog.newInstance();
 //        registAutoDialog.setTargetFragment(this, 0);
         registAutoDialog.show(fm, "fragment_regist_auto");
+
+        if (fabStatus) {
+            hideFab();
+            shrinkFlTransBg();
+            fabStatus = false;
+        }
     }
 
     public static final int REQUEST_CODE_REGIST_MANUAL = 1002;
@@ -683,6 +718,12 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
     public void onClickFabMenuRegisterManual() {
         Intent intent = new Intent(MainActivity.this, RegistManualActivity.class);
         startActivityForResult(intent, REQUEST_CODE_REGIST_MANUAL);
+
+        if (fabStatus) {
+            hideFab();
+            shrinkFlTransBg();
+            fabStatus = false;
+        }
     }
 
     private void expandFab() {

@@ -58,7 +58,7 @@ public class PillSearchViewHolder extends RecyclerView.ViewHolder{
                 .load(pill.getImageUrl())
                 .centerCrop()
                 .placeholder(android.R.drawable.ic_menu_report_image)
-                .error(android.R.drawable.stat_notify_error)
+                .error(R.drawable.image_not_found_search)
                 .crossFade()
                 .into(ivPill);
 

@@ -27,10 +27,12 @@ public interface IConditionformDao {
 
     public ArrayList<Disease> findDiseaseByDate(long timeStamp);
 
-    public Disease findDiseaseById(int id);
+    public Disease findDiseaseById(int diseaseRowId);
 
-    public Disease findDiseaseWithHistoryByIdAndDate(int id, long date);
+    public Disease findDiseaseWithHistoryByIdAndDate(int diseaseRowId, long date);
 
     public boolean updateTakeHistory(long timeStamp, Disease disease);
+
+    public boolean deleteDisease(long diseaseRowId);
 
 }

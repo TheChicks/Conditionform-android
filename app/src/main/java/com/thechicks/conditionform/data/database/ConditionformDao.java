@@ -472,4 +472,14 @@ public class ConditionformDao implements IConditionformDao {
         return false;
     }
 
+    @Override
+    public boolean deleteDisease(long diseaseRowId) {
+
+        int rowId = mDbHelper.delete(Constants.DiseaseEntray.TABLE_NAME, Constants.DiseaseEntray._ID + "=?", new String[]{Long.toString(diseaseRowId)});
+        if (rowId < 0) {
+            return false;
+        }
+        return true;
+    }
+
 }

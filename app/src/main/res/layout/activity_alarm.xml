@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".alert.AlarmAlertActivity">
 
     <RelativeLayout
         android:id="@+id/relativeLayout_time"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="#7899ff">
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:background="@drawable/gradient_lunch">
 
         <ImageView
             android:id="@+id/imageView_time"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerInParent="true"
-            android:src="@android:drawable/ic_popup_reminder"/>
+            android:src="@drawable/ic_lunch_white"/>
 
         <TextView
             android:id="@+id/textView_time"
@@ -28,7 +29,7 @@
             android:layout_below="@+id/imageView_time"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="아침"
+            android:text="점심"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="normal|bold"/>
@@ -38,15 +39,14 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerview_alarm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout_time"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="30dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="4"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_cancel"
@@ -54,9 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/button_shape_normal"
             android:text="취소"
-            android:textColor="#ffffff"
+            android:textColor="@color/color_button_text"
             android:textSize="18dp"
             android:textStyle="bold"/>
 
@@ -66,9 +66,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
-            android:text="5분후에 먹기"
-            android:textColor="#ffffff"
+            android:background="@drawable/button_shape_normal"
+            android:text="연장"
+            android:textColor="@color/color_button_text"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
@@ -78,12 +78,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/button_shape_normal"
             android:text="복용"
-            android:textColor="#ffffff"
+            android:textColor="@color/color_button_text"
             android:textSize="18dp"
             android:textStyle="bold"/>
 
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context="com.thechicks.conditionform.ui.home.DiseaseDosageCheckBottomSheetDialogFragment">
 
@@ -188,25 +189,27 @@
                 android:layout_margin="4dp"
                 android:background="@color/color_label_1"/>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:padding="4dp">
 
                 <TextView
                     android:id="@+id/textView_time_count_current"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
                     android:layout_margin="4dp"
                     android:text="0"
                     android:textColor="#000000"
                     android:textSize="16sp"/>
 
                 <TextView
+                    android:id="@+id/textView_time_count_center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
+                    android:layout_toRightOf="@id/textView_time_count_current"
                     android:text="/"
                     android:textColor="#000000"
                     android:textSize="16sp"/>
@@ -216,21 +219,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
+                    android:layout_toRightOf="@id/textView_time_count_center"
                     android:text="6"
                     android:textColor="#000000"
                     android:textSize="16sp"/>
 
-                <Button
-                    android:id="@+id/button_time_count_minus"
+                <ImageView
+                    android:id="@+id/imageView_time_count_up"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="4dp"
+                    android:src="@drawable/ic_up_black"/>
 
-                <Button
-                    android:id="@+id/button_time_count_plus"
+                <ImageView
+                    android:id="@+id/imageView_time_count_down"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_toLeftOf="@id/imageView_time_count_up"
+                    android:src="@drawable/ic_down_black"/>
 
-            </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
 

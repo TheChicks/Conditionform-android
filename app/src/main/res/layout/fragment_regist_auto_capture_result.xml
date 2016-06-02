@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_capture_result_background"
     android:orientation="vertical"
-    android:padding="8dp"
     tools:context="com.thechicks.conditionform.ui.RegistAutoCaptureResultFragment">
 
     <ImageView
@@ -14,8 +14,10 @@
         android:layout_weight="8"/>
 
     <LinearLayout
+        android:background="#304159"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="4dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -25,15 +27,19 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="편집"/>
+            android:background="@drawable/button_shape_capture"
+            android:text="편집"
+            android:textColor="@color/white"/>
 
-        <Button
-            android:id="@+id/button_capture_repeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:text="다시찍기"/>
+        <!--<Button-->
+            <!--android:id="@+id/button_capture_repeat"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_margin="8dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/button_shape_normal"-->
+            <!--android:text="다시찍기"-->
+            <!--android:textColor="@color/color_button_text"/>-->
 
         <Button
             android:id="@+id/button_capture_confirm"
@@ -41,6 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="확인"/>
+            android:background="@drawable/button_shape_capture"
+            android:text="확인"
+            android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

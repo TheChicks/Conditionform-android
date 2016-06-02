@@ -6,6 +6,8 @@
 
     <color name="color_fab">#a65bfc</color>
 
+    <color name="color_button_text">#7899ff</color>
+
     <!--홈 화면 날짜-->
     <color name="color_gradient_evening_end">#92EAFF</color>
     <color name="color_gradient_evening_center">#9e9cfc</color>
@@ -48,5 +50,8 @@
 
     <!--설정화면-->
     <color name="color_text_settings">#212121</color>
+
+    <!--캡처화면-->
+    <color name="color_capture_result_background">#1e2a3a</color>
 
 </resources>

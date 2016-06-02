@@ -124,11 +124,10 @@ public class RegistAutoCaptureResultFragment extends Fragment {
         startCropImageActivity(mCaptureUri);
     }
 
-    @OnClick(R.id.button_capture_repeat)
-    public void onClickCaptureRepeat() {
-        //Todo: 다시찍기
-
-    }
+//    @OnClick(R.id.button_capture_repeat)
+//    public void onClickCaptureRepeat() {
+//        //Todo: 다시찍기
+//    }
 
     @OnClick(R.id.button_capture_confirm)
     public void onClickCaptureConfirm() {

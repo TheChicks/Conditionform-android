@@ -31,6 +31,7 @@ import android.widget.TimePicker;
 
 import com.thebluealliance.spectrum.SpectrumDialog;
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.alert.AlarmAlertReceiver;
 import com.thechicks.conditionform.data.database.ConditionformDao;
 import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.OcrResult;
@@ -261,7 +262,7 @@ public class RegistManualActivity extends AppCompatActivity {
     public void autoRegistWithOcrResult(ArrayList<OcrResult> ocrResultArrayList) {
         // OcrResult에서 가장 큰 값들 골라낸다.
 
-        int maxDosageOneDay = 0;
+        int maxDosageOneDay = 0;  // 체크박스 활성화 해준다. 1(아), 2(아저), 3(아점저), 4(아점저잠), 5(일아점저잠)
         int maxDosageTotalDays = 0;
 
         // 최대값 추출
@@ -283,7 +284,7 @@ public class RegistManualActivity extends AppCompatActivity {
             mRegistManualPillAdapter.addItem(ocrResultArrayList.get(i).getPill(), i);
         }
 
-        // 기간 자동 설정 - 오늘부터 maxDosageTotalDays까지 기간 자동 설정
+        // 기간 자동 설정 - 오늘부터 maxDosageTotalDays 기간 자동 설정
         tvDateStart.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(startDateTimestamp));
         endDateTimestamp = TimeUtils.getAfterDayUnixTimeStamp(startDateTimestamp, maxDosageTotalDays - 1);
         tvDateEnd.setText(TimeUtils.unixTimeStampToStringDateYearMonthDay(endDateTimestamp));
@@ -492,6 +493,8 @@ public class RegistManualActivity extends AppCompatActivity {
 
 
                 //Todo: 알람 등록
+
+                AlarmAlertReceiver.registerNextAlarmWithAlarmManager(getApplicationContext(), null);
 
 
                 //Parent Activity에 결과값 전달
