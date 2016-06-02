@@ -4,9 +4,9 @@
     <color name="colorPrimaryDark">#6485eb</color>
     <color name="colorAccent">#6485eb</color>
 
-    <color name="colorFAB">#6485eb</color>
+    <color name="colorFAB">#a65bfc</color>
 
-    <color name="colorTextSettings">#a5a8a7</color>
+    <color name="colorTextSettings">#212121</color>
 
     <!--label color-->
     <color name="color_label_1">#eb6d73</color>
@@ -32,5 +32,22 @@
         <item>@color/color_label_9</item>
         <item>@color/color_label_10</item>
     </array>
+
+    <color name="color_gradient_evening_end">#92EAFF</color>
+    <color name="color_gradient_evening_center">#9e9cfc</color>
+    <color name="color_gradient_evening_start">#AD38FD</color>
+
+    <color name="color_gradient_lunch_end">#AAEDFF</color>
+    <color name="color_gradient_lunch_center">#89cefb</color>
+    <color name="color_gradient_lunch_start">#307AFD</color>
+
+    <color name="color_gradient_morning_end">#FDFC8F</color>
+    <color name="color_gradient_morning_center">#fbe469</color>
+    <color name="color_gradient_morning_start">#FEA500</color>
+
+
+
+
+
 
 </resources>

@@ -25,7 +25,7 @@ public class RegistAutoDialog extends DialogFragment {
         super.onAttach(context);
 
         try {
-            callback = (RegistAutoDialogListener) getTargetFragment();
+            callback = (RegistAutoDialogListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + "must implement NoticeDislogListener");
         }

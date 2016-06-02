@@ -5,6 +5,7 @@ import com.thechicks.conditionform.data.model.Disease;
 import com.thechicks.conditionform.data.model.Pill;
 import com.thechicks.conditionform.data.model.History;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,9 +23,9 @@ public interface IConditionformDao {
 
     public boolean addPrescription(long diseaseRowId, long pillRowId);
 
-    public List<History> findAllDisease();
+    public ArrayList<History> findAllDisease();
 
-    public List<Disease> findDiseaseByDate(long timeStamp);
+    public ArrayList<Disease> findDiseaseByDate(long timeStamp);
 
     public Disease findDiseaseById(int id);
 

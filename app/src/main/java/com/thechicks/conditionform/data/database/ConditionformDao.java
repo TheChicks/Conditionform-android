@@ -146,7 +146,7 @@ public class ConditionformDao implements IConditionformDao {
               dosageCurrnt
      */
     @Override
-    public List<Disease> findDiseaseByDate(long timeStamp) {
+    public ArrayList<Disease> findDiseaseByDate(long timeStamp) {
 
         final String[] HOME_LIST_COLUMN = {Constants.DiseaseEntray.TABLE_NAME + "." + Constants.DiseaseEntray._ID, Constants.DiseaseEntray.COLUMN_DISEASE_NAME,
                 Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE, Constants.DiseaseEntray.COLUMN_DISEASE_LABEL_COLOR,
@@ -169,7 +169,7 @@ public class ConditionformDao implements IConditionformDao {
         //Todo: createdAt으로 정렬
 //        String SORT_ORDER_CREATEDAT_DESC = Constants.DiseaseEntray.COLUMN_DISEASE_CREATEDAT + " DESC";
 
-        List<Disease> diseaseList = new ArrayList<>();
+        ArrayList<Disease> diseaseList = new ArrayList<>();
 
         Cursor cursor = sqLiteQueryBuilder.query(mDbHelper.getReadableDatabase(),
                 HOME_LIST_COLUMN,
@@ -216,7 +216,7 @@ public class ConditionformDao implements IConditionformDao {
     Disease -  id, dateStart, dateEnd, dosageType, timeInterval, name, image, color
     */
     @Override
-    public List<History> findAllDisease() {
+    public ArrayList<History> findAllDisease() {
 
         final String[] HISTORY_LIST_COLUMN = {Constants.DiseaseEntray._ID,
                 Constants.DiseaseEntray.COLUMN_DISEASE_NAME, Constants.DiseaseEntray.COLUMN_DISEASE_IMAGE,
@@ -224,7 +224,7 @@ public class ConditionformDao implements IConditionformDao {
                 Constants.DiseaseEntray.COLUMN_DISEASE_DATE_END, Constants.DiseaseEntray.COLUMN_DISEASE_DOSAGE_TYPE,
                 Constants.DiseaseEntray.COLUMN_DISEASE_TIME_INTERVAL};
 
-        List<History> historyList = new ArrayList<>();
+        ArrayList<History> historyList = new ArrayList<>();
 
         Cursor cursor = mDbHelper.query(Constants.DiseaseEntray.TABLE_NAME,
                 HISTORY_LIST_COLUMN,

@@ -1,4 +1,4 @@
-<android.support.design.widget.CoordinatorLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -14,27 +14,5 @@
         android:layout_marginRight="4dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <FrameLayout
-        android:id="@+id/trans_bg"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:background="@drawable/simple_circle"
-        android:visibility="gone"/>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_menu_open"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_add_black_24dp"
-        android:tint="#ffffff"
-        app:fabSize="normal"
-        app:layout_behavior="com.thechicks.conditionform.util.FloatingActionButtonFloatonScrollBehavior"/>
-
-    <include layout="@layout/fab_menu"/>
-
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>
