@@ -1,6 +1,7 @@
 package com.thechicks.conditionform.ui.settings;
 
 import android.app.TimePickerDialog;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.alert.AlarmKlaxon;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.PreferencesUtils;
 import com.thechicks.conditionform.util.TimeUtils;
@@ -105,7 +107,7 @@ public class SettingsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstancesState) {
+    public void onViewCreated(View view, @Nullable final Bundle savedInstancesState) {
         super.onViewCreated(view, savedInstancesState);
 
 //        morningTime = tvMorningtime.getText().toString();
@@ -135,6 +137,10 @@ public class SettingsFragment extends Fragment {
         swVibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {  //진동 0.3초 울리기
+                    AlarmKlaxon.startVibrator(getActivity(), 300);
+                }
                 PreferencesUtils.setPreferences(getActivity(), Constants.PREF_VIBRATE, isChecked);
             }
         });
@@ -142,6 +148,17 @@ public class SettingsFragment extends Fragment {
         swSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if (isChecked) {  //효과음 0.3초 울리기
+                    /*
+                      RingtoneManager.TYPE_NOTIFICATION - 문자 도착
+                      RingtoneManager.TYPE_ALARM - 알람
+                      RingtoneManager.TYPE_RINGTONE - 벨소리
+                    */
+                    RingtoneManager
+                            .getRingtone(getActivity(), RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                            .play();
+                }
                 PreferencesUtils.setPreferences(getActivity(), Constants.PREF_SOUND, isChecked);
             }
         });

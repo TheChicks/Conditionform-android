@@ -11,8 +11,8 @@ import android.os.Build;
 import android.os.Vibrator;
 import android.util.Log;
 
-import com.thechicks.conditionform.data.model.AlarmInstance;
 import com.thechicks.conditionform.R;
+import com.thechicks.conditionform.data.model.AlarmInstance;
 
 import java.io.IOException;
 
@@ -25,20 +25,23 @@ public class AlarmKlaxon {
 
     public static final String TAG = AlarmKlaxon.class.getSimpleName();
 
-    private static final long[] sVibratePattern = new long[]{200, 2000, 100, 2000};  //무진동 진동 패턴
+    // (지연시간, 진동, 쉼, 진동, 쉼, ...)
+    private static final long[] sVibratePattern = new long[]{0, 2000, 200, 2000, 200};  //진동 패턴
 
     private static final float IN_CALL_VOLUME = 0.125f;
 
     private static AudioAttributes VIBRATION_ATTRIBUTES;
 
-    private static boolean sStarted = false;
+    private static boolean startedAlarm = false;
+    private static boolean startedVibrator = false;
+
     private static MediaPlayer sMediaPlayer = null;
 
     public static void stop(Context context) {
         Log.d(TAG, " stop()");
 
-        if (sStarted) {
-            sStarted = false;
+        if (startedAlarm) {
+            startedAlarm = false;
 
             // stop audio playing
             if (sMediaPlayer != null) {
@@ -51,7 +54,7 @@ public class AlarmKlaxon {
             }
 
             // stop vibrator
-            ((Vibrator) (context.getSystemService(Context.VIBRATOR_SERVICE))).cancel();
+            stopVibrator(context);
         }
     }
 
@@ -99,8 +102,33 @@ public class AlarmKlaxon {
         }
 
         //진동 울리는가
-//        if (instance.mVibrate) {
-        if (true) {
+        startVibrator(context, true);
+//        startedVibrator(context, instance.mVibrate);
+
+        startedAlarm = true;
+    }
+
+    // 진동
+    public static void startVibrator(Context context, boolean isVibrator) {
+
+        //Todo: 오디오 모드에 따른 분기 처리
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        int audioMode = audioManager.getRingerMode();
+        switch (audioMode){
+            case AudioManager.RINGER_MODE_NORMAL:  //벨소리 모드
+                Log.d(TAG, " 벨소리");
+                break;
+            case AudioManager.RINGER_MODE_VIBRATE:  //진동 모드
+                Log.d(TAG, " 진동");
+                break;
+            case AudioManager.RINGER_MODE_SILENT:  //무음 모드
+                Log.d(TAG, " 무음");
+                break;
+        }
+
+
+        if (isVibrator) {
             Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -113,8 +141,23 @@ public class AlarmKlaxon {
             } else {
                 vibrator.vibrate(sVibratePattern, 0);
             }
+
+            startedVibrator = true;
         }
-        sStarted = true;
+    }
+
+    public static void startVibrator(Context context, long millisecond){
+        Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(millisecond);
+    }
+
+    public static void stopVibrator(Context context) {
+
+        if (startedVibrator) {
+            // stop vibrator
+            ((Vibrator) (context.getSystemService(Context.VIBRATOR_SERVICE))).cancel();
+            startedVibrator = false;
+        }
     }
 
     private static void startAlarm(Context context, MediaPlayer player) throws IOException {
