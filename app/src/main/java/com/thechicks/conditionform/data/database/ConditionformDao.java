@@ -475,11 +475,52 @@ public class ConditionformDao implements IConditionformDao {
     @Override
     public boolean deleteDisease(long diseaseRowId) {
 
-        int rowId = mDbHelper.delete(Constants.DiseaseEntray.TABLE_NAME, Constants.DiseaseEntray._ID + "=?", new String[]{Long.toString(diseaseRowId)});
+        int rowId = mDbHelper.delete(Constants.DiseaseEntray.TABLE_NAME,
+                Constants.DiseaseEntray._ID + "=?",
+                new String[]{Long.toString(diseaseRowId)});
+
         if (rowId < 0) {
             return false;
         }
         return true;
     }
 
+    @Override
+    public boolean deleteHistory(long diseaseRowIds) {
+
+        int rowId = mDbHelper.delete(Constants.HistoryEntray.TABLE_NAME,
+                Constants.HistoryEntray.COLUMN_HISTORY_FK_DISEASE_ID + "=?",
+                new String[]{Long.toString(diseaseRowIds)});
+
+        if(rowId < 0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteAlarm(long diseaseRowIds) {
+
+        int rowId = mDbHelper.delete(Constants.AlarmEntray.TABLE_NAME,
+                Constants.AlarmEntray.COLUMN_ALARM_FK_DISEASE_ID + "=?",
+                new String[]{Long.toString(diseaseRowIds)});
+
+        if(rowId < 0){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deletePill(long diseaseRowIds) {
+
+        int rowId = mDbHelper.delete(Constants.PillEntray.TABLE_NAME,
+                Constants.PillEntray.COLUMN_PILL_FK_DISEASE_ID + "=?",
+                new String[]{Long.toString(diseaseRowIds)});
+
+        if(rowId < 0){
+            return false;
+        }
+        return true;
+    }
 }

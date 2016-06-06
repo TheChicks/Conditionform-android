@@ -35,4 +35,10 @@ public interface IConditionformDao {
 
     public boolean deleteDisease(long diseaseRowId);
 
+    public boolean deleteHistory(long diseaseRowIds);
+
+    public boolean deleteAlarm(long diseaseRowIds);
+
+    public boolean deletePill(long diseaseRowIds);
+
 }

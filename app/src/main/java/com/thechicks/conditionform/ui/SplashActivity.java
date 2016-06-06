@@ -9,7 +9,7 @@ import com.thechicks.conditionform.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 100;
+    private static int SPLASH_TIME_OUT = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

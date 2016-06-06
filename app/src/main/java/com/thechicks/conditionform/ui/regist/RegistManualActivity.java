@@ -2,6 +2,7 @@ package com.thechicks.conditionform.ui.regist;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -331,11 +333,16 @@ public class RegistManualActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        int margin = ViewUtils.dpToPixel(this, 10);
+        int margin = ViewUtils.dpToPixel(this, 15);
         params.setMargins(margin, 0, margin, 0);
 
         final AppCompatEditText editText = new AppCompatEditText(this);
         editText.setLayoutParams(params);
+
+        //키보드 보이기
+        editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
 
         new AlertDialog.Builder(this)
                 .setTitle("약 추가")

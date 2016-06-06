@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -44,6 +47,9 @@ import retrofit2.Response;
 public class HistoryDetailActivity extends AppCompatActivity {
 
     public static final String TAG = HistoryDetailActivity.class.getSimpleName();
+
+    @Bind(R.id.coordinatorLayout)
+    CoordinatorLayout clRoot;
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -230,6 +236,12 @@ public class HistoryDetailActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        ButterKnife.unbind(this);
+        super.onDestroy();
+    }
+
     @OnClick(R.id.button_confirm)
     public void onClickConfirm() {
         finish();
@@ -247,15 +259,57 @@ public class HistoryDetailActivity extends AppCompatActivity {
 
         // Disease 삭제
         if (conditionformDao.deleteDisease(diseaseId)) {
-            Toast.makeText(HistoryDetailActivity.this, "삭제 성공", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(clRoot, "삭제 성공!", Snackbar.LENGTH_SHORT);
+            ((TextView) snackbar
+                    .getView()
+                    .findViewById(android.support.design.R.id.snackbar_text))
+                    .setTextColor(ContextCompat.getColor(HistoryDetailActivity.this, R.color.colorPrimary));
+            snackbar.show();
         } else {
-            Toast.makeText(HistoryDetailActivity.this, "삭제 실패", Toast.LENGTH_SHORT).show();
+            Snackbar snackbar = Snackbar.make(clRoot, "삭제 실패", Snackbar.LENGTH_SHORT);
+            ((TextView) snackbar
+                    .getView()
+                    .findViewById(android.support.design.R.id.snackbar_text))
+                    .setTextColor(ContextCompat.getColor(HistoryDetailActivity.this, R.color.colorPrimary));
+            snackbar.show();
         }
-        // History 삭제
 
-        // Pill 삭제
+        // Todo: History 삭제
+        if (conditionformDao.deleteHistory(diseaseId)) {
+            Snackbar snackbar = Snackbar.make(clRoot, "삭제 성공!", Snackbar.LENGTH_SHORT);
+            ((TextView) snackbar
+                    .getView()
+                    .findViewById(android.support.design.R.id.snackbar_text))
+                    .setTextColor(ContextCompat.getColor(HistoryDetailActivity.this, R.color.colorPrimary));
+            snackbar.show();
+        } else {
+            Snackbar snackbar = Snackbar.make(clRoot, "삭제 실패", Snackbar.LENGTH_SHORT);
+            ((TextView) snackbar
+                    .getView()
+                    .findViewById(android.support.design.R.id.snackbar_text))
+                    .setTextColor(ContextCompat.getColor(HistoryDetailActivity.this, R.color.colorPrimary));
+            snackbar.show();
+        }
 
-        // Alarm 삭제
+        // Todo: Pill 삭제
+        if (conditionformDao.deletePill(diseaseId)) {
+            Snackbar snackbar = Snackbar.make(clRoot, "삭제 성공!", Snackbar.LENGTH_SHORT);
+            ((TextView) snackbar
+                    .getView()
+                    .findViewById(android.support.design.R.id.snackbar_text))
+                    .setTextColor(ContextCompat.getColor(HistoryDetailActivity.this, R.color.colorPrimary));
+            snackbar.show();
+        } else {
+            Snackbar snackbar = Snackbar.make(clRoot, "삭제 실패", Snackbar.LENGTH_SHORT);
+            ((TextView) snackbar
+                    .getView()
+                    .findViewById(android.support.design.R.id.snackbar_text))
+                    .setTextColor(ContextCompat.getColor(HistoryDetailActivity.this, R.color.colorPrimary));
+            snackbar.show();
+        }
+
+        // Todo: Alarm 삭제
+
 
         finish();
         overridePendingTransition(R.anim.move_left_in_activity, R.anim.move_right_out_activity);

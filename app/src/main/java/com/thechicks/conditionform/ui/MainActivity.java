@@ -30,11 +30,12 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.database.ConditionformDao;
@@ -47,7 +48,6 @@ import com.thechicks.conditionform.ui.home.RegistAutoDialog;
 import com.thechicks.conditionform.ui.regist.RegistManualActivity;
 import com.thechicks.conditionform.ui.search.SearchFragment;
 import com.thechicks.conditionform.ui.settings.SettingsFragment;
-import com.thechicks.conditionform.ui.statistics.StatisticsFragment;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.TimeUtils;
@@ -65,6 +65,9 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity implements RegistAutoDialog.RegistAutoDialogListener {
 
     public static final String TAG = MainActivity.class.getSimpleName();
+
+    @Bind(R.id.coordinatorLayout)
+    CoordinatorLayout clRoot;
 
     @Bind(R.id.appbar_normal)
     AppBarLayout mAppbarNormal;
@@ -84,9 +87,6 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
     @Bind(R.id.toolbar_home)
     Toolbar mToolbarHome;
 
-    @Bind(R.id.coordinatorLayout)
-    CoordinatorLayout clRoot;
-
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
@@ -94,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
     NavigationView mNavigationView;
 
     ActionBarDrawerToggle mActionBarDrawerToggle;
+
+    @Bind(R.id.relative_time)
+    RelativeLayout rlTime;  //시간에 따라 gradient background update
+
+    @Bind(R.id.imageView_time)
+    ImageView ivTime;  //시간에 따라 icon 변경
 
     @Bind(R.id.textView_date_toDay)
     TextView tvDateToday;  //오늘 날짜 display
@@ -157,7 +163,9 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
             ab.setTitle("");
         }
 
-        statusBarColorChange(true);  //상태바 색상 변경
+        setStatusBarColor(true);  //상태바 색상 변경
+        setTimeBackground();
+        setTimeIcon();
 
         setupDrawerContent(mNavigationView);
 
@@ -182,7 +190,8 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         animationLoad();
 
         conditionformDao = new ConditionformDao(MainActivity.this);
-    }
+
+      }
 
     @Override
     protected void onStart() {
@@ -222,9 +231,23 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         });
     }
 
+    public void setTimeBackground(){
+    /*Todo: 시간에 따라 background update
+          4 ~ 11 아침
+          11 ~ 18 점심
+          18 ~ 4 저녁
+        */
+        rlTime.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.gradient_lunch));
+    }
+
+    public void setTimeIcon(){
+        //Todo: 시간에 따라 icon 변경
+        ivTime.setImageResource(R.drawable.ic_lunch_white);
+    }
+
     //상태바 색상 변경
     @TargetApi(21)
-    private void statusBarColorChange(boolean isHome) {
+    private void setStatusBarColor(boolean isHome) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             if (isHome) {
                 //Todo: 현재 시간에 따라 상태바 색상 변경
@@ -282,7 +305,11 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarHome);
                 fabMenuOpen.show();
-                statusBarColorChange(true);
+                setStatusBarColor(true);
+
+                //키보드 숨기기
+                InputMethodManager imm1 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm1.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 break;
             case R.id.nav_history_fragment:
                 if (fragment instanceof HistoryFragment) {
@@ -302,7 +329,11 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
-                statusBarColorChange(false);
+                setStatusBarColor(false);
+
+                //키보드 숨기기
+                InputMethodManager imm2 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm2.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 break;
 //            case R.id.nav_statistics_fragment:
 //                if (fragment instanceof StatisticsFragment) {
@@ -322,7 +353,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
 //                    shrinkFlTransBg();
 //                    fabStatus = false;
 //                }
-//                statusBarColorChange(false);
+//                setStatusBarColor(false);
 //                break;
             case R.id.nav_search_fragment:
                 if (fragment instanceof SearchFragment) {
@@ -342,7 +373,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
-                statusBarColorChange(false);
+                setStatusBarColor(false);
                 break;
             case R.id.nav_settings_fragment:
                 if (fragment instanceof SettingsFragment) {
@@ -362,7 +393,10 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
-                statusBarColorChange(false);
+                setStatusBarColor(false);
+                //키보드 숨기기
+                InputMethodManager imm3 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                imm3.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 break;
         }
 
