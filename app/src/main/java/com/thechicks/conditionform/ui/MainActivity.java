@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -48,6 +47,7 @@ import com.thechicks.conditionform.ui.home.RegistAutoDialog;
 import com.thechicks.conditionform.ui.regist.RegistManualActivity;
 import com.thechicks.conditionform.ui.search.SearchFragment;
 import com.thechicks.conditionform.ui.settings.SettingsFragment;
+import com.thechicks.conditionform.ui.widget.FloatingActionMenu;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.TimeUtils;
@@ -104,26 +104,29 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
     @Bind(R.id.textView_date_toDay)
     TextView tvDateToday;  //오늘 날짜 display
 
-    @Bind(R.id.fab_menu_open)
-    FloatingActionButton fabMenuOpen;
-
-    @Bind(R.id.fab_menu_register_auto)
-    FloatingActionButton fabRegisterAuto;
-
-    @Bind(R.id.fab_menu_register_manual)
-    FloatingActionButton fabRegisterManual;
-
-    @Bind(R.id.relative_fab_menu_register_auto)
-    RelativeLayout rlFabMenuRegisterAuto;
-
-    @Bind(R.id.relative_fab_menu_register_manual)
-    RelativeLayout rlFabMenuRegisterManual;
+//    @Bind(R.id.fab_menu_open)
+//    FloatingActionButton fabMenuOpen;
+//
+//    @Bind(R.id.fab_menu_register_auto)
+//    FloatingActionButton fabRegisterAuto;
+//
+//    @Bind(R.id.fab_menu_register_manual)
+//    FloatingActionButton fabRegisterManual;
+//
+//    @Bind(R.id.relative_fab_menu_register_auto)
+//    RelativeLayout rlFabMenuRegisterAuto;
+//
+//    @Bind(R.id.relative_fab_menu_register_manual)
+//    RelativeLayout rlFabMenuRegisterManual;
 
     @Bind(R.id.trans_bg)
     FrameLayout flTransBg;
 
+//    @Bind(R.id.fab_menu)
+//    FrameLayout flFabMenu;
+
     @Bind(R.id.fab_menu)
-    FrameLayout flFabMenu;
+    FloatingActionMenu fabMenu;
 
     //Animations
     Animation animShowFabMenuRegisterAuto;
@@ -191,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
 
         conditionformDao = new ConditionformDao(MainActivity.this);
 
+        initActionMenu();
       }
 
     @Override
@@ -304,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 getSupportActionBar().setTitle("");
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarHome);
-                fabMenuOpen.show();
+//                fabMenuOpen.show();
                 setStatusBarColor(true);
 
                 //키보드 숨기기
@@ -323,9 +327,9 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 getSupportActionBar().setTitle(menuItem.getTitle());
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarNormal);
-                fabMenuOpen.hide();
+//                fabMenuOpen.hide();
                 if (fabStatus) {
-                    hideFab();
+//                    hideFab();
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
@@ -367,9 +371,9 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 getSupportActionBar().setTitle(menuItem.getTitle());
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarSearch);
-                fabMenuOpen.hide();
+//                fabMenuOpen.hide();
                 if (fabStatus) {
-                    hideFab();
+//                    hideFab();
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
@@ -387,9 +391,9 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 getSupportActionBar().setTitle(menuItem.getTitle());
                 mDrawerLayout.removeDrawerListener(mActionBarDrawerToggle);
                 mActionBarDrawerToggle = setupDrawerToggle(mToolbarNormal);
-                fabMenuOpen.hide();
+//                fabMenuOpen.hide();
                 if (fabStatus) {
-                    hideFab();
+//                    hideFab();
                     shrinkFlTransBg();
                     fabStatus = false;
                 }
@@ -573,10 +577,10 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
     }
 
     private void animationLoad() {
-        animShowFabMenuRegisterAuto = AnimationUtils.loadAnimation(this, R.anim.show_fab_menu_register_auto);
-        animHideFabMenuRegisterAuto = AnimationUtils.loadAnimation(this, R.anim.hide_fab_menu_register_auto);
-        animShowFabMenuRegisterManual = AnimationUtils.loadAnimation(this, R.anim.show_fab_menu_register_manual);
-        animHideFabMenuRegisterManual = AnimationUtils.loadAnimation(this, R.anim.hide_fab_menu_register_manual);
+//        animShowFabMenuRegisterAuto = AnimationUtils.loadAnimation(this, R.anim.show_fab_menu_register_auto);
+//        animHideFabMenuRegisterAuto = AnimationUtils.loadAnimation(this, R.anim.hide_fab_menu_register_auto);
+//        animShowFabMenuRegisterManual = AnimationUtils.loadAnimation(this, R.anim.show_fab_menu_register_manual);
+//        animHideFabMenuRegisterManual = AnimationUtils.loadAnimation(this, R.anim.hide_fab_menu_register_manual);
         animGrow = AnimationUtils.loadAnimation(this, R.anim.grow_color);
         animShrink = AnimationUtils.loadAnimation(this, R.anim.shrink_color);
     }
@@ -681,29 +685,29 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         }, currentDisplayYear, currentDisplayMonth - 1, currentDisplayDay).show();
     }
 
-    @OnClick(R.id.fab_menu_open)
-    public void onClickFabMenuOpen() {
-
-        if (fabStatus) {
-//            //Close FAB menu
-            hideFab();
-            Log.e(TAG, " hide");
-            shrinkFlTransBg();
-            fabStatus = false;
-        } else {
-//            //Display FAB menu
-            expandFab();
-            Log.e(TAG, " show");
-            growFlTransBg();
-            fabStatus = true;
-        }
-    }
+//    @OnClick(R.id.fab_menu_open)
+//    public void onClickFabMenuOpen() {
+//
+//        if (fabStatus) {
+////            //Close FAB menu
+////            hideFab();
+//            Log.e(TAG, " hide");
+//            shrinkFlTransBg();
+//            fabStatus = false;
+//        } else {
+////            //Display FAB menu
+////            expandFab();
+//            Log.e(TAG, " show");
+//            growFlTransBg();
+//            fabStatus = true;
+//        }
+//    }
 
     //Todo: 이벤트가 안날라온다. FrameLayout 영역문제. 애니메이션으로 커지는 영역은 실 영역이 아니다.
     @OnClick(R.id.trans_bg)
     public void onClickFlTransBg() {
         if (fabStatus) {
-            hideFab();
+//            hideFab();
             shrinkFlTransBg();
         }
     }
@@ -730,66 +734,92 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
 //        flTransBg.setLayoutParams(layoutParams);
     }
 
-    //자동 등록 화면으로 연결
-    @OnClick(R.id.fab_menu_register_auto)
-    public void onClickFabMenuRegisterAuto() {
-
-        RegistAutoDialog registAutoDialog = RegistAutoDialog.newInstance();
-//        registAutoDialog.setTargetFragment(this, 0);
-        registAutoDialog.show(fm, "fragment_regist_auto");
-
-        if (fabStatus) {
-            hideFab();
-            shrinkFlTransBg();
-            fabStatus = false;
-        }
-    }
-
+//    //자동 등록 화면으로 연결
+//    @OnClick(R.id.fab_menu_register_auto)
+//    public void onClickFabMenuRegisterAuto() {
+//
+//        RegistAutoDialog registAutoDialog = RegistAutoDialog.newInstance();
+////        registAutoDialog.setTargetFragment(this, 0);
+//        registAutoDialog.show(fm, "fragment_regist_auto");
+//
+//        if (fabStatus) {
+////            hideFab();
+//            shrinkFlTransBg();
+//            fabStatus = false;
+//        }
+//    }
+//
     public static final int REQUEST_CODE_REGIST_MANUAL = 1002;
+//
+//    //직접 등록 화면으로 연결
+//    @OnClick(R.id.fab_menu_register_manual)
+//    public void onClickFabMenuRegisterManual() {
+//        Intent intent = new Intent(MainActivity.this, RegistManualActivity.class);
+//        startActivityForResult(intent, REQUEST_CODE_REGIST_MANUAL);
+//
+//        if (fabStatus) {
+////            hideFab();
+//            shrinkFlTransBg();
+//            fabStatus = false;
+//        }
+//    }
 
-    //직접 등록 화면으로 연결
-    @OnClick(R.id.fab_menu_register_manual)
-    public void onClickFabMenuRegisterManual() {
-        Intent intent = new Intent(MainActivity.this, RegistManualActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_REGIST_MANUAL);
+//    private void expandFab() {
+//        LinearLayout.LayoutParams lpFabMenu1 = (LinearLayout.LayoutParams) rlFabMenuRegisterAuto.getLayoutParams();
+//        lpFabMenu1.bottomMargin += (int) (rlFabMenuRegisterAuto.getHeight() * 0.1);
+//        rlFabMenuRegisterAuto.setLayoutParams(lpFabMenu1);
+//        rlFabMenuRegisterAuto.startAnimation(animShowFabMenuRegisterAuto);
+//        fabRegisterAuto.setClickable(true);
+//
+//        LinearLayout.LayoutParams lpFabMenu2 = (LinearLayout.LayoutParams) rlFabMenuRegisterManual.getLayoutParams();
+//        lpFabMenu2.bottomMargin += (int) (rlFabMenuRegisterManual.getHeight() * 2.3);
+//        rlFabMenuRegisterManual.setLayoutParams(lpFabMenu2);
+//        rlFabMenuRegisterManual.startAnimation(animShowFabMenuRegisterManual);
+//        fabRegisterManual.setClickable(true);
+//    }
+//
+//    private void hideFab() {
+//        LinearLayout.LayoutParams lpFabMenu1 = (LinearLayout.LayoutParams) rlFabMenuRegisterAuto.getLayoutParams();
+//        lpFabMenu1.bottomMargin -= (int) (rlFabMenuRegisterAuto.getHeight() * 0.1);
+//        rlFabMenuRegisterAuto.setLayoutParams(lpFabMenu1);
+//        rlFabMenuRegisterAuto.startAnimation(animHideFabMenuRegisterAuto);
+//        fabRegisterAuto.setClickable(false);
+//
+//        LinearLayout.LayoutParams lpFabMenu2 = (LinearLayout.LayoutParams) rlFabMenuRegisterManual.getLayoutParams();
+//        lpFabMenu2.bottomMargin -= (int) (rlFabMenuRegisterManual.getHeight() * 2.3);
+//        rlFabMenuRegisterManual.setLayoutParams(lpFabMenu2);
+//        rlFabMenuRegisterManual.startAnimation(animHideFabMenuRegisterManual);
+//        fabRegisterManual.setClickable(false);
+//    }
 
-        if (fabStatus) {
-            hideFab();
-            shrinkFlTransBg();
-            fabStatus = false;
-        }
+    public void initActionMenu(){
+        fabMenu.setOnItemClickListener(0, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegistAutoDialog registAutoDialog = RegistAutoDialog.newInstance();
+//        registAutoDialog.setTargetFragment(this, 0);
+                registAutoDialog.show(fm, "fragment_regist_auto");
+
+                if (fabStatus) {
+//            hideFab();
+                    shrinkFlTransBg();
+                    fabStatus = false;
+                }
+            }
+        });
+        fabMenu.setOnItemClickListener(1, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegistManualActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_REGIST_MANUAL);
+
+                if (fabStatus) {
+//            hideFab();
+                    shrinkFlTransBg();
+                    fabStatus = false;
+                }
+            }
+        });
     }
 
-    private void expandFab() {
-
-        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams) rlFabMenuRegisterAuto.getLayoutParams();
-        lpFabMenu1.bottomMargin += (int) (rlFabMenuRegisterAuto.getHeight() * 1.2);
-        rlFabMenuRegisterAuto.setLayoutParams(lpFabMenu1);
-        rlFabMenuRegisterAuto.startAnimation(animShowFabMenuRegisterAuto);
-        fabRegisterAuto.setClickable(true);
-
-        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams) rlFabMenuRegisterManual.getLayoutParams();
-        lpFabMenu2.bottomMargin += (int) (rlFabMenuRegisterManual.getHeight() * 2.3);
-        rlFabMenuRegisterManual.setLayoutParams(lpFabMenu2);
-        rlFabMenuRegisterManual.startAnimation(animShowFabMenuRegisterManual);
-        fabRegisterManual.setClickable(true);
-
-    }
-
-    private void hideFab() {
-
-        FrameLayout.LayoutParams lpFabMenu1 = (FrameLayout.LayoutParams) rlFabMenuRegisterAuto.getLayoutParams();
-        lpFabMenu1.bottomMargin -= (int) (rlFabMenuRegisterAuto.getHeight() * 1.2);
-        rlFabMenuRegisterAuto.setLayoutParams(lpFabMenu1);
-        rlFabMenuRegisterAuto.startAnimation(animHideFabMenuRegisterAuto);
-        fabRegisterAuto.setClickable(false);
-
-        FrameLayout.LayoutParams lpFabMenu2 = (FrameLayout.LayoutParams) rlFabMenuRegisterManual.getLayoutParams();
-        lpFabMenu2.bottomMargin -= (int) (rlFabMenuRegisterManual.getHeight() * 2.3);
-        rlFabMenuRegisterManual.setLayoutParams(lpFabMenu2);
-        rlFabMenuRegisterManual.startAnimation(animHideFabMenuRegisterManual);
-        fabRegisterManual.setClickable(false);
-
-
-    }
 }

@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.thechicks.conditionform.R;
 import com.thechicks.conditionform.data.model.Disease;
-import com.thechicks.conditionform.ui.DosageCheckButton;
+import com.thechicks.conditionform.ui.widget.DosageCheckButton;
 import com.thechicks.conditionform.util.Constants;
 import com.thechicks.conditionform.util.PreferencesUtils;
 import com.thechicks.conditionform.util.TimeUtils;

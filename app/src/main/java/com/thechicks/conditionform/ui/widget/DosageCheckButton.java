@@ -1,4 +1,4 @@
-package com.thechicks.conditionform.ui;
+package com.thechicks.conditionform.ui.widget;
 
 import android.content.Context;
 import android.graphics.Color;

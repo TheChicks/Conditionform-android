@@ -1,4 +1,4 @@
-package com.thechicks.conditionform.util;
+package com.thechicks.conditionform.ui.extension;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
@@ -6,13 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 /**
- * Created by opklnm102 on 2016-05-11.
+ * Created by Dong on 2016-04-09.
  */
-public class FloatingActionButtonHideonScrollBehavior extends FloatingActionButton.Behavior {
+public class FloatingActionButtonFloatonScrollBehavior extends FloatingActionButton.Behavior {
 
-    public FloatingActionButtonHideonScrollBehavior(Context contextm, AttributeSet attrs) {
+    public FloatingActionButtonFloatonScrollBehavior(Context contextm, AttributeSet attrs) {
         super();
     }
 
@@ -21,11 +22,13 @@ public class FloatingActionButtonHideonScrollBehavior extends FloatingActionButt
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
 
         //child -> Floating Action Button
-        //Hide
-        if (child.getVisibility() == View.VISIBLE && dyConsumed > 0) {
-            child.hide();
-        } else if (child.getVisibility() == View.GONE && dyConsumed < 0) {
-            child.show();
+        //Float
+        if (dyConsumed > 0) {
+            CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+            int fab_bottomMargin = layoutParams.bottomMargin;
+            child.animate().translationY(child.getHeight() + fab_bottomMargin).setInterpolator(new LinearInterpolator()).start();
+        } else if (dyConsumed < 0) {
+            child.animate().translationY(0).setInterpolator(new LinearInterpolator()).start();
         }
     }
 

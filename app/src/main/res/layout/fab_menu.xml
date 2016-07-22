@@ -70,4 +70,17 @@
             android:text="직접 등록"/>
 
     </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_menu_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:background="?android:attr/selectableItemBackground"
+        android:src="@drawable/ic_add_black_24dp"
+        android:tint="#ffffff"
+        app:backgroundTint="@color/color_fab"
+        app:fabSize="normal"
+        app:layout_behavior="com.thechicks.conditionform.util.FloatingActionButtonFloatonScrollBehavior"/>
 </FrameLayout>

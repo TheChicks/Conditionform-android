@@ -160,22 +160,30 @@
             android:background="@drawable/simple_circle"
             android:visibility="gone"/>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_menu_open"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
-            android:background="?android:attr/selectableItemBackground"
-            android:src="@drawable/ic_add_black_24dp"
-            android:tint="#ffffff"
-            app:backgroundTint="@color/color_fab"
-            app:fabSize="normal"
-            app:layout_behavior="com.thechicks.conditionform.util.FloatingActionButtonFloatonScrollBehavior"/>
+        <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/fab_menu_open"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|end"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--android:background="?android:attr/selectableItemBackground"-->
+        <!--android:src="@drawable/ic_add_black_24dp"-->
+        <!--android:tint="#ffffff"-->
+        <!--app:backgroundTint="@color/color_fab"-->
+        <!--app:fabSize="normal"-->
+        <!--app:layout_behavior="com.thechicks.conditionform.ui.extension.FloatingActionButtonFloatonScrollBehavior"/>-->
 
-        <include
+        <!--<include-->
+        <!--android:id="@+id/fab_menu"-->
+        <!--layout="@layout/fab_menu"/>-->
+
+        <com.thechicks.conditionform.ui.widget.FloatingActionMenu
             android:id="@+id/fab_menu"
-            layout="@layout/fab_menu"/>
+            android:layout_gravity="bottom|end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <!--app:layout_anchor="@id/coordinatorLayout"-->
+        <!--app:layout_anchorGravity="bottom|end"-->
 
     </android.support.design.widget.CoordinatorLayout>
 

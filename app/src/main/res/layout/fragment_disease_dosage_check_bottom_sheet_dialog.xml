@@ -302,7 +302,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <com.thechicks.conditionform.ui.DosageCheckButton
+            <com.thechicks.conditionform.ui.widget.DosageCheckButton
                 android:id="@+id/dosageCheckButton_wakeup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -351,7 +351,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <com.thechicks.conditionform.ui.DosageCheckButton
+            <com.thechicks.conditionform.ui.widget.DosageCheckButton
                 android:id="@+id/dosageCheckButton_morning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -400,7 +400,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <com.thechicks.conditionform.ui.DosageCheckButton
+            <com.thechicks.conditionform.ui.widget.DosageCheckButton
                 android:id="@+id/dosageCheckButton_lunch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -449,7 +449,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <com.thechicks.conditionform.ui.DosageCheckButton
+            <com.thechicks.conditionform.ui.widget.DosageCheckButton
                 android:id="@+id/dosageCheckButton_evening"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -499,7 +499,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"/>
 
-            <com.thechicks.conditionform.ui.DosageCheckButton
+            <com.thechicks.conditionform.ui.widget.DosageCheckButton
                 android:id="@+id/dosageCheckButton_sleep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
