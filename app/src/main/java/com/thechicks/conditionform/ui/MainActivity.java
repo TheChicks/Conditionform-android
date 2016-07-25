@@ -50,6 +50,7 @@ import com.thechicks.conditionform.ui.settings.SettingsFragment;
 import com.thechicks.conditionform.ui.widget.FloatingActionMenu;
 import com.thechicks.conditionform.util.AsyncHandler;
 import com.thechicks.conditionform.util.Constants;
+import com.thechicks.conditionform.util.KeyboardUtils;
 import com.thechicks.conditionform.util.TimeUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         conditionformDao = new ConditionformDao(MainActivity.this);
 
         initActionMenu();
-      }
+    }
 
     @Override
     protected void onStart() {
@@ -235,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         });
     }
 
-    public void setTimeBackground(){
+    public void setTimeBackground() {
     /*Todo: 시간에 따라 background update
           4 ~ 11 아침
           11 ~ 18 점심
@@ -244,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
         rlTime.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.gradient_lunch));
     }
 
-    public void setTimeIcon(){
+    public void setTimeIcon() {
         //Todo: 시간에 따라 icon 변경
         ivTime.setImageResource(R.drawable.ic_lunch_white);
     }
@@ -312,8 +313,9 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 setStatusBarColor(true);
 
                 //키보드 숨기기
-                InputMethodManager imm1 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm1.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+//                InputMethodManager imm1 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//                imm1.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                KeyboardUtils.hideKeyboard(this);
                 break;
             case R.id.nav_history_fragment:
                 if (fragment instanceof HistoryFragment) {
@@ -336,8 +338,9 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 setStatusBarColor(false);
 
                 //키보드 숨기기
-                InputMethodManager imm2 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm2.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+//                InputMethodManager imm2 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//                imm2.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                KeyboardUtils.hideKeyboard(this);
                 break;
 //            case R.id.nav_statistics_fragment:
 //                if (fragment instanceof StatisticsFragment) {
@@ -378,6 +381,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                     fabStatus = false;
                 }
                 setStatusBarColor(false);
+                KeyboardUtils.showKeyboard(this, mAppbarSearch);
                 break;
             case R.id.nav_settings_fragment:
                 if (fragment instanceof SettingsFragment) {
@@ -399,8 +403,9 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
                 }
                 setStatusBarColor(false);
                 //키보드 숨기기
-                InputMethodManager imm3 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm3.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+//                InputMethodManager imm3 = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//                imm3.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                KeyboardUtils.hideKeyboard(this);
                 break;
         }
 
@@ -734,7 +739,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
 //        flTransBg.setLayoutParams(layoutParams);
     }
 
-//    //자동 등록 화면으로 연결
+    //    //자동 등록 화면으로 연결
 //    @OnClick(R.id.fab_menu_register_auto)
 //    public void onClickFabMenuRegisterAuto() {
 //
@@ -792,7 +797,7 @@ public class MainActivity extends AppCompatActivity implements RegistAutoDialog.
 //        fabRegisterManual.setClickable(false);
 //    }
 
-    public void initActionMenu(){
+    public void initActionMenu() {
         fabMenu.setOnItemClickListener(0, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -47,4 +47,6 @@
 
     <string name="title_activity_history_detail">복용 내역 상세정보</string>
 
+    <string name="please_wait">로딩중...</string>
+
 </resources>
